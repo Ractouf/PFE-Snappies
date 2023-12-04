@@ -1,25 +1,15 @@
-import { createSignal } from "solid-js";
+import { createSignal, createResource } from "solid-js";
 
 const FetchComponent = () => {
-  const [response, setResponse] = createSignal(null);
+  const fetchData = async () => (await fetch("http://localhost:8000/api/ping")).json();
 
-  const fetchData = async () => {
-    try {
-      const res = await fetch("http://127.0.0.1:8000/ping");
-      console.log(res);
-      const data = await res.json();
-      setResponse(data);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-      setResponse("Error fetching data");
-    }
-  };
+  const [data, { mutate, refetch }] = createResource(fetchData);
 
   return (
     <div>
-      <button onClick={fetchData}>Fetch Data</button>
+      <button onClick={refetch}>Fetch Data</button>
       <div>
-        <strong>Response:</strong> {response()}
+        <strong>Response:</strong> {JSON.stringify(data())}
       </div>
     </div>
   );
