@@ -2,7 +2,7 @@ import FetchComponent from './FetchComponent';
 
 function App() {
   return (
-    <FetchComponent></FetchComponent>
+    <FetchComponent />
   );
 }
 
