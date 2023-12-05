@@ -11,14 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('clients_tour', function (Blueprint $table) {
+        Schema::create('clients_tours', function (Blueprint $table) {
             $table->increments('id');
             $table->boolean('is_delivered')->default(false);
-            $table->unsignedBigInteger('client');
-            $table->unsignedBigInteger('tour');
-            $table->foreign('client')->references('id')->on('clients');
-            $table->foreign('tour')->references('id')->on('tours');
-            $table->unique(['client', 'tour']);
+            $table->unsignedBigInteger('client_id');
+            $table->unsignedBigInteger('tour_id');
+            $table->foreign('client_id')->references('id')->on('clients');
+            $table->foreign('tour_id')->references('id')->on('tours');
+            $table->unique(['client_id', 'tour_id']);
             $table->timestamps();
         });
     }

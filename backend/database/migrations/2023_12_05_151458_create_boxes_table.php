@@ -17,7 +17,7 @@ return new class extends Migration
             $table->integer('quantity');
             $table->unsignedBigInteger('client')->nullable();
             $table->unsignedBigInteger('tour');
-            $table->foreign(['client', 'tour'])->references(['client', 'tour'])->on('clients_tour');
+            $table->foreign(['client', 'tour'])->references(['client_id', 'tour_id'])->on('clients_tours');
             $table->unsignedBigInteger('article');
             $table->foreign('article')->references('id')->on('articles');
             $table->timestamps();

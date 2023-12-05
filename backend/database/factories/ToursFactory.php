@@ -3,6 +3,8 @@
 namespace Database\Factories;
 
 use App\Models\Tours;
+use App\Models\TypicalTours;
+use App\Models\Users;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -19,9 +21,9 @@ class ToursFactory extends Factory
     public function definition(): array
     {
         return [
-            'day' => $this->faker->dateTimeBetween('now', '-1 years'),
-            'delivery_driver' => $this->faker->numberBetween(1, 10),
-            'typical_tour' => $this->faker->numberBetween(1, 10),
+            'day' => $this->faker->dateTimeBetween('-1 years'),
+            'delivery_driver' => Users::inRandomOrder()->value('id'),
+            'typical_tour' => TypicalTours::inRandomOrder()->value('id'),
         ];
     }
 }

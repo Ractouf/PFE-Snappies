@@ -2,7 +2,9 @@
 
 namespace Database\Factories;
 
+use App\Models\Clients;
 use App\Models\ClientsTours;
+use App\Models\Tours;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -10,6 +12,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class ClientsToursFactory extends Factory
 {
+    private static $order = 1;
     protected $model = ClientsTours::class;
     /**
      * Define the model's default state.
@@ -20,8 +23,8 @@ class ClientsToursFactory extends Factory
     {
         return [
             'is_delivered' => $this->faker->boolean(),
-            'client_id' => $this->faker->numberBetween(1, 10),
-            'tour_id' => $this->faker->numberBetween(1, 10),
+            'client_id' => Clients::inRandomOrder()->value('id'),
+            'tour_id' => Tours::inRandomOrder()->value('id'),
         ];
     }
 }
