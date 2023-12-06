@@ -8,4 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Boxes extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'is_delivered',
+        'quantity',
+        'client',
+        'tour',
+        'article',
+    ];
 }

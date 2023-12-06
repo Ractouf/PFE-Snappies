@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class TypicalTours extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'day',
+        'name',
+    ];
 }
