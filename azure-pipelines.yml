@@ -1,0 +1,73 @@
+trigger:
+- main
+
+pr:
+- main
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+jobs:
+- job: BackendJob
+  steps:
+  - checkout: self
+    path: $(Build.SourcesDirectory)/backend
+  - task: UseDotNet@2
+    inputs:
+      packageType: 'sdk'
+      version: '3.x'
+      installationPath: $(Agent.ToolsDirectory)/dotnet
+      includePreviewVersions: true
+  - script: |
+      cd $(Build.SourcesDirectory)/backend
+      composer install
+      cp .env.example .env
+      php artisan key:generate
+      php artisan serve
+      # Ajoutez ici d'autres commandes Laravel si nécessaire
+    displayName: 'Build and Configure Laravel Backend'
+  
+- job: FrontendJob
+  steps:
+  - checkout: self
+    path: $(Build.SourcesDirectory)/frontend
+  - task: NodeTool@0
+    inputs:
+      versionSpec: '14.x'
+  - script: |
+      cd $(Build.SourcesDirectory)/frontend
+      npm install
+      npm run dev # Assurez-vous d'ajuster cela en fonction de votre processus de construction
+    displayName: 'Build Frontend'
+    
+- job: DeployJob
+  dependsOn: 
+    - BackendJob
+    - FrontendJob
+  condition: succeeded('BackendJob') && succeeded('FrontendJob')
+  steps:
+  - task: CopyFiles@2
+    inputs:
+      SourceFolder: '$(Build.SourcesDirectory)/frontend/dist' # Assurez-vous d'ajuster cela en fonction de votre structure de projet
+      Contents: '**'
+      TargetFolder: '$(Build.ArtifactStagingDirectory)/frontend'
+      
+  - task: PublishBuildArtifacts@1
+    inputs:
+      pathtoPublish: '$(Build.ArtifactStagingDirectory)/frontend'
+      artifactName: 'frontend'
+      publishLocation: 'Container'
+      
+  - task: CopyFiles@2
+    inputs:
+      SourceFolder: '$(Build.SourcesDirectory)/backend'
+      Contents: '**'
+      TargetFolder: '$(Build.ArtifactStagingDirectory)/backend'
+      
+  - task: PublishBuildArtifacts@1
+    inputs:
+      pathtoPublish: '$(Build.ArtifactStagingDirectory)/backend'
+      artifactName: 'backend'
+      publishLocation: 'Container'
+      
+# Ajoutez ici d'autres étapes de déploiement ou de configuration en fonction de vos besoins
