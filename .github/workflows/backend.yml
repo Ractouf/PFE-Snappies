@@ -1,0 +1,48 @@
+trigger:
+- main  # Branch to trigger the pipeline
+
+pool:
+  vmImage: 'ubuntu-latest'  # Use an Ubuntu image
+
+jobs:
+- job: BuildAndTest
+  displayName: 'Build and Test'
+  steps:
+  - checkout: self
+
+  - script: |
+      # Install PHP and Composer
+      sudo apt-get update
+      sudo apt-get install php php-cli php-mbstring unzip curl
+      php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+      php composer-setup.php
+      php -r "unlink('composer-setup.php');"
+      sudo mv composer.phar /usr/local/bin/composer
+
+      # Navigate to the backend folder
+      cd ./backend
+
+      # Install dependencies
+      composer install
+
+      # Copy environment file and generate application key
+      cp .env.example .env
+      php artisan key:generate
+
+      # Run tests
+      php artisan test
+    displayName: 'Build and Test'
+
+- job: Deploy
+  displayName: 'Deploy to Production'
+  condition: succeeded('BuildAndTest')
+  steps:
+  - checkout: self
+
+  - script: |
+      # Navigate to the backend folder
+      cd ./backend
+
+      # Your deployment script goes here
+      # e.g., deploy to a web server, push to a container registry, etc.
+    displayName: 'Deploy to Production'
