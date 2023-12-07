@@ -21,9 +21,9 @@ class ToursFactory extends Factory
     public function definition(): array
     {
         return [
-            'day' => $this->faker->dateTimeBetween('-1 years'),
-            'delivery_driver' => Users::inRandomOrder()->value('id'),
-            'typical_tour' => TypicalTours::inRandomOrder()->value('id'),
+            'date' => $this->faker->dateTimeBetween('-1 years'),
+            'delivery_driver_id' => Users::inRandomOrder()->value('id'),
+            'typical_tour_id' => TypicalTours::inRandomOrder()->value('id'),
         ];
     }
 }

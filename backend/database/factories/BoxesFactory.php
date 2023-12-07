@@ -25,11 +25,10 @@ class BoxesFactory extends Factory
         $randomClientsTour = ClientsTours::inRandomOrder()->first();
 
         return [
-            'is_delivered' => $this->faker->boolean(),
             'quantity' => $this->faker->numberBetween(1, 10),
-            'client' => $randomClientsTour ? $randomClientsTour->client_id : null,
-            'tour' => $randomClientsTour ? $randomClientsTour->tour_id : null,
-            'article' => Articles::inRandomOrder()->value('id'),
+            'client_id' => $randomClientsTour ? $randomClientsTour->client_id : null,
+            'tour_id' => $randomClientsTour ? $randomClientsTour->tour_id : null,
+            'article_id' => Articles::inRandomOrder()->value('id'),
         ];
     }
 }

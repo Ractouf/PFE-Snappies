@@ -13,8 +13,7 @@ return new class extends Migration
     {
         Schema::create('typical_tours', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('day');
-            $table->string('name');
+            $table->string('name')->unique();
             $table->timestamps();
         });
     }

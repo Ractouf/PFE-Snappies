@@ -63,9 +63,7 @@ class UsersController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $user = Users::find($id);
-        $user->update($request->all());
-        return $user;
+        return Users::find($id)->update($request->all());
     }
 
     /**

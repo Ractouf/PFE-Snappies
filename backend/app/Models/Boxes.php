@@ -9,10 +9,9 @@ class Boxes extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'is_delivered',
         'quantity',
-        'client',
-        'tour',
-        'article',
+        'client_id',
+        'tour_id',
+        'article_id',
     ];
 }

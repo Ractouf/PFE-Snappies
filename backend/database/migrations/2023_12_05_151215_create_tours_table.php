@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('tours', function (Blueprint $table) {
             $table->increments('id');
-            $table->dateTime('day');
-            $table->unsignedBigInteger('delivery_driver')->nullable();
-            $table->foreign('delivery_driver')->references('id')->on('users');
-            $table->unsignedBigInteger('typical_tour');
-            $table->foreign('typical_tour')->references('id')->on('typical_tours');
+            $table->dateTime('date');
+            $table->unsignedBigInteger('delivery_driver_id');
+            $table->foreign('delivery_driver_id')->references('id')->on('users');
+            $table->unsignedBigInteger('typical_tour_id');
+            $table->foreign('typical_tour_id')->references('id')->on('typical_tours');
             $table->timestamps();
         });
     }

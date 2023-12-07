@@ -9,8 +9,8 @@ class Tours extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'day',
-        'delivery_driver',
-        'typical_tour',
+        'date',
+        'delivery_driver_id',
+        'typical_tour_id',
     ];
 }
