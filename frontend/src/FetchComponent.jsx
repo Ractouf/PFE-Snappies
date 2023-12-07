@@ -5,11 +5,14 @@ const FetchComponent = () => {
 
   const [data, { mutate, refetch }] = createResource(fetchData);
 
+  
+
   return (
     <div>
       <button onClick={refetch}>Fetch Data</button>
       <div>
         <strong>Response:</strong> {JSON.stringify(data())}
+
       </div>
     </div>
   );
