@@ -37,11 +37,7 @@ Route::group(['middleware' => ['auth:sanctum', 'checkRole:admin']], function () 
     Route::patch('/typicalTours/{id}', [TypicalToursController::class, 'update']);
     Route::delete('/typicalTours/{id}', [TypicalToursController::class, 'destroy']);
 
-    Route::get('/clients', [ClientsController::class, 'index']);
-    Route::get('/clients/{id}', [ClientsController::class, 'show']);
-    Route::post('/clients', [ClientsController::class, 'store']);
-    Route::patch('/clients/{id}', [ClientsController::class, 'update']);
-    Route::delete('/clients/{id}', [ClientsController::class, 'destroy']);
+    Route::resource('clients', ClientsController::class);
 
     Route::get('/tours', [ToursController::class, 'index']);
     Route::patch('/tours/{id}', [ToursController::class, 'update']);
