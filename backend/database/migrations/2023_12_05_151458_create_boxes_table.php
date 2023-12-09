@@ -13,13 +13,11 @@ return new class extends Migration
     {
         Schema::create('boxes', function (Blueprint $table) {
             $table->increments('id');
-            $table->boolean('is_delivered')->default(false);
             $table->integer('quantity');
-            $table->unsignedBigInteger('client')->nullable();
-            $table->unsignedBigInteger('tour');
-            $table->foreign(['client', 'tour'])->references(['client_id', 'tour_id'])->on('clients_tours');
-            $table->unsignedBigInteger('article');
-            $table->foreign('article')->references('id')->on('articles');
+            $table->unsignedBigInteger('clients_tours_id')->nullable();
+            $table->foreign('clients_tours_id')->references('id')->on('clients_tours');
+            $table->unsignedBigInteger('article_id');
+            $table->foreign('article_id')->references('id')->on('articles');
             $table->timestamps();
         });
     }
