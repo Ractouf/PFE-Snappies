@@ -1,19 +1,15 @@
 import { createSignal } from 'solid-js';
 
 function Login() {
-  // State for the login form
   const [username, setUsername] = createSignal('');
   const [password, setPassword] = createSignal('');
 
-  // Function to handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Here, you can add your logic to handle the login
     console.log('Username:', username());
     console.log('Password:', password());
 
-    // Reset the form fields
     setUsername('');
     setPassword('');
   };

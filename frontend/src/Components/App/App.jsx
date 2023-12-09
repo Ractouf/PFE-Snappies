@@ -1,10 +1,13 @@
-import logo from './logo.svg';
-import styles from './App.module.css';
-import FetchComponent from '../../FetchComponent';
+
+import Header from '../Header/Header';
+import Footer from '../Footer/Footer';
 
 function App() {
   return (
-    <FetchComponent></FetchComponent>
+    <>
+      <Header></Header>
+      <Footer></Footer>
+    </>
   );
 }
 

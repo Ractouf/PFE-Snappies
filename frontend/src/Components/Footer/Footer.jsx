@@ -1,11 +1,13 @@
+import "./Footer.css";
 
 const Footer = () => {
-    return (
-      <footer>
-        <p>&copy; {new Date().getFullYear()} Snappies. All rights reserved.</p>
-        {/* A remplacer */}
-      </footer>
-    );
+  return (
+    <footer className="footer-container">
+      <p>&copy; {new Date().getFullYear()} Snappies. All rights reserved.</p>
+      {/* Replace the comment with something random */}
+      <p>Visit our website for amazing deals!</p>
+    </footer>
+  );
 };
 
-export { Footer };
+export default Footer;

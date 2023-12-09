@@ -1,37 +1,38 @@
 /* @refresh reload */
 import { render } from 'solid-js/web';
-import { createSignal } from 'solid-js';
 
 import './index.css';
 import App from './Components/App/App';
 import Login from './Components/Login/Login';
-import { Router, Route, Routes } from "@solidjs/router";
+import { Router, Route } from "@solidjs/router";
 import Inventory from './Components/Inventory/Inventory';
+import { createSignal } from 'solid-js';
 
-const root = document.getElementById('root');
+const Root = () => {
+  const [loggedIn, setLoggedIn] = createSignal(false);
 
-if (import.meta.env.DEV && !(root instanceof HTMLElement)) {
-  throw new Error(
-    'Root element not found. Did you forget to add it to your index.html? Or maybe the id attribute got misspelled?',
-  );
-}
+  const checkLogin = () => {
+    const token = localStorage.getItem('token');
+    setLoggedIn(!!token);
+  };
 
-const Main = () => {
-  const [location, setLocation] = createSignal(window.location.pathname);
-
-  const updateLocation = () => setLocation(window.location.pathname);
-
-  window.addEventListener('popstate', updateLocation);
+  checkLogin();
 
   return (
     <Router>
-      <Routes>
-        <Route path="/" componentt={App} />
-        <Route path="/login" component={Login} />
-        <Route path="/items" component={Inventory} />
-      </Routes>
+      {loggedIn() ? (
+        <>
+          <Route path="/" component={App} />
+          <Route path="/items" component={Inventory} />
+        </>
+      ) : (
+        <>
+          <Route path="/" component={Login} />
+          <Route path="/items" component={Inventory} />
+        </>
+      )}
     </Router>
   );
 };
 
-render(() => <Main />, root);
+render(() => Root(), document.getElementById("root"));
