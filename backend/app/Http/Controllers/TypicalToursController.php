@@ -7,47 +7,53 @@ use Illuminate\Http\Request;
 
 class TypicalToursController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         return TypicalTours::all();
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         $fields = $request->validate([
-            'name' => 'required',
+            'name' => 'required|unique:typical_tours,name',
         ]);
 
-        return TypicalTours::create([
-            'name' => $fields['name'],
-        ]);
+        return TypicalTours::create($fields);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function showByName(string $name)
     {
-        return TypicalTours::find($id);
+        $typicalTour = TypicalTours::where('name', $name)->first();
+
+        if (!$typicalTour) {
+            return response()->json([
+                'message' => 'Typical tour not found',
+            ], 404);
+        }
+
+        $clientsTours = $typicalTour->clientsTours;
+
+        $typicalTourRes = [];
+        foreach ($clientsTours as $clientsTour) {
+            $client = $clientsTour->client;
+
+            $boxes = $clientsTour->boxes;
+            foreach ($boxes as $box) {
+                $box['article'] = $box->article;
+            }
+            $client['boxes'] = $boxes;
+
+            $typicalTourRes[] = $client;
+        }
+
+        return $typicalTourRes;
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, string $id)
     {
         return TypicalTours::find($id)->update($request->all());
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
         return TypicalTours::destroy($id);

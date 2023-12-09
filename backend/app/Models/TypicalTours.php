@@ -11,4 +11,9 @@ class TypicalTours extends Model
     protected $fillable = [
         'name',
     ];
+
+    public function clientsTours()
+    {
+        return $this->hasMany(ClientsTours::class, 'tour_id');
+    }
 }

@@ -1,6 +1,9 @@
 <?php
 
+use App\Http\Controllers\ArticlesController;
+use App\Http\Controllers\BoxesController;
 use App\Http\Controllers\ClientsController;
+use App\Http\Controllers\ClientsToursController;
 use App\Http\Controllers\ToursController;
 use App\Http\Controllers\TypicalToursController;
 use App\Http\Controllers\UsersController;
@@ -14,12 +17,11 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::post('/logout', [UsersController::class, 'logout']);
 
     Route::get('/typicalTours', [TypicalToursController::class, 'index']);
-    Route::get('/typicalTours/{id}', [TypicalToursController::class, 'show']);
-
-    Route::get('/clients/{id}', [ClientsController::class, 'show']);
+    Route::get('/typicalTours/{name}', [TypicalToursController::class, 'showByName']);
 
     Route::post('/tours', [ToursController::class, 'store']);
     Route::get('/tours/{id}', [ToursController::class, 'show']);
+    Route::get('/tours/{date}/{driverId}', [ToursController::class, 'showByDateAndDriver']);
     Route::delete('/tours/{id}', [ToursController::class, 'destroy']);
 });
 
@@ -36,12 +38,21 @@ Route::group(['middleware' => ['auth:sanctum', 'checkRole:admin']], function () 
     Route::delete('/typicalTours/{id}', [TypicalToursController::class, 'destroy']);
 
     Route::get('/clients', [ClientsController::class, 'index']);
+    Route::get('/clients/{id}', [ClientsController::class, 'show']);
     Route::post('/clients', [ClientsController::class, 'store']);
     Route::patch('/clients/{id}', [ClientsController::class, 'update']);
     Route::delete('/clients/{id}', [ClientsController::class, 'destroy']);
 
     Route::get('/tours', [ToursController::class, 'index']);
     Route::patch('/tours/{id}', [ToursController::class, 'update']);
+
+    Route::post('/clientsTours', [ClientsToursController::class, 'store']);
+    Route::patch('/clientsTours/{id}', [ClientsToursController::class, 'update']);
+    Route::delete('/clientsTours/{id}', [ClientsToursController::class, 'destroy']);
+
+    Route::resource('articles', ArticlesController::class);
+
+    Route::resource('boxes', BoxesController::class);
 });
 
 // tout CRUD d'un controller

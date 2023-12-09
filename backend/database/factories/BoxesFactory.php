@@ -22,12 +22,9 @@ class BoxesFactory extends Factory
      */
     public function definition(): array
     {
-        $randomClientsTour = ClientsTours::inRandomOrder()->first();
-
         return [
             'quantity' => $this->faker->numberBetween(1, 10),
-            'client_id' => $randomClientsTour ? $randomClientsTour->client_id : null,
-            'tour_id' => $randomClientsTour ? $randomClientsTour->tour_id : null,
+            'clients_tours_id' => ClientsTours::inRandomOrder()->value('id'),
             'article_id' => Articles::inRandomOrder()->value('id'),
         ];
     }

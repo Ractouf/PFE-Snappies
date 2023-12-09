@@ -3,64 +3,39 @@
 namespace App\Http\Controllers;
 
 use App\Models\ToursBoxesClients;
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 class ToursBoxesClientsController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        return ToursBoxesClients::all();
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $fields = $request->validate([
+            'is_delivered' => 'required|boolean',
+            'tour_id' => 'required|string',
+            'client_id' => 'required|string',
+            'box_id' => 'required|string',
+        ]);
+
+        return ToursBoxesClients::create($fields);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(ToursBoxesClients $toursBoxesClients)
+    public function show(string $id)
     {
-        //
+        return ClientsToursController::find($id);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(ToursBoxesClients $toursBoxesClients)
+    public function update(Request $request, string $id)
     {
-        //
+        return ClientsToursController::find($id)->update($request->all());
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, ToursBoxesClients $toursBoxesClients)
+    public function destroy(string $id)
     {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(ToursBoxesClients $toursBoxesClients)
-    {
-        //
+        return ClientsToursController::destroy($id);
     }
 }

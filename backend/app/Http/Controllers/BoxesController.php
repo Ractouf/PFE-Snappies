@@ -3,39 +3,39 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\Clients;
+use App\Models\Boxes;
 use Illuminate\Http\Request;
 
-class ClientsController extends Controller
+class BoxesController extends Controller
 {
     public function index()
     {
-        return Clients::all();
+        return Boxes::all();
     }
 
     public function store(Request $request)
     {
         $fields = $request->validate([
-            'name' => 'required',
-            'address' => 'required',
-            'phone' => 'required',
+            'quantity' => 'required',
+            'clients_tours_id' => 'string',
+            'article_id' => 'required',
         ]);
 
-        return Clients::create($fields);
+        return Boxes::create($fields);
     }
 
     public function show(string $id)
     {
-        return Clients::find($id);
+        return Boxes::find($id);
     }
 
     public function update(Request $request, string $id)
     {
-        return Clients::find($id)->update($request->all());
+        return Boxes::find($id)->update($request->all());
     }
 
     public function destroy(string $id)
     {
-        return Clients::destroy($id);
+        return Boxes::destroy($id);
     }
 }

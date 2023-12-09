@@ -10,8 +10,12 @@ class Boxes extends Model
     use HasFactory;
     protected $fillable = [
         'quantity',
-        'client_id',
-        'tour_id',
+        'clients_tours_id',
         'article_id',
     ];
+
+    public function article()
+    {
+        return $this->belongsTo(Articles::class, 'article_id');
+    }
 }

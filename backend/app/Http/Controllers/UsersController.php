@@ -11,17 +11,11 @@ use Illuminate\Support\Facades\Hash;
 
 class UsersController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         return Users::all();
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         $fields = $request->validate([
@@ -32,13 +26,7 @@ class UsersController extends Controller
             'password' => 'required',
         ]);
 
-        $user = Users::create([
-            'firstname' => $fields['firstname'],
-            'lastname' => $fields['lastname'],
-            'phone' => $fields['phone'],
-            'email' => $fields['email'],
-            'password' => bcrypt($fields['password']),
-        ]);
+        $user = Users::create($fields);
 
         $token = $user->createToken('myapptoken')->plainTextToken;
 
@@ -50,35 +38,21 @@ class UsersController extends Controller
         return response($response, 201);
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
         return Users::find($id);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, string $id)
     {
         return Users::find($id)->update($request->all());
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
         return Users::destroy($id);
     }
 
-    /**
-     * Login user and create token
-     * @param Request $request
-     * @return \Illuminate\Contracts\Foundation\Application|ResponseFactory|Application|Response
-     */
     public function login(Request $request)
     {
         $fields = $request->validate([
@@ -106,11 +80,6 @@ class UsersController extends Controller
         return response($response, 201);
     }
 
-    /**
-     * Logout user (Revoke the token)
-     * @param Request $request
-     * @return array
-     */
     public function logout(Request $request)
     {
         auth()->user()->tokens()->delete();
