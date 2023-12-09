@@ -19,8 +19,7 @@ class TypicalToursFactory extends Factory
     public function definition(): array
     {
         return [
-            'day' => $this->faker->dayOfWeek(),
-            'name' => $this->faker->city(),
+            'name' => $this->faker->unique()->city(),
         ];
     }
 }

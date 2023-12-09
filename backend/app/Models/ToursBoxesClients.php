@@ -5,12 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Tours extends Model
+class ToursBoxesClients extends Model
 {
     use HasFactory;
+
     protected $fillable = [
-        'date',
-        'delivery_driver_id',
-        'typical_tour_id',
+        'is_delivered',
+        'tour_id',
+        'client_id',
+        'box_id',
     ];
 }

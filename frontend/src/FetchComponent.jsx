@@ -1,9 +1,9 @@
-import { createSignal, createResource } from "solid-js";
+import { createResource } from "solid-js";
 
 const FetchComponent = () => {
-  const fetchData = async () => (await fetch("http://localhost:8000/api/ping")).json();
+  const fetchData = async () => (await fetch("http://localhost:8000/api/users")).json();
 
-  const [data, { mutate, refetch }] = createResource(fetchData);
+  const [data, { refetch }] = createResource(fetchData);
 
   return (
     <div>

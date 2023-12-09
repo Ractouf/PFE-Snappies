@@ -9,8 +9,16 @@ class ClientsTours extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'is_delivered',
         'client_id',
         'tour_id',
     ];
+
+    public function client()
+    {
+        return $this->belongsTo(Clients::class, 'client_id');
+    }
+    public function boxes()
+    {
+        return $this->hasMany(Boxes::class, 'clients_tours_id');
+    }
 }

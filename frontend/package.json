@@ -1,15 +1,20 @@
 {
-  "name": "vite-template-solid",
+  "name": "pfe-snappies",
   "version": "0.0.0",
   "description": "",
   "scripts": {
     "start": "vite",
     "dev": "vite",
     "build": "vite build",
-    "serve": "vite preview"
+    "serve": "vite preview",
+    "lint": "eslint \"src/*.jsx\"",
+    "lint:fix": "eslint --fix \"src/*.jsx\"",
+    "code:fix": "npm run lint:fix"
   },
   "license": "MIT",
   "devDependencies": {
+    "eslint": "^8.55.0",
+    "eslint-plugin-solid": "^0.13.0",
     "solid-devtools": "^0.27.3",
     "vite": "^4.3.9",
     "vite-plugin-solid": "^2.7.0"
