@@ -1,14 +1,16 @@
+import Header from "../Header/Header";
+import Footer from "../Footer/Footer";
 
-import Header from '../Header/Header';
-import Footer from '../Footer/Footer';
+const App = props => {
+    return (
+        <>
+            <Header></Header>
 
-function App() {
-  return (
-    <>
-      <Header></Header>
-      <Footer></Footer>
-    </>
-  );
+            {props.children}
+
+            <Footer></Footer>
+        </>
+    );
 }
 
 export default App;

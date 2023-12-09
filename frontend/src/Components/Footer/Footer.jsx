@@ -2,7 +2,7 @@ import "./Footer.css";
 
 const Footer = () => {
   return (
-    <footer className="footer-container">
+    <footer class = "footer-container">
       <p>&copy; {new Date().getFullYear()} Snappies. All rights reserved.</p>
       {/* Replace the comment with something random */}
       <p>Visit our website for amazing deals!</p>
