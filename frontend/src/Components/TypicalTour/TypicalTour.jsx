@@ -2,7 +2,11 @@ import { createSignal } from 'solid-js';
 import {API_BASE_URL} from "../../config";
 
 const fetchTours = async () => {
-    const tours = await fetch(`${API_BASE_URL}/typicalTours`)
+    const tours = await fetch(`${API_BASE_URL}/typicalTours`, {
+        headers: {
+            'Authorization': `bearer ${localStorage.getItem('token')}`,
+        },
+    })
 
     if (!tours.ok) {
         const errorData = await tours.json();
