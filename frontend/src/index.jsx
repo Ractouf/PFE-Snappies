@@ -2,14 +2,17 @@
 import { render } from 'solid-js/web';
 
 import './index.css';
-import App from './App';
+import App from './Components/App/App';
+import { Router, Route } from "@solidjs/router";
+import Login from "./Components/Login/Login";
+import Button from "./Components/Button/Button";
 
-const root = document.getElementById('root');
-
-if (import.meta.env.DEV && !(root instanceof HTMLElement)) {
-  throw new Error(
-    'Root element not found. Did you forget to add it to your index.html? Or maybe the id attribute got misspelled?',
-  );
-}
-
-render(() => <App />, root);
+render(
+    () =>
+        <Router root={App}>
+            <Route path = "/login" component = {Login}/>
+            // change button to something else
+            <Route path = "/" component = {Button}/>
+        </Router>,
+    document.getElementById("root")
+);
