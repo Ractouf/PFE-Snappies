@@ -1,0 +1,54 @@
+.loading {
+    text-align: center;
+}
+
+.client-row:nth-child(even) {
+    background-color: lightgray;
+}
+
+.hidden {
+    display: none;
+}
+
+.validate {
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.4);
+    width: 100%;
+    height: 100%;
+    z-index: 100;
+}
+
+.boxes {
+    position: fixed;
+    top: 20%;
+    left: calc(50% - 100px);
+    background-color: tomato;
+    padding-block: 30px;
+    padding-inline: 50px;
+}
+
+.boxes h3 {
+    padding-block: 5px;
+}
+
+.client-row:after {
+    position: absolute;
+    content: '';
+    border-bottom: 1px solid tomato;
+    width: calc(100% - 20px);
+    right: 10px;
+}
+
+.client-row-item {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    padding-block: 20px;
+    margin-inline: 10px;
+}
+
+.google-maps-logo {
+    max-height: 30px;
+}
