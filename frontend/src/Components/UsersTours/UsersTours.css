@@ -20,17 +20,47 @@
     z-index: 100;
 }
 
-.boxes {
+.validate-content {
     position: fixed;
     top: 20%;
-    left: calc(50% - 100px);
     background-color: tomato;
     padding-block: 30px;
     padding-inline: 50px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
-.boxes h3 {
+.boxes {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.article h3 {
     padding-block: 5px;
+}
+
+.article {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+
+.article input {
+    width: 40px;
+    height: 25px;
+}
+
+.article select {
+    width: 100px;
+    height: 30px;
+}
+
+.article button {
+    width: 30px;
+    height: 30px;
 }
 
 .client-row:after {
@@ -47,6 +77,12 @@
     align-items: center;
     padding-block: 20px;
     margin-inline: 10px;
+}
+
+.confirm {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .google-maps-logo {

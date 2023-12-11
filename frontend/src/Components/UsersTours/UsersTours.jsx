@@ -5,7 +5,7 @@ import "./UsersTours.css";
 const UsersTours = () => {
     const params = useParams();
 
-    async function fetchData(tour) {
+    async function fetchTours(tour) {
         const response = await fetch(`http://localhost:8000/api/typicalTours/${tour}`, {
             method: 'GET',
             headers: {
@@ -20,10 +20,62 @@ const UsersTours = () => {
         }
     }
 
-    const [clients] = createResource(() => params.typicalTour, fetchData);
+    const [clients] = createResource(() => params.typicalTour, fetchTours);
+
+    async function fetchArticles() {
+        const response = await fetch("http://localhost:8000/api/articles", {
+            method: 'GET',
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('token'),
+            }
+        });
+
+        if (!response.ok) {
+            console.log(`HTTP error! status: ${response.status}`);
+        } else {
+            return await response.json();
+        }
+    }
+
+    const [articles] = createResource(fetchArticles);
 
     function goToMaps(address) {
         window.location.href = `https://www.google.com/maps/dir/?api=1&destination=${address}&travelmode:driving`
+    }
+
+    function addSelect(article) {
+        const select = document.createElement("select");
+
+        articles().forEach(article => {
+            const option = document.createElement("option");
+            option.value = article.name;
+            option.innerHTML = article.name;
+            select.appendChild(option);
+        });
+
+        if (article)
+            select.value = article.name;
+
+        return select;
+    }
+
+    function removeArticle(event) {
+        const article = event.target.parentNode;
+        const boxes = event.target.parentNode.parentNode;
+
+        boxes.removeChild(article);
+    }
+
+    function addArticle() {
+        const boxes = document.querySelector(`.boxes`);
+
+        boxes.appendChild(
+            <div class = "article">
+                <input type= "number" min = "0" value = "0"/>
+                {addSelect()}
+                <button onclick = {removeArticle}>-</button>
+            </div>
+        )
     }
 
     function validateClient(client) {
@@ -35,19 +87,32 @@ const UsersTours = () => {
 
         const content = client.boxes.map(box => {
             return (
-                    <h3>{box.quantity}x {box.article.name}</h3>
+                <div class = "article">
+                    <input type= "number" min = "0" value = {box.quantity}/>
+                    {addSelect(box.article)}
+                    <button onclick = {removeArticle}>-</button>
+                </div>
             );
         });
         content.forEach(item => boxes.appendChild(item));
 
-        element.appendChild(boxes);
+        const div = document.createElement("div");
+        div.classList.add("validate-content");
+        div.appendChild(boxes);
+        div.appendChild(<button onclick = {addArticle}>Ajouter un article</button>);
+        div.appendChild(
+            <div class = "confirm">
+                <button onClick={hide}>Annuler</button>
+                <button onClick={addArticle}>Confirmer</button>
+            </div>
+        );
+
+        element.appendChild(div);
         element.classList.remove("hidden");
     }
 
     function hide(event) {
-        if (event.target !== event.currentTarget) {
-            event.stopPropagation();
-        } else {
+        if (event.target === event.currentTarget) {
             const element = document.querySelector(`.validate`);
             element.classList.add("hidden");
         }
@@ -56,7 +121,7 @@ const UsersTours = () => {
     return (
         <>
             <ul>
-                {!clients.loading ?
+                {!clients.loading && !articles.loading ?
                     clients().map(client => {
                         return (
                             <li class = "client-row">
