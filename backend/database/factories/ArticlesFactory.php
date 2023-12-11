@@ -20,7 +20,6 @@ class ArticlesFactory extends Factory
     {
         return [
             'name' => $this->faker->colorName(),
-            'size' => $this->faker->randomElement(['small', 'medium', 'large', null]),
         ];
     }
 }
