@@ -22,8 +22,7 @@ class ArticlesController extends Controller
     public function store(Request $request)
     {
         $fields = $request->validate([
-            'name' => 'required|string',
-            'size' => 'string',
+            'name' => 'required|string'
         ]);
 
         return Articles::create($fields);
