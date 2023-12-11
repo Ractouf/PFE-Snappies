@@ -21,4 +21,9 @@ class ClientsTours extends Model
     {
         return $this->hasMany(Boxes::class, 'clients_tours_id');
     }
+
+    public function extras()
+    {
+        return $this->hasMany(ExtraTours::class, 'clientsTours');
+    }
 }
