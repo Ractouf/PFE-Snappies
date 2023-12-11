@@ -20,7 +20,7 @@
     z-index: 100;
 }
 
-.validate-content {
+.validate-form {
     position: fixed;
     top: 20%;
     background-color: tomato;

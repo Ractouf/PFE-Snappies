@@ -96,18 +96,18 @@ const UsersTours = () => {
         });
         content.forEach(item => boxes.appendChild(item));
 
-        const div = document.createElement("div");
-        div.classList.add("validate-content");
-        div.appendChild(boxes);
-        div.appendChild(<button onclick = {addArticle}>Ajouter un article</button>);
-        div.appendChild(
+        const form = document.createElement("form");
+        form.classList.add("validate-form");
+        form.appendChild(boxes);
+        form.appendChild(<button onclick = {addArticle}>Ajouter un article</button>);
+        form.appendChild(
             <div class = "confirm">
                 <button onClick={hide}>Annuler</button>
                 <button onClick={addArticle}>Confirmer</button>
             </div>
         );
 
-        element.appendChild(div);
+        element.appendChild(form);
         element.classList.remove("hidden");
     }
 
