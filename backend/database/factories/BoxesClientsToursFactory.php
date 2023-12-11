@@ -2,19 +2,16 @@
 
 namespace Database\Factories;
 
-use App\Models\Articles;
 use App\Models\Boxes;
-use App\Models\Clients;
+use App\Models\BoxesClientsTours;
 use App\Models\ClientsTours;
-use App\Models\Tours;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends Factory<Boxes>
+ * @extends Factory<BoxesClientsTours>
  */
-class BoxesFactory extends Factory
+class BoxesClientsToursFactory extends Factory
 {
-    protected $model = Boxes::class;
     /**
      * Define the model's default state.
      *
@@ -23,8 +20,9 @@ class BoxesFactory extends Factory
     public function definition(): array
     {
         return [
-            'quantity_article' => $this->faker->numberBetween(1, 10),
-            'article_id' => Articles::inRandomOrder()->value('id'),
+            'client_tour_id' => ClientsTours::inRandomOrder()->value('id'),
+            'box_id' => Boxes::inRandomOrder()->value('id'),
+            'quantity_box' => $this->faker->numberBetween(1, 10),
         ];
     }
 }

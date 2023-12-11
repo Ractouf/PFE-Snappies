@@ -45,39 +45,26 @@ class ToursBoxesClientsController extends Controller
     public function createRow(string $tourId)
     {
         $typicalTour = TypicalTours::find($tourId);
-    
-        $clients = $typicalTour->clientsTours;
-    
+
+        $clientTours = $typicalTour->clientsTours;
+
         $createdRows = [];
-        
-        foreach ($clients as $client) {
-            $boxes = $client->boxes;
-            $extras = $client->extras;
-    
+
+        foreach ($clientTours as $clientTour) {
+            $boxes = $clientTour->boxesClientsTours;
+
             foreach ($boxes as $box) {
                 $fields = [
                     'tour_id' => $tourId,
-                    'client_id' => $client->id,
-                    'box_id' => $box->id
+                    'client_id' => $clientTour->id,
+                    'box_id' => $box->box_id
                 ];
-    
+
                 $createdRow = ToursBoxesClients::create($fields);
                 $createdRows[] = $createdRow;
             }
-    
-            foreach ($extras as $extra) {
-                $fields = [
-                    'tour_id' => $tourId,
-                    'client_id' => $client->id,
-                    'box_id' => $extra->boxes,
-                ];
-    
-                $createdRow = ToursBoxesClients::create($fields);
-                $createdRows[] = $createdRow; 
-            }
         }
-        
+
         return response()->json($createdRows, 201);
     }
-    
 }

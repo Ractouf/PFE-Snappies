@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('extra_tours', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedBigInteger('boxes');
-            $table->foreign('boxes')->references('id')->on('boxes');
-            $table->unsignedBigInteger('clientsTours');
-            $table->foreign('clientsTours')->references('id')->on('clients_tours');
+            $table->unsignedBigInteger('box_id');
+            $table->foreign('box_id')->references('id')->on('boxes');
+            $table->unsignedBigInteger('client_tour_id');
+            $table->foreign('client_tour_id')->references('id')->on('clients_tours');
         });
     }
 

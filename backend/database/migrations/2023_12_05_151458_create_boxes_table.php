@@ -13,9 +13,7 @@ return new class extends Migration
     {
         Schema::create('boxes', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('quantity');
-            $table->unsignedBigInteger('clients_tours_id')->nullable();
-            $table->foreign('clients_tours_id')->references('id')->on('clients_tours');
+            $table->double('quantity_article');
             $table->unsignedBigInteger('article_id');
             $table->foreign('article_id')->references('id')->on('articles');
             $table->timestamps();

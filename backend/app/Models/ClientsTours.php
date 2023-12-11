@@ -10,20 +10,20 @@ class ClientsTours extends Model
     use HasFactory;
     protected $fillable = [
         'client_id',
-        'tour_id',
+        'typical_tour_id',
     ];
 
     public function client()
     {
         return $this->belongsTo(Clients::class, 'client_id');
     }
-    public function boxes()
+    public function boxesClientsTours()
     {
-        return $this->hasMany(Boxes::class, 'clients_tours_id');
+        return $this->hasMany(BoxesClientsTours::class, 'client_tour_id');
     }
 
     public function extras()
     {
-        return $this->hasMany(ExtraTours::class, 'clientsTours');
+        return $this->hasMany(ExtraTours::class, 'client_tour_id');
     }
 }

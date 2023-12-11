@@ -26,12 +26,11 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::delete('/tours/{id}', [ToursController::class, 'destroy']);
 
     Route::get('/users', [UsersController::class, 'index']);
-   
 });
 
 // admin protected routes
 Route::group(['middleware' => ['auth:sanctum', 'checkRole:admin']], function () {
-    
+
     Route::post('/users', [UsersController::class, 'store']);
     Route::get('/users/{id}', [UsersController::class, 'show']);
     Route::patch('/users/{id}', [UsersController::class, 'update']);

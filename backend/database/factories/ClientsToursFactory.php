@@ -20,9 +20,23 @@ class ClientsToursFactory extends Factory
      */
     public function definition(): array
     {
+        $uniquePairs = [];
+
+        while (true) {
+            $clientId = Clients::inRandomOrder()->value('id');
+            $tourId = TypicalTours::inRandomOrder()->value('id');
+
+            $pair = $clientId . '-' . $tourId;
+
+            if (!in_array($pair, $uniquePairs)) {
+                $uniquePairs[] = $pair;
+                break;
+            }
+        }
+
         return [
-            'client_id' => Clients::inRandomOrder()->value('id'),
-            'tour_id' => TypicalTours::inRandomOrder()->value('id'),
+            'client_id' => $clientId,
+            'typical_tour_id' => $tourId,
         ];
     }
 }
