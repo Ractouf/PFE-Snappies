@@ -1,5 +1,5 @@
 import {createResource, createSignal} from "solid-js";
-import {Navigate, redirect, useNavigate} from "@solidjs/router";
+import { useNavigate} from "@solidjs/router";
 
 const registerUser = async (email, password, lastname, firstname, phone, is_admin) => {
     const requestBody = JSON.stringify({email, password, lastname, firstname, phone, is_admin});
