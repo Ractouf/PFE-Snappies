@@ -12,7 +12,7 @@ class ClientsToursController extends Controller
     {
         $fields = $request->validate([
             'client_id' => 'required|string',
-            'tour_id' => 'required|string',
+            'typical_tour_id' => 'required|string',
         ]);
 
         return ClientsTours::create($fields);

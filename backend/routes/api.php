@@ -7,6 +7,7 @@ use App\Http\Controllers\ClientsToursController;
 use App\Http\Controllers\ToursController;
 use App\Http\Controllers\TypicalToursController;
 use App\Http\Controllers\UsersController;
+use App\Http\Controllers\ToursBoxesClientsController;
 use Illuminate\Support\Facades\Route;
 
 // public routes
@@ -23,7 +24,10 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get('/tours/{id}', [ToursController::class, 'show']);
     Route::get('/tours/{date}/{driverId}', [ToursController::class, 'showByDateAndDriver']);
     Route::delete('/tours/{id}', [ToursController::class, 'destroy']);
-
+  
+    Route::get('/tours/{tourId}/{deliveryDriverId}/{date}', [ToursBoxesClientsController::class, 'getTour']);
+    Route::post('/tours/{typicalTourId}/{tourId}', [ToursBoxesClientsController::class,'createRow']);
+  
     Route::get('/articles', [ArticlesController::class, 'index']);
 });
 
