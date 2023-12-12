@@ -1,108 +1,71 @@
-import {createResource} from "solid-js";
+import {createSignal, For} from "solid-js";
 import Client from "./Client";
+import Box from "./Box";
 
-const ClientRow = ({ client }) => {
-    async function fetchArticles() {
-        const response = await fetch("http://localhost:8000/api/articles", {
-            method: 'GET',
-            headers: {
-                'Authorization': 'Bearer ' + localStorage.getItem('token'),
+const ClientRow = ({ client, extra, setExtra }) => {
+    const [boxes, setBoxes] = createSignal(client.boxes);
+    const [showArticles, setShowArticles] = createSignal(false);
+
+    const toggleArticles = () => {
+        setShowArticles(!showArticles());
+    };
+
+    const addArticle = () => {
+        if (extra().length !== 0) {
+            setBoxes([...boxes(), {
+                article: extra()[0].article,
+                quantity_article: "0",
+                quantity_box: "0"
+            }]);
+        }
+    };
+
+    const removeArticle = (index) => {
+        const removedBox = boxes()[index];
+        setBoxes(boxes().filter((_, i) => i !== index));
+
+        if (removedBox.article !== undefined) {
+            const extraBox = extra().find(box => box.article === removedBox.article);
+            if (extraBox) {
+                extraBox.quantity_box = parseInt(extraBox.quantity_box, 10) + parseInt(removedBox.quantity_box, 10);
+            } else {
+                setExtra([...extra(), removedBox]);
             }
-        });
-
-        if (!response.ok) {
-            console.log(`HTTP error! status: ${response.status}`);
-        } else {
-            return await response.json();
         }
-    }
+    };
 
-    const [articles] = createResource(fetchArticles);
-
-    function removeArticle(event) {
-        const article = event.target.parentNode;
-        const boxes = event.target.parentNode.parentNode;
-
-        boxes.removeChild(article);
-    }
-
-    function addArticle(e) {
-        e.preventDefault();
-        const boxes = document.querySelector(`.boxes`);
-
-        boxes.appendChild(
-            <div class = "article">
-                <input type= "number" min = "0" value = "0"/>
-                {addSelect()}
-                <button onclick = {removeArticle}>-</button>
-            </div>
-        )
-    }
-
-    function addSelect(article) {
-        const select = document.createElement("select");
-
-        articles().forEach(article => {
-            const option = document.createElement("option");
-            option.value = article.name;
-            option.innerHTML = article.name;
-            select.appendChild(option);
-        });
-
-        if (article)
-            select.value = article.name;
-
-        return select;
-    }
-
-    function hide(event) {
-        event.preventDefault();
-        if (event.target === event.currentTarget) {
-            const element = document.querySelector(`.validate`);
-            element.classList.add("hidden");
-        }
-    }
-
-    function validateClient(client) {
-        const element = document.querySelector(`.validate`);
-        const boxes = document.createElement("div");
-        boxes.classList.add("boxes");
-
-        element.innerHTML = "";
-
-        const content = client.boxes.map(box => {
-            return (
-                <div class = "article">
-                    <input type= "number" min = "0" value = {box.quantity}/>
-                    {addSelect(box.article)}
-                    <button onclick = {removeArticle}>-</button>
-                </div>
-            );
-        });
-        content.forEach(item => boxes.appendChild(item));
-
-        const form = document.createElement("form");
-        form.classList.add("validate-form");
-        form.appendChild(boxes);
-        form.appendChild(<button onclick = {addArticle}>Ajouter un article</button>);
-        form.appendChild(
-            <div class = "confirm">
-                <button onClick={hide}>Annuler</button>
-                <button onClick={addArticle}>Confirmer</button>
-            </div>
-        );
-
-        element.appendChild(form);
-        element.classList.remove("hidden");
-    }
+    const allBoxesDelivered = client.boxes.every(box => box.is_delivered);
 
     return (
-        <li class = "client-row">
-            <div onClick = {() => validateClient(client)} class = "client-row-item">
-                <Client client = {client} />
+        <div class = "nth">
+            <div onClick={toggleArticles} >
+                <Client client={client} />
             </div>
-        </li>
-    )
+
+            {showArticles() && (
+                <div class = "client-details">
+                    <div class = "client-articles">
+                        <For each = {boxes()}>
+                            {(box, index) => !allBoxesDelivered ?
+                                <Box box = {box} extra = {extra} setExtra = {setExtra} removeArticle = {removeArticle} index = {index}/>
+                                :
+                                <h4>{box.quantity_box}x {box.article}</h4>
+                            }
+                        </For>
+                    </div>
+
+                    <div class = "client-confirmation">
+                        {!allBoxesDelivered &&
+                            <>
+                                <button onClick={addArticle}>Ajouter un article</button>
+                                <button>Confirmer</button>
+                            </>
+                        }
+                    </div>
+                </div>
+            )}
+        </div>
+    );
 };
 
 export default ClientRow;

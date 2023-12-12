@@ -1,88 +1,66 @@
-.loading {
-    text-align: center;
+.nth:nth-child(even) {
+    background-color: lightgrey;
 }
 
-.client-row:nth-child(even) {
-    background-color: lightgray;
+.clients {
+    display: flex;
+    flex-direction: column;
 }
 
-.hidden {
-    display: none;
+.client {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-inline: 10px;
+    gap: 5px;
+    padding-block: 20px;
 }
 
-.validate {
-    position: fixed;
-    top: 0;
-    left: 0;
-    background-color: rgba(0, 0, 0, 0.4);
-    width: 100%;
-    height: 100%;
-    z-index: 100;
+.client-details {
+    margin-block: 10px;
+    margin-inline: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
 }
 
-.validate-form {
-    position: fixed;
-    top: 20%;
-    background-color: tomato;
-    padding-block: 30px;
-    padding-inline: 50px;
+.client-articles {
     display: flex;
     flex-direction: column;
     gap: 10px;
+    width: 100%;
 }
 
-.boxes {
+.red-border {
+    padding: 3px;
+    border-bottom: 1px solid tomato;
+}
+
+.client-confirmation {
     display: flex;
-    flex-direction: column;
-    gap: 5px;
+    justify-content: space-between;
+    width: 100%;
 }
 
-.article h3 {
-    padding-block: 5px;
+.delivered {
+    width: 30px;
+    height: 30px;
 }
 
 .article {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    gap: 20px;
 }
 
 .article input {
     width: 40px;
-    height: 25px;
-}
-
-.article select {
-    width: 100px;
     height: 30px;
 }
 
 .article button {
-    width: 30px;
+    width: 40px;
     height: 30px;
-}
-
-.client-row:after {
-    position: absolute;
-    content: '';
-    border-bottom: 1px solid tomato;
-    width: calc(100% - 20px);
-    right: 10px;
-}
-
-.client-row-item {
-    display: flex;
-    gap: 10px;
-    align-items: center;
-    padding-block: 20px;
-    margin-inline: 10px;
-}
-
-.confirm {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
 }
 
 .google-maps-logo {

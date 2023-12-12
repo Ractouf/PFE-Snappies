@@ -3,15 +3,17 @@ function goToMaps(address) {
 }
 
 const Client = ({ client }) => {
+    const allBoxesDelivered = client.boxes.every(box => box.is_delivered);
+
     return (
-        <>
-            <input type = "checkbox"/>
-            <div>
+        <div class = "client">
+            <input disabled class = "delivered" checked = {allBoxesDelivered} type = "checkbox"/>
+            <div class = "client-info">
                 <h3>{client.name}</h3>
                 <h4>{client.address}</h4>
             </div>
             <img onClick = {() => goToMaps(client.address)} class = "google-maps-logo" src = "/src/assets/googleMaps.png" alt = "maps"/>
-        </>
+        </div>
     );
 };
 
