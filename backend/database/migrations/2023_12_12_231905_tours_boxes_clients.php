@@ -18,8 +18,8 @@ return new class extends Migration
             $table->foreign('tour_id')->references('id')->on('tours');
             $table->unsignedBigInteger('client_id')->nullable();
             $table->foreign('client_id')->references('id')->on('clients');
-            $table->unsignedBigInteger('box_id');
-            $table->foreign('box_id')->references('id')->on('boxes');
+            $table->unsignedBigInteger('box_client_tour_id');
+            $table->foreign('box_client_tour_id')->references('id')->on('boxes_clients_tours');
             $table->timestamps();
         });
     }

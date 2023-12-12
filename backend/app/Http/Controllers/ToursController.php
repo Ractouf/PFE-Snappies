@@ -41,7 +41,7 @@ class ToursController extends Controller
             $createdRow = ToursBoxesClients::create([
                 'tour_id' => $tourId,
                 'client_id' => $clientId,
-                'box_id' => $boxClientTour->box_id
+                'box_client_tour_id' => $boxClientTour->id
             ]);
 
             $createdRows[] = $createdRow;
@@ -54,8 +54,8 @@ class ToursController extends Controller
             foreach ($boxes as $box) {
                 $createdRow = ToursBoxesClients::create([
                     'tour_id' => $tourId,
-                    'client_id' => $clientTour->id,
-                    'box_id' => $box->box_id
+                    'client_id' => $clientTour->client_id,
+                    'box_client_tour_id' => $box->id
                 ]);
 
                 $createdRows[] = $createdRow;

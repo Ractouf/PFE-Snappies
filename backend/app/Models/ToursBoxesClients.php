@@ -13,7 +13,7 @@ class ToursBoxesClients extends Model
         'is_delivered',
         'tour_id',
         'client_id',
-        'box_id',
+        'box_client_tour_id',
     ];
 
     public function tour()
@@ -28,6 +28,6 @@ class ToursBoxesClients extends Model
 
     public function boxesClientsTours()
     {
-        return $this->belongsTo(BoxesClientsTours::class, "box_id");
+        return $this->belongsTo(BoxesClientsTours::class, "box_client_tour_id");
     }
 }
