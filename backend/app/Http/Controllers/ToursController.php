@@ -17,12 +17,15 @@ class ToursController extends Controller
     public function store(Request $request)
     {
         $fields = $request->validate([
-            'date' => 'required',
             'delivery_driver_id' => 'required',
             'typical_tour_id' => 'required',
         ]);
 
-        return Tours::create($fields);
+        return Tours::create([
+            'date' => date('d/m/y'),
+            'delivery_driver_id' => $fields['delivery_driver_id'],
+            'typical_tour_id' => $fields['typical_tour_id'],
+            ]);
     }
 
     public function show(string $id)
