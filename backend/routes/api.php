@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Route;
 // public routes
 Route::post('/login', [UsersController::class, 'login']);
 
+
 // user protected routes
 Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::post('/logout', [UsersController::class, 'logout']);
