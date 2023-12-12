@@ -16,7 +16,7 @@ return new class extends Migration
             $table->boolean('is_delivered')->default(false);
             $table->unsignedBigInteger('tour_id');
             $table->foreign('tour_id')->references('id')->on('tours');
-            $table->unsignedBigInteger('client_id');
+            $table->unsignedBigInteger('client_id')->nullable();
             $table->foreign('client_id')->references('id')->on('clients');
             $table->unsignedBigInteger('box_id');
             $table->foreign('box_id')->references('id')->on('boxes');

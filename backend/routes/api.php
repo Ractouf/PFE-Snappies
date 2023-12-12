@@ -25,6 +25,9 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get('/tours/{date}/{driverId}', [ToursController::class, 'showByDateAndDriver']);
     Route::delete('/tours/{id}', [ToursController::class, 'destroy']);
 
+    Route::get('/tours/{tourId}/{deliveryDriverId}/{date}', [ToursBoxesClientsController::class, 'getTour']);
+    Route::post('/tours/{typicalTourId}/{tourId}', [ToursBoxesClientsController::class,'createRow']);
+
     Route::get('/users', [UsersController::class, 'index']);
 });
 
@@ -48,8 +51,6 @@ Route::group(['middleware' => ['auth:sanctum', 'checkRole:admin']], function () 
     Route::post('/clientsTours', [ClientsToursController::class, 'store']);
     Route::patch('/clientsTours/{id}', [ClientsToursController::class, 'update']);
     Route::delete('/clientsTours/{id}', [ClientsToursController::class, 'destroy']);
-
-    Route::post('/tours/{tour_id}', [ToursBoxesClientsController::class,'createRow']);
 
     Route::resource('articles', ArticlesController::class);
 

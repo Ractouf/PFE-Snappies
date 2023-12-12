@@ -16,4 +16,9 @@ class TypicalTours extends Model
     {
         return $this->hasMany(ClientsTours::class, 'typical_tour_id');
     }
+
+    public function boxesClientsTours()
+    {
+        return $this->hasMany(BoxesClientsTours::class, 'typical_tour_id');
+    }
 }

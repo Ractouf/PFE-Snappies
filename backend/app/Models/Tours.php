@@ -13,4 +13,9 @@ class Tours extends Model
         'delivery_driver_id',
         'typical_tour_id',
     ];
+
+    public function toursBoxesClients()
+    {
+        return $this->hasMany(ToursBoxesClients::class, "tour_id");
+    }
 }

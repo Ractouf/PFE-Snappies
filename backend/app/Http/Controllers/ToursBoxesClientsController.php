@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Tours;
 use App\Models\ToursBoxesClients;
-use App\Models\Boxes;
 use App\Models\TypicalTours;
-use App\Models\ExtraTours;
 use Illuminate\Http\Request;
 
 class ToursBoxesClientsController extends Controller
@@ -42,25 +41,88 @@ class ToursBoxesClientsController extends Controller
         return ClientsToursController::destroy($id);
     }
 
-    public function createRow(string $tourId)
+    public function getTour(string $tourId, string $deliveryDriverId, string $date)
     {
-        $typicalTour = TypicalTours::find($tourId);
+        $tour = Tours::where('id', $tourId)
+            ->where('delivery_driver_id', $deliveryDriverId)
+            ->whereDate('date', $date)
+            ->first();
 
-        $clientTours = $typicalTour->clientsTours;
+        if (!$tour) {
+            return response()->json(['message' => 'Tour not found'], 404);
+        }
+
+        $toursBoxesClients = $tour->toursBoxesClients;
+
+        $res = ['clients' => []];
+        foreach ($toursBoxesClients as $tourBoxClient) {
+            $client = $tourBoxClient->client;
+            if ($client) {
+                $clientId = $client->id;
+
+                if (!isset($res['clients'][$clientId])) {
+                    $res['clients'][$clientId] = [
+                        'name' => $client->name,
+                        'address' => $client->address,
+                        'phone' => $client->phone,
+                        'boxes' => []
+                    ];
+                }
+
+                $res['clients'][$clientId]['boxes'][] = [
+                    'is_delivered' => $tourBoxClient->is_delivered,
+                    'quantity_box' => $tourBoxClient->boxesClientsTours->quantity_box,
+                    'quantity_article' => $tourBoxClient->boxesClientsTours->box->quantity_article,
+                    'article' => $tourBoxClient->boxesClientsTours->box->article->name,
+                ];
+            } else {
+                $res['extra'][] = [
+                    'is_delivered' => $tourBoxClient->is_delivered,
+                    'quantity_box' => $tourBoxClient->boxesClientsTours->quantity_box,
+                    'quantity_article' => $tourBoxClient->boxesClientsTours->box->quantity_article,
+                    'article' => $tourBoxClient->boxesClientsTours->box->article->name,
+                ];
+            }
+        }
+
+        $res['clients'] = array_values($res['clients']);
+        return response()->json($res);
+    }
+
+    public function createRow(string $typicalTourId, string $tourId)
+    {
+        $typicalTour = TypicalTours::find($typicalTourId);
+
+        $boxesClientsTours = $typicalTour->boxesClientsTours;
 
         $createdRows = [];
+        foreach ($boxesClientsTours as $boxClientTour) {
+            $clientTour = $boxClientTour->clientTour;
+            $clientId = null;
+            if ($clientTour) {
+                $clientId = $clientTour->client_id;
+            }
 
+            $createdRow = ToursBoxesClients::create([
+                'tour_id' => $tourId,
+                'client_id' => $clientId,
+                'box_id' => $boxClientTour->box_id
+            ]);
+
+            $createdRows[] = $createdRow;
+        }
+
+        $clientTours = $typicalTour->clientsTours;
         foreach ($clientTours as $clientTour) {
             $boxes = $clientTour->boxesClientsTours;
 
             foreach ($boxes as $box) {
-                $fields = [
+                $createdRow = ToursBoxesClients::create([
                     'tour_id' => $tourId,
                     'client_id' => $clientTour->id,
                     'box_id' => $box->box_id
-                ];
+                ]);
 
-                $createdRow = ToursBoxesClients::create($fields);
                 $createdRows[] = $createdRow;
             }
         }

@@ -15,4 +15,19 @@ class ToursBoxesClients extends Model
         'client_id',
         'box_id',
     ];
+
+    public function tour()
+    {
+        return $this->belongsTo(Tours::class, "tour_id");
+    }
+
+    public function client()
+    {
+        return $this->belongsTo(Clients::class, "client_id");
+    }
+
+    public function boxesClientsTours()
+    {
+        return $this->belongsTo(BoxesClientsTours::class, "box_id");
+    }
 }
