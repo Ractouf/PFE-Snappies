@@ -11,16 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tours_boxes_clients', function (Blueprint $table) {
+        Schema::create('extra_tours', function (Blueprint $table) {
             $table->increments('id');
-            $table->boolean('is_delivered')->default(false);
-            $table->unsignedBigInteger('tour_id');
-            $table->foreign('tour_id')->references('id')->on('tours');
-            $table->unsignedBigInteger('client_id')->nullable();
-            $table->foreign('client_id')->references('id')->on('clients');
             $table->unsignedBigInteger('box_id');
             $table->foreign('box_id')->references('id')->on('boxes');
-            $table->timestamps();
+            $table->unsignedBigInteger('client_tour_id');
+            $table->foreign('client_tour_id')->references('id')->on('clients_tours');
         });
     }
 
@@ -29,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tours_boxes_clients');
+        Schema::dropIfExists('extra_tours');
     }
 };

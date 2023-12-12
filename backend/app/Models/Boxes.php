@@ -9,8 +9,7 @@ class Boxes extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'quantity',
-        'clients_tours_id',
+        'quantity_article',
         'article_id',
     ];
 
