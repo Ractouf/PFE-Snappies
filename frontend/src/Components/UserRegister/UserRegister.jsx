@@ -1,6 +1,5 @@
 import {createResource, createSignal} from "solid-js";
-import {redirect} from "@solidjs/router";
-import Button from "../Button/Button";
+import {Navigate, redirect, useNavigate} from "@solidjs/router";
 
 const registerUser = async (email, password, lastname, firstname, phone, is_admin) => {
     const requestBody = JSON.stringify({email, password, lastname, firstname, phone, is_admin});
@@ -12,7 +11,6 @@ const registerUser = async (email, password, lastname, firstname, phone, is_admi
         },
         body: requestBody,
     });
-    console.log(response);
     if (!response.ok) {
         const errorData = await response.json();
         throw new Error(errorData.message);
@@ -23,7 +21,11 @@ const registerUser = async (email, password, lastname, firstname, phone, is_admi
 
 const UserRegister = () => {
 
-    //todo: check if user is logged in as admin or redirect to login page
+    const navigator = useNavigate()
+
+    if ( JSON.parse(localStorage.getItem('user')).is_admin === false ) {
+        return navigator('/login');
+    }
 
     const [password, setPassword] = createSignal('')
     const [passwordConfirm, setPasswordConfirm] = createSignal('')
@@ -39,13 +41,11 @@ const UserRegister = () => {
 
         //check empty fields
         if (email() === '' || password() === '' || lastname() === '' || firstname() === '' || phone() === '') {
-            console.log('All fields are required')
             return "All fields are required"
         }
 
         //check passwords match
         if (password() !== passwordConfirm()) {
-            console.log('Passwords do not match')
             setPassword('')
             setPasswordConfirm('')
             return "Passwords do not match"
@@ -54,7 +54,6 @@ const UserRegister = () => {
         //check mail format
         const mailformat = /\S+@\S+\.\S+/;
         if (!email().match(mailformat)) {
-            console.log('Invalid email format')
             return "Invalid email format"
         }
 
@@ -64,7 +63,6 @@ const UserRegister = () => {
             if (phone().match(/^04\d{8}$/)) {
                 setPhone(`+32${phone().substring(1)}`)
             } else {
-                console.log('Invalid phone number format')
                 return "Invalid phone number format"
             }
         }
@@ -83,8 +81,7 @@ const UserRegister = () => {
 
         try {
             await refetch();
-            console.log('Register successful:', data());
-            redirect(`/users/${data().id}`)
+            navigator('/users/' + data().user.id)
         } catch (error) {
             console.error('Register failed:', error.message);
             setErrorMessage("Register failed")
