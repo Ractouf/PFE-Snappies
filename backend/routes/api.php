@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Route;
 
 // public routes
 Route::post('/login', [UsersController::class, 'login']);
+Route::get('/tours/{tourId}/{deliveryDriverId}/{date}', [ToursBoxesClientsController::class, 'getTour']);
 
 // user protected routes
 Route::group(['middleware' => 'auth:sanctum'], function () {
@@ -25,7 +26,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get('/tours/{date}/{driverId}', [ToursController::class, 'showByDateAndDriver']);
     Route::delete('/tours/{id}', [ToursController::class, 'destroy']);
   
-    Route::get('/tours/{tourId}/{deliveryDriverId}/{date}', [ToursBoxesClientsController::class, 'getTour']);
+
     Route::post('/tours/{typicalTourId}/{tourId}', [ToursBoxesClientsController::class,'createRow']);
   
     Route::get('/articles', [ArticlesController::class, 'index']);

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ClientsTours;
 use App\Models\Tours;
 use App\Models\ToursBoxesClients;
 use App\Models\TypicalTours;
@@ -57,6 +58,7 @@ class ToursBoxesClientsController extends Controller
         $res = ['clients' => []];
         foreach ($toursBoxesClients as $tourBoxClient) {
             $client = $tourBoxClient->client;
+
             if ($client) {
                 $clientId = $client->id;
 
@@ -65,7 +67,8 @@ class ToursBoxesClientsController extends Controller
                         'name' => $client->name,
                         'address' => $client->address,
                         'phone' => $client->phone,
-                        'boxes' => []
+                        'boxes' => [],
+                        'extras' => [],
                     ];
                 }
 
@@ -75,8 +78,25 @@ class ToursBoxesClientsController extends Controller
                     'quantity_article' => $tourBoxClient->boxesClientsTours->box->quantity_article,
                     'article' => $tourBoxClient->boxesClientsTours->box->article->name,
                 ];
+
+                $boxesClientsTours = $tourBoxClient->boxesClientsTours;
+
+                foreach ($boxesClientsTours as $boxClientTour) {
+                    $extrasTours = $boxClientTour->extras;
+                    foreach ($extrasTours as $extraTour) {
+                        $isDelivered = ToursBoxesClients::where('box_id', $extraTour->box_id)->value('is_delivered');
+                        $clientId = $boxClientTour->clientTour->client_id;
+
+                        $res['clients'][$clientId]['extras'][] = [
+                            'is_delivered' => $isDelivered,
+                            'quantity_box' => $extraTour->quantity_box,
+                            'quantity_article' => $extraTour->box->quantity_article,
+                            'article' => $extraTour->box->article->name,
+                        ];
+                    }
+                }
             } else {
-                $res['extra'][] = [
+                $res['rab'][] = [
                     'is_delivered' => $tourBoxClient->is_delivered,
                     'quantity_box' => $tourBoxClient->boxesClientsTours->quantity_box,
                     'quantity_article' => $tourBoxClient->boxesClientsTours->box->quantity_article,
