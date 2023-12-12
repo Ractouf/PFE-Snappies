@@ -22,7 +22,6 @@ class DatabaseSeeder extends Seeder
     {
         TypicalTours::factory(10)->create();
         Users::factory(100)->create();
-        Tours::factory(50)->create();
         Clients::factory(10)->create();
         ClientsTours::factory(10)->create();
         Articles::factory(4)->create();
