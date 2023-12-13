@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Route;
 // public routes
 Route::post('/login', [UsersController::class, 'login']);
 
+
 // user protected routes
 Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::post('/logout', [UsersController::class, 'logout']);
@@ -24,10 +25,11 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get('/tours/{id}', [ToursController::class, 'show']);
     Route::get('/tours/{date}/{driverId}', [ToursController::class, 'showByDateAndDriver']);
     Route::delete('/tours/{id}', [ToursController::class, 'destroy']);
-  
-    Route::get('/tours/{tourId}/{deliveryDriverId}/{date}', [ToursBoxesClientsController::class, 'getTour']);
+
     Route::post('/tours/{typicalTourId}/{tourId}', [ToursBoxesClientsController::class,'createRow']);
-  
+    Route::get('/toursBoxes/{tourId}', [ToursBoxesClientsController::class, 'getTour']);
+    Route::post('/toursBoxes/{tourId}/{clientId}', [ToursBoxesClientsController::class, 'markBoxesAsDelivered']);
+
     Route::get('/articles', [ArticlesController::class, 'index']);
 });
 
