@@ -12,7 +12,7 @@ render(
     () =>
         <Router root={App}>
             <Route path = "/login" component = {Login}/>
-            <Route path = "/:typicalTour/:driver/:date" component = {UsersTours}/>
+            <Route path = "/tours/:tourId" component = {UsersTours}/>
             // change button to something else
             <Route path = "/" component = {Button}/>
         </Router>,

@@ -7,8 +7,8 @@ const UsersTours = () => {
     const [tour, setTour] = createSignal([]);
     const [extraBoxes, setExtraBoxes] = createSignal([]);
 
-    async function fetchTours(tour, driver, date) {
-        const response = await fetch(`http://localhost:8000/api/tours/${tour}/${driver}/${date}`, {
+    async function fetchTours(tour) {
+        const response = await fetch(`http://localhost:8000/api/toursBoxes/${tour}`, {
             method: 'GET',
             headers: {
                 'Authorization': 'Bearer ' + localStorage.getItem('token'),
@@ -18,20 +18,24 @@ const UsersTours = () => {
         if (!response.ok) {
             console.log(`HTTP error! status: ${response.status}`);
         } else {
-            const res = await response.json()
+            const res = await response.json();
             console.log(res)
             setTour(res);
-            setExtraBoxes(res.extra);
+
+            if (res.rab)
+                setExtraBoxes(res.rab);
+            else
+                setExtraBoxes([]);
         }
     }
 
     const params = useParams();
-    onMount(() => fetchTours(params.typicalTour, params.driver, params.date));
+    onMount(() => fetchTours(params.tourId));
 
     return (
         <div class = "clients">
             <For each = {tour().clients}>
-                {client => <ClientRow client = {client} extra = {extraBoxes} setExtra = {setExtraBoxes}/>}
+                {client => <ClientRow client = {client} extra = {extraBoxes} setExtra = {setExtraBoxes} tour = {tour()} fetchTours = {fetchTours}/>}
             </For>
         </div>
     );

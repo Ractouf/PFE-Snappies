@@ -1,6 +1,6 @@
 import {createSignal, createEffect, For} from "solid-js";
 
-const Box = ({ box, extra, setExtra,removeArticle, index }) => {
+const Box = ({ box, extra, setExtra, removeArticle, index, setBoxes }) => {
     const [totalBox, setTotalBox] = createSignal(0);
     const [boxQuantity, setboxQuantity] = createSignal(box.quantity_box);
     const [article, setArticle] = createSignal(box.article);
@@ -36,10 +36,25 @@ const Box = ({ box, extra, setExtra,removeArticle, index }) => {
             const res = 0 - difference;
             setExtra([...extra(), { article: article(), quantity_box: res.toString(), quantity_article: box.quantity_article }]);
         }
+
+        setBoxes(prevBoxes => {
+            const newBoxes = [...prevBoxes];
+            const boxToUpdate = newBoxes.find(b => b.article === article());
+            if (boxToUpdate) {
+                boxToUpdate.quantity_box = newQuantity.toString();
+            }
+            return newBoxes;
+        });
+
+        console.log(extra());
     };
 
     const handleSelectChange = (event) => {
         const selectedArticle = event.target.value;
+
+        if (selectedArticle === article()) {
+            return;
+        }
 
         const newBox = extra().find(ex => ex.article === selectedArticle);
         if (newBox) {
@@ -53,6 +68,10 @@ const Box = ({ box, extra, setExtra,removeArticle, index }) => {
 
             setArticle(newBox.article);
             setboxQuantity("0");
+
+            box.box_id = newBox.box_id;
+            box.article = newBox.article;
+            box.quantity_box = "0";
             box.quantity_article = newBox.quantity_article;
         }
     };
@@ -60,10 +79,10 @@ const Box = ({ box, extra, setExtra,removeArticle, index }) => {
     return (
         <div class = "article">
             <input type="number" min="0" max={totalBox()} value={boxQuantity()} onChange={handleQuantityChange}/>
-            <select onChange={handleSelectChange}>
+            <select onChange={handleSelectChange} value={article()}>
                 <option value={article()}>{article()}</option>
                 <For each = {extra()}>
-                    {b => b.article !== article() && <option value={b.article}>{b.article}</option>}
+                    {b => <option value={b.article}>{b.article}</option>}
                 </For>
             </select>
             <button onClick={() => removeArticle(index())}>-</button>
