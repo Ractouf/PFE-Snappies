@@ -53,6 +53,7 @@ class ToursBoxesClientsController extends Controller
         $toursBoxesClients = $tour->toursBoxesClients;
 
         $res = ['clients' => []];
+        $res['tour_id'] = $tourId;
         foreach ($toursBoxesClients as $tourBoxClient) {
             $client = $tourBoxClient->client;
 
@@ -118,6 +119,7 @@ class ToursBoxesClientsController extends Controller
             $tourBoxClient = ToursBoxesClients::where('client_id', $clientId)
                 ->where('box_id', $boxes['box_id'])
                 ->where('tour_id', $tourId)
+                ->orWhere('tour_id', null)
                 ->where('is_delivered', false)
                 ->first();
 
@@ -164,6 +166,7 @@ class ToursBoxesClientsController extends Controller
                 // met à jour la ligne client boite
                 $tourBoxClient->update(['quantity_box' => $boxes['quantity_box']]);
                 $tourBoxClient->update(['is_delivered' => true]);
+                $tourBoxClient->update(['tour_id' => $tourId]);
             } else {
                 // client demande une NOUVELLE boite en plus
                 $clientDelivered = ToursBoxesClients::where('client_id', $clientId)
