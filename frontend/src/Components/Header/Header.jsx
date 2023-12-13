@@ -10,7 +10,7 @@ const Header = () => {
     return (
         <header>
 
-            <div class="logo"><img src="/src/assets/logo.png" alt="Logo" class="logo-img"/></div>
+            <div class="logo-header"><img src="/src/assets/logo.png" alt="Logo" class="logo-img"/></div>
             <p>Page Name</p>
 
             <input class="side-menu" type="checkbox" id="side-menu"/>
