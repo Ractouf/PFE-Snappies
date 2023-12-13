@@ -8,7 +8,7 @@ function isLoggedIn() {
 const App = props => {
     return (
         <>
-            <Header></Header>
+            {location.pathname !== "/login" && <Header />}
 
             {!isLoggedIn() && <Navigate href="/login" />}
             {props.children}
