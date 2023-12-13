@@ -17,8 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger('client_tour_id');
             $table->unsignedBigInteger('typical_tour_id');
             $table->unsignedBigInteger('box_id');
-            $table->foreign(['client_tour_id', 'typical_tour_id', 'box_id'])->references(['client_tour_id', 'typical_tour_id', 'box_id'])->on('boxes_clients_tours');
-            $table->unique(['typical_tour_id', 'box_id', 'client_tour_id']);
+            $table->foreign(['client_tour_id', 'typical_tour_id', 'box_id'])->references(['client_tour_id', 'typical_tour_id', 'box_id'])->on('boxes_clients_tours');     
         });
     }
 
