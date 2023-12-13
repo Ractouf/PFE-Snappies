@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Route;
 
 // public routes
 Route::post('/login', [UsersController::class, 'login']);
+Route::get('/typical-tours', [TypicalToursController::class, 'getAll']);
 
 // user protected routes
 Route::group(['middleware' => 'auth:sanctum'], function () {
@@ -24,10 +25,10 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get('/tours/{id}', [ToursController::class, 'show']);
     Route::get('/tours/{date}/{driverId}', [ToursController::class, 'showByDateAndDriver']);
     Route::delete('/tours/{id}', [ToursController::class, 'destroy']);
-  
+
     Route::get('/tours/{tourId}/{deliveryDriverId}/{date}', [ToursBoxesClientsController::class, 'getTour']);
-    Route::post('/tours/{typicalTourId}/{tourId}', [ToursBoxesClientsController::class,'createRow']);
-  
+    Route::post('/tours/{typicalTourId}/{tourId}', [ToursBoxesClientsController::class, 'createRow']);
+
     Route::get('/articles', [ArticlesController::class, 'index']);
 });
 
@@ -43,6 +44,7 @@ Route::group(['middleware' => ['auth:sanctum', 'checkRole:admin']], function () 
     Route::patch('/typicalTours/{id}', [TypicalToursController::class, 'update']);
     Route::delete('/typicalTours/{id}', [TypicalToursController::class, 'destroy']);
 
+
     Route::resource('clients', ClientsController::class);
 
     Route::get('/tours', [ToursController::class, 'index']);
@@ -51,6 +53,8 @@ Route::group(['middleware' => ['auth:sanctum', 'checkRole:admin']], function () 
     Route::post('/clientsTours', [ClientsToursController::class, 'store']);
     Route::patch('/clientsTours/{id}', [ClientsToursController::class, 'update']);
     Route::delete('/clientsTours/{id}', [ClientsToursController::class, 'destroy']);
+    Route::get('/clientsTours/getByClientId/{clientId}', [ClientsToursController::class, 'getByClientId']);
+
 
     Route::post('/articles', [ArticlesController::class, 'store']);
     Route::get('/articles/{id}', [ArticlesController::class, 'show']);
