@@ -41,7 +41,7 @@ const Login = () => {
 
     return (
         <div class="login">
-            <img src="/src/assets/logo.png" alt="Logo" className="logo"/>
+            <img src="/src/assets/logo2.png" alt="Logo" className="logo"/>
             <form class="login-form" onSubmit={handleSubmit}>
                 <label>
                     <input class="login-input" placeholder="E-MAIL" type="text" value={email()}
