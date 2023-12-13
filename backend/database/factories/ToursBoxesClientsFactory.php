@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Models\Boxes;
+use App\Models\BoxesClientsTours;
 use App\Models\Clients;
 use App\Models\Tours;
 use App\Models\ToursBoxesClients;
@@ -24,7 +24,7 @@ class ToursBoxesClientsFactory extends Factory
             'is_delivered' => $this->faker->boolean(),
             'client_id' => Clients::inRandomOrder()->value('id'),
             'tour_id' => Tours::inRandomOrder()->value('id'),
-            'box_id' => Boxes::inRandomOrder()->value('id'),
+            'box_client_tour_id' => BoxesClientsTours::inRandomOrder()->value('id'),
         ];
     }
 }

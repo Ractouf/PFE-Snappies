@@ -10,7 +10,7 @@ class ExtraTours extends Model
     use HasFactory;
 
     protected $fillable = [
-        'box_id',
-        'client_tour_id',
+        'quantity_box',
+        'box_client_tour_id'
     ];
 }
