@@ -53,8 +53,10 @@ const ArticleRow = ({ article, setArticles }) => {
             </div>
 
             <form hidden={isFormHidden()} onSubmit={formSubmit}>
-                <input class="articles-add-confirm"type="submit" disabled={isSubmitting()} value ="gucci"/>
-                {isSubmitting() && <p>Envoi...</p>}
+                {!isSubmitting() &&
+                    <input className="articles-add-confirm" type="submit" disabled={isSubmitting()} value="→"/>}
+
+                {isSubmitting() && <img src="/src/assets/loading.gif" alt="chargement" class="load"/>}
 
                 <input class="articles-text-input" type="text" value={inputValue()} oninput={(e) => setInputValue(e.target.value)}/>
 

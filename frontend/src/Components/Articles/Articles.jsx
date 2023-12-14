@@ -62,7 +62,7 @@ const Articles = () => {
     return (
         <div class="articles">
             {loading() ?
-                <p>Chargement ...</p>
+                <div class="load-page"><img src="/src/assets/loading.gif" alt="chargement" className="load"/></div>
                 :
                 articles().length > 0 ?
                     <>
@@ -73,14 +73,16 @@ const Articles = () => {
                     :
                     <p>Aucun article, voulez vous en ajouter ?</p>
             }
-            <button onClick = {toggleForm}>EHEHEHE</button>
-            <form hidden = {isFormVisible()}>
-                <input class="articles-text-input" type="text" value={inputValue()} onInput={(e) => setInputValue(e.target.value)}/>
-                <input onClick={addArticle} type="submit" value="Ajouter un article" disabled={isSubmitting()}/>
-                {isSubmitting() && <p>Envoi...</p>}
+            <button class = "add-article"onClick = {toggleForm}>+</button>
+            <form hidden={isFormVisible()}>
+                    {!isSubmitting() && <input class="articles-add-confirm" onClick={addArticle} type="submit" value="→"
+                                               disabled={isSubmitting()}/>}
+                    {isSubmitting() && <img class = "load" src="/src/assets/loading.gif" alt="envoie"/>}
+                    <input class="articles-text-input" type="text" value={inputValue()}
+                           onInput={(e) => setInputValue(e.target.value)}/>
             </form>
         </div>
-    );
+);
 }
 
 export default Articles;
