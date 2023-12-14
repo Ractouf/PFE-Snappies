@@ -6,7 +6,28 @@
 }
 
 .articles form {
+    padding-left: 16vw;
+    padding-bottom: 2vh;
+    width: 70vw;
+    justify-content: space-between;
+}
 
+.articles input {
+    border: none;
+    border-radius: 5px;
+    padding: 0 5px;
+    height: 30px;
+}
+
+.articles-text-input {
+    width: 40vw;
+    background-color: #BFBEBB;;
+    color: #333333;
+}
+
+.articles-add-confirm {
+    background-color: #25313c;
+    color: white;
 }
 
 .modifier-div {

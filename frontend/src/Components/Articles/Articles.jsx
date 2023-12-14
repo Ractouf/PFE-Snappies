@@ -75,7 +75,7 @@ const Articles = () => {
             }
             <button onClick = {toggleForm}>EHEHEHE</button>
             <form hidden = {isFormVisible()}>
-                <input type="text" value={inputValue()} onInput={(e) => setInputValue(e.target.value)}/>
+                <input class="articles-text-input" type="text" value={inputValue()} onInput={(e) => setInputValue(e.target.value)}/>
                 <input onClick={addArticle} type="submit" value="Ajouter un article" disabled={isSubmitting()}/>
                 {isSubmitting() && <p>Envoi...</p>}
             </form>

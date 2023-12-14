@@ -63,7 +63,9 @@
     color: #333333;
     border-radius: 15px;
     width: 30px;
+    height: 30px;
     background-color: #D97467FF;
+    border: none;
 }
 
 .client-articles {
