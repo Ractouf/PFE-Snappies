@@ -11,7 +11,11 @@ const App = props => {
             {location.pathname !== "/login" && <Header />}
 
             {!isLoggedIn() && <Navigate href="/login" />}
-            {props.children}
+
+            <div class="page">
+                {props.children}
+            </div>
+
         </>
     );
 }
