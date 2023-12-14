@@ -67,7 +67,7 @@ class ToursController extends Controller
             }
         }
 
-        return response()->json($createdRows, 201);
+        return response()->json($tourId, 201);
     }
 
     public function show(string $id)

@@ -1,9 +1,11 @@
 import {createResource} from 'solid-js';
 import {useNavigate} from "@solidjs/router";
 import {API_BASE_URL} from "../../config";
+import button from "../Button/Button";
 
 const TypicalTour = () => {
     const navigate = useNavigate();
+    const user = JSON.parse(localStorage.getItem('user'));
 
     const fetchTours = async () => {
         const tours = await fetch(`${API_BASE_URL}/typicalTours`, {
@@ -22,19 +24,21 @@ const TypicalTour = () => {
     }
 
     const handleClick = async (idTournee) => {
-        const user = JSON.parse(localStorage.getItem('user'));
 
         const userId = user.id
 
         if (user.is_admin) {
-            navigate(`${API_BASE_URL}/${idTournee}`);
+            //ToDo changer vers le bonne url
+            console.log("is admin");
+            //navigate(`/${idTournee}`);
         } else {
-            const requestBody = JSON.stringify({userId, idTournee});
+            const requestBody = JSON.stringify({delivery_driver_id: userId, typical_tour_id: idTournee});
 
             const linkDeliveryDriverTours = await fetch(`${API_BASE_URL}/tours`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
                 },
                 body: requestBody,
             })
@@ -44,9 +48,8 @@ const TypicalTour = () => {
                 throw new Error(errorData.message);
             }
 
-            const rep = await  linkDeliveryDriverTours.json();
-            console.log(rep)
-            //navigate(`/tours/${}`)
+            const rep = await linkDeliveryDriverTours.json();
+            navigate(`/tours/${rep.id}`)
         }
     }
 
@@ -58,15 +61,16 @@ const TypicalTour = () => {
             {!tours.loading ?
                 <ul>
                     {tours().map((item) => (
-                        <li>
-                            <h4 onClick={() => handleClick(item.id)}>
-                                {item.name}
-                            </h4>
+                        <li onClick={() => handleClick(item.id)}>
+                            <h4>{item.name}</h4>
+                            {user.is_admin ?
+                                <button> modfier </button> :
+                                <button> selectionner </button>}
                         </li>
                     ))}
                 </ul>
                 :
-                <h1 class = "loading"> Chargement...</h1>
+                <h1 class="loading"> Chargement...</h1>
             }
         </div>
     )
