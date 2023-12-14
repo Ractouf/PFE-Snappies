@@ -55,15 +55,18 @@ const TypicalTour = () => {
 
     return (
         <div>
-            <h2>Choix tournée</h2>
             {!tours.loading ?
                 <ul>
                     {tours().map((item) => (
-                        <li onClick={() => handleClick(item.id)}>
-                            <h4>{item.name}</h4>
-                            {user.is_admin ?
-                                <button> modfier </button> :
-                                <button> selectionner </button>}
+                        <li class="article-row" onClick={() => handleClick(item.id)}>
+                            <div class="article-content">
+                                {user.is_admin ?
+                                    <div class="modifier-div">
+                                        <button> modifier</button>
+                                    </div> :
+                                    <button> selectionner </button>}
+                                <h2>{item.name}</h2>
+                            </div>
                         </li>
                     ))}
                 </ul>
