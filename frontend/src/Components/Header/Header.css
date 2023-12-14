@@ -5,10 +5,14 @@
 
 header{
     background-color: #25313c;
-    position: sticky;
+    position: fixed;
     height: 10vh;
     width: 100%;
     display: flex;
+}
+
+.page {
+    padding-top: 10vh;
 }
 
 header p{

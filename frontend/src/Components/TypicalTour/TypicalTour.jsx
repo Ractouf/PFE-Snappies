@@ -62,7 +62,7 @@ const TypicalTour = () => {
                             <div class="article-content">
                                 {user.is_admin ?
                                     <div class="modifier-div">
-                                        <button> modifier</button>
+                                        <button> Modifier</button>
                                     </div> :
                                     <button> selectionner </button>}
                                 <h2>{item.name}</h2>
