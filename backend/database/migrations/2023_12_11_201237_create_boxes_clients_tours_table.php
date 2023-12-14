@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->double('quantity_box');
             $table->unsignedBigInteger('client_tour_id')->nullable();
-            $table->foreign('client_tour_id')->references('id')->on('clients_tours');
+            $table->foreign('client_tour_id')->references('id')->on('clients_tours')->onDelete('cascade');
             $table->unsignedBigInteger('typical_tour_id')->nullable();
             $table->foreign('typical_tour_id')->references('id')->on('typical_tours');
             $table->unsignedBigInteger('box_id');

@@ -89,6 +89,33 @@ const ModifyClient = () => {
     await response.json();
 
     if (parseInt(selectedTour()) !== 0) {
+      if (clientTours() === 0) {
+        try {
+          const bodyContent = JSON.stringify({
+            client_id: clientId.toString(),
+            typical_tour_id: selectedTour().toString(),
+          });
+  
+          const toursResponse = await fetch('http://localhost:8000/api/clientsTours', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': 'Bearer ' + localStorage.getItem('token'),
+            },
+            body: bodyContent,
+          });
+  
+          if (!toursResponse.ok) {
+            console.log(`HTTP error! status: ${toursResponse.status}`);
+          }
+  
+          const toursData = await toursResponse.json();
+  
+          console.log('Clients Tours created successfully:', toursData);
+      } catch (error) {
+        console.error(errorMessage || 'Error in API request:', error);
+      }
+      } else {
       const bodyContent = JSON.stringify({
         client_id: clientId.toString(),
         typical_tour_id: selectedTour().toString(),
@@ -102,9 +129,26 @@ const ModifyClient = () => {
         },
         body: bodyContent,
       });
-    } else {
-      //delete if exists
+    }
+    } else 
+    {
+      try {
+        const token = localStorage.getItem('token');
+        const response = await fetch (`http://localhost:8000/api/clientsTours/${clientId}`, {
+          method: 'DELETE',
+          headers: {
+            'Authorization': 'Bearer ' + token,
+          },
+        });
 
+        if (response.ok) {
+          return await response.json();
+        } else {
+          console.error('HTTP Error');
+        }
+      } catch (error) {
+        console.error(errorMessage || 'Error in API request:', error);
+      }
     }
 
     setIsSubmitting(false);

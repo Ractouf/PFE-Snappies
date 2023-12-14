@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Route;
 
 // public routes
 Route::post('/login', [UsersController::class, 'login']);
+Route::delete('/clientsTours/{id}', [ClientsToursController::class, 'destroy']);
 
 // user protected routes
 Route::group(['middleware' => 'auth:sanctum'], function () {
@@ -51,7 +52,7 @@ Route::group(['middleware' => ['auth:sanctum', 'checkRole:admin']], function () 
 
     Route::post('/clientsTours', [ClientsToursController::class, 'store']);
     Route::patch('/clientsTours/{id}', [ClientsToursController::class, 'update']);
-    Route::delete('/clientsTours/{id}', [ClientsToursController::class, 'destroy']);
+
     Route::get('/clientsTours/getByClientId/{clientId}', [ClientsToursController::class, 'getByClientId']);
 
 
