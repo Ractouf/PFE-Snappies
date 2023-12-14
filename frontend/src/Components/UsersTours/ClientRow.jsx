@@ -89,8 +89,8 @@ const ClientRow = ({ client, extra, setExtra, tour, fetchTours }) => {
                     <div class = "client-confirmation">
                         {!allBoxesDelivered &&
                             <>
-                                <button onClick={addArticle}>Ajouter un article</button>
-                                <button onClick={deliverClient}>Confirmer</button>
+                                <button class="add" onClick={addArticle}>+</button>
+                                <button class="confirm-add" onClick={deliverClient}>Confirmer</button>
                             </>
                         }
                     </div>

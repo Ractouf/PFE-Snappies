@@ -9,6 +9,7 @@
 
 .clients {
     background-color: #FFF9EFFF;
+    color: #333333;
 }
 
 .client {
@@ -18,9 +19,13 @@
     width: 100vw;
 }
 
+.adress {
+    color: #D97467FF;
+}
+
 .client-info {
-    width: 72vw;
-    margin-right: 0.6vw;
+    width: 68vw;
+    margin-right: 4.6vw;
 }
 
 .client-check {
@@ -29,12 +34,36 @@
 }
 
 .client-details {
-    margin-block: 10px;
-    margin-inline: 50px;
+    margin-left: 16vw;
+    border-top: 1px solid #D97467FF;
+    width: 68vw;
+    padding-top: 2vh;
+    padding-bottom: 2vh;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 20px;
+}
+
+.client-details input, .client-details select, .client-details button{
+    border: none;
+    text-align: center;
+}
+
+.client-details input, .client-details select {
+    border-radius: 5px;
+    background-color: #BFBEBB;
+}
+
+.client-details select {
+    width: 40vw;
+    color: #333333;
+}
+
+.remove-btn {
+    color: #333333;
+    border-radius: 15px;
+    width: 30px;
+    background-color: #D97467FF;
 }
 
 .client-articles {
@@ -50,6 +79,26 @@
     width: 100%;
 }
 
+.client-confirmation button{
+    margin-top: 10px;
+}
+
+.add {
+    width: 40px;
+    font-size: 25px;
+    font-weight: normal;
+    color: #333333;
+    background-color: rgb(0,0,0,0%);
+}
+
+.confirm-add {
+    background-color: #25313c;
+    color: white;
+    padding-left: 5px;
+    padding-right: 5px;
+    border-radius: 5px;
+}
+
 .delivered {
     display:block;
     margin:auto;
@@ -63,11 +112,8 @@
 .article input {
     width: 40px;
     height: 30px;
-}
+    color: #333333;
 
-.article button {
-    width: 40px;
-    height: 30px;
 }
 
 .google-maps-logo {
@@ -92,7 +138,7 @@
     margin: auto;
     height: 21px;
     width: 25px;
-    background-color: rgb(217,116,103);
+    background-color: #D97467FF;
     border-radius: 5px;
     padding-top: 4px;
 }

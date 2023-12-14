@@ -85,7 +85,7 @@ const Box = ({ box, extra, setExtra, removeArticle, index, setBoxes }) => {
                     {b => <option value={b.article}>{b.article}</option>}
                 </For>
             </select>
-            <button onClick={() => removeArticle(index())}>-</button>
+            <button class="remove-btn" onClick={() => removeArticle(index())}>X</button>
         </div>
     )
 };

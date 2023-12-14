@@ -13,7 +13,7 @@ const Client = ({ client }) => {
             </div>
             <div class="client-info">
                 <h3>{client.name}</h3>
-                <h4>{client.address}</h4>
+                <h4 class="adress">{client.address}</h4>
             </div>
             <img onClick = {() => goToMaps(client.address)} class = "google-maps-logo" src = "/src/assets/googleMaps.png" alt = "maps"/>
         </div>
