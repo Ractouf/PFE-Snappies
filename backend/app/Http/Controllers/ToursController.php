@@ -89,4 +89,25 @@ class ToursController extends Controller
     {
         return Tours::destroy($id);
     }
+
+    public function getAvailableTour()
+    {
+        $typicalTours = TypicalTours::all();
+        // get the typical_tour_id of the tours of today
+        $tours = Tours::where('date', date('d/m/y'))->get();
+        $typicalToursId = [];
+        foreach ($tours as $tour) {
+            $typicalToursId[] = $tour->typical_tour_id;
+        }
+
+        $availableTours = [];
+
+        foreach ($typicalTours as $typicalTour) {
+            if (!in_array($typicalTour->id, $typicalToursId)) {
+                $availableTours[] = $typicalTour;
+            }
+        }
+
+        return $availableTours;
+    }
 }
