@@ -10,7 +10,8 @@ class BoxesController extends Controller
 {
     public function index()
     {
-        return Boxes::all();
+        $allboxes = Boxes::with('article')->get();
+        return $allboxes;
     }
 
     public function store(Request $request)
