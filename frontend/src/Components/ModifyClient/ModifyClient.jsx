@@ -152,6 +152,7 @@ const ModifyClient = () => {
     }
 
     setIsSubmitting(false);
+    navigate('/clients');
   };
 
   return (

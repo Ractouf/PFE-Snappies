@@ -8,8 +8,8 @@ import Login from "./Components/Login/Login";
 import Button from "./Components/Button/Button";
 import UsersTours from "./Components/UsersTours/UsersTours";
 import Client from './Components/Clients/Clients';
-import ClientList from './ClientsList/ClientsList';
-import ModifyClient from './ModifyClient/ModifyClient';
+import ClientList from './Components/ClientsList/ClientsList';
+import ModifyClient from './Components/ModifyClient/ModifyClient';
 
 render(
     () =>
