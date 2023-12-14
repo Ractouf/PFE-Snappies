@@ -157,24 +157,20 @@ const ModifyClient = () => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <label>
-        Client:
-        <input type="text" value={name()} onInput={(e) => setName(e.target.value)}/>
-      </label>
-      <label>
-        Adresse:
-        <input type="text" value={address()} onInput={(e) => setAddress(e.target.value)}/>
-      </label>
-      <label>
-        Téléphone:
-        <input type="text" value={phone()} onInput={(e) => setPhone(e.target.value)}/>
-      </label>
+
+      <input placeholder="nom" type="text" value={name()} onInput={(e) => setName(e.target.value)}/>
+
+
+      <input placeholder="adresse" type="text" value={address()} onInput={(e) => setAddress(e.target.value)}/>
+
+
+      <input placeholder="téléphone" type="text" value={phone()} onInput={(e) => setPhone(e.target.value)}/>
 
 
       <div>
         {!toursByClient.loading ?
-          <>
-            <label for = "tour">Tournée: </label>
+            <>
+              <label for="tour">Tournée: </label>
               {tours.loading ?
                 <span>Loading...</span>
               :

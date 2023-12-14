@@ -37,28 +37,31 @@ const ClientList = () => {
   };
 
   return (
-    <>
-      <div>
-        <h2>Client List</h2>
-        <button onClick={handleAddClientClick}>Add Client</button>
+    <div class = "clients">
+      {clients.loading &&
+          <div className="load-page"><img src="/src/assets/loading.gif" alt="chargement..." className="load"/></div>}
+      <For each={clients()}>
+        {(client) =>
+            <div class="article-row">
+            <div class = "article-content">
+              <div class="modifier-div">
+                <button onClick={() => handleModifyClientClick(client.id)}>
+                  Modify
+                </button>
+              </div>
+              <div class="client-info">
+                <p>{client.name}</p>
+                <p class = "adress">{client.address}</p>
+                <p>{client.phone}</p>
+              </div>
+            </div>
+          </div>
+        }
+      </For>
 
-        <ul>
-          {clients.loading && <p>Loading...</p>}
-          <For each={clients()}>
-            {(client) =>
-                <li>
-                  <strong>Name:</strong> {client.name}, <strong>Address:</strong> {client.address},{' '}
-                  <strong>Phone:</strong> {client.phone}
-                  <button onClick={() => handleModifyClientClick(client.id)}>
-                    Modify
-                  </button>
-                </li>
-            }
-          </For>
-        </ul>
-      </div>
-    </>
-  );
+      <button className="add-article" onClick={handleAddClientClick}>+</button>
+    </div>
+);
 };
 
 export default ClientList;

@@ -86,27 +86,23 @@ const Client = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label>
-        Client:
-        <input type="text" value={name()} onInput={(e) => setName(e.target.value)}/>
-      </label>
-      <label>
-        Adresse:
-        <input type="text" value={address()} onInput={(e) => setAddress(e.target.value)}/>
-      </label>
-      <label>
-        Téléphone:
-        <input type="text" value={phone()} onInput={(e) => setPhone(e.target.value)}/>
-      </label>
+    <form class = "clients-add" onSubmit={handleSubmit}>
+
+      <input placeholder = "nom" type="text" value={name()} onInput={(e) => setName(e.target.value)}/>
+
+
+      <input placeholder = "adresse" type="text" value={address()} onInput={(e) => setAddress(e.target.value)}/>
+
+
+      <input placeholder = "téléphone" type="text" value={phone()} onInput={(e) => setPhone(e.target.value)}/>
+
 
       <div>
-        <label for = "tour">Select a Typical Tour (Optional): </label>
         {toursResource.loading ?
-            <span>Loading...</span>
-        :
-          <select value={selectedTour()} onChange={(e) => setSelectedTour(e.target.value)}>
-            <option value = {0}>Aucun tour</option>
+            <div class = "client-tours-load"><img src="/src/assets/loading.gif" alt="chargement..." className="load"/></div>
+            :
+            <select value={selectedTour()} onChange={(e) => setSelectedTour(e.target.value)}>
+            <option value = {0}>Select a Typical Tour (Optional)</option>
             <For each = {toursResource()}>
               {tour => <option value={tour.id}>{tour.name}</option>}
             </For>
@@ -114,7 +110,7 @@ const Client = () => {
         }
       </div>
 
-      <button type="submit" disabled = {isSubmitting()}>Create Client</button>
+      <button class = "confirm-add" type="submit" disabled = {isSubmitting()}>Ajouter Client</button>
       {isSubmitting() && <span>Envoi...</span>}
     </form>
   );
