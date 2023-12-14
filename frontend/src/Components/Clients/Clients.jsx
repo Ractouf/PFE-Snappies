@@ -1,11 +1,12 @@
-import { createSignal, createResource } from 'solid-js';
+import {createResource, createSignal, For} from 'solid-js';
 import './Client.css';
 
 const Client = () => {
   const [name, setName] = createSignal('');
   const [address, setAddress] = createSignal('');
   const [phone, setPhone] = createSignal('');
-  const [selectedTour, setSelectedTour] = createSignal('');
+  const [selectedTour, setSelectedTour] = createSignal(0);
+  const [isSubmitting, setIsSubmitting] = createSignal(false);
 
   const fetchTours = async () => {
     const response = await fetch(`http://localhost:8000/api/typicalTours`, {
@@ -18,33 +19,25 @@ const Client = () => {
     if (!response.ok) {
       console.log(`HTTP error! status: ${response.status}`);
     } else {
-      const data = await response.json();
-      console.log(data);
-      return data;
+      return await response.json();
     }
   }
 
   const fetchClient = async (clientData) => {
-    try {
-        const response = await fetch('http://localhost:8000/api/clients', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + localStorage.getItem('token'),
-          },
-          body: JSON.stringify(clientData),
-        });
-  
-        if (!response.ok) {
-          console.log(`HTTP error! status: ${response.status}`);
-        } else {
-          const responseData = await response.json();
-          console.log('Client created successfully:', responseData);
-          return responseData;
-        }
-      } catch (error) {
-        console.error('Error submitting form:', error);
-      }
+    const response = await fetch('http://localhost:8000/api/clients', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + localStorage.getItem('token'),
+      },
+      body: JSON.stringify(clientData),
+    });
+
+    if (!response.ok) {
+      console.log(`HTTP error! status: ${response.status}`);
+    } else {
+      return await response.json();
+    }
   }
 
   const [toursResource] = createResource(fetchTours);
@@ -57,101 +50,72 @@ const Client = () => {
       address: address(),
       phone: phone(),
     };
-  
-    try {
-      const res = await fetchClient(clientData);
-      const clientId = res.id;
-  
-      console.log(res.id);
-  
-      if (selectedTour() !== '') {
-        const bodyContent = JSON.stringify({
-          client_id: clientId.toString(),
-          typical_tour_id: selectedTour().toString(),
-        });
-  
-        const toursResponse = await fetch('http://localhost:8000/api/clientsTours', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + localStorage.getItem('token'),
-          },
-          body: bodyContent,
-        });
 
-        console.log("fdsfsdf");
-        if (!toursResponse.ok) {
-          console.log(`HTTP error! status: ${toursResponse.status}`);
-          throw new Error('Error creating client tours');
-        }
-        
-        const toursData = await toursResponse.json();
-        
-        console.log('Clients Tours created successfully:', toursData);
+    const res = await fetchClient(clientData);
+    const clientId = res.id;
+
+    if (parseInt(selectedTour()) !== 0) {
+      const bodyContent = JSON.stringify({
+        client_id: clientId.toString(),
+        typical_tour_id: selectedTour().toString(),
+      });
+
+      const toursResponse = await fetch('http://localhost:8000/api/clientsTours', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + localStorage.getItem('token'),
+        },
+        body: bodyContent,
+      });
+
+      if (!toursResponse.ok) {
+        console.log(`HTTP error! status: ${toursResponse.status}`);
       }
-  
-      // Reset form fields
-      setName('');
-      setAddress('');
-      setPhone('');
-      setSelectedTour('');
-  
-    } catch (error) {
-      console.error('Error creating client:', error);
+
+      const toursData = await toursResponse.json();
+
+      console.log('Clients Tours created successfully:', toursData);
     }
+
+    // Reset form fields
+    setName('');
+    setAddress('');
+    setPhone('');
+    setSelectedTour('');
   };
 
   return (
     <form onSubmit={handleSubmit}>
+      <label>
+        Client:
+        <input type="text" value={name()} onInput={(e) => setName(e.target.value)}/>
+      </label>
+      <label>
+        Adresse:
+        <input type="text" value={address()} onInput={(e) => setAddress(e.target.value)}/>
+      </label>
+      <label>
+        Téléphone:
+        <input type="text" value={phone()} onInput={(e) => setPhone(e.target.value)}/>
+      </label>
+
       <div>
-        <label htmlFor="name">Name:</label>
-        <input
-          type="text"
-          id="name"
-          value={name()}
-          onInput={(e) => setName(e.target.value)}
-        />
-      </div>
-      <div>
-        <label htmlFor="address">Address:</label>
-        <input
-          type="text"
-          id="address"
-          value={address()}
-          onInput={(e) => setAddress(e.target.value)}
-        />
-      </div>
-      <div>
-        <label htmlFor="phone">Phone:</label>
-        <input
-          type="text"
-          id="phone"
-          value={phone()}
-          onInput={(e) => setPhone(e.target.value)}
-        />
-      </div>
-      <div>
-        <label htmlFor="tour">Select a Typical Tour (Optional): </label>
-        {toursResource.loading ? (
-          <span>Loading...</span>
-        ) : (
-          <select
-            id="tour"
-            value={selectedTour()}
-            onChange={(e) => setSelectedTour(e.target.value)}
-          >
-            <option value="">Select a tour</option>
-            {toursResource().map((tour) => (
-              <option key={tour.id} value={tour.id}>
-                {tour.name}
-              </option>
-            ))}
+        <label for = "tour">Select a Typical Tour (Optional): </label>
+        {toursResource.loading ?
+            <span>Loading...</span>
+        :
+          <select value={selectedTour()} onChange={(e) => setSelectedTour(e.target.value)}>
+            <option value = {0}>Aucun tour</option>
+            <For each = {toursResource()}>
+              {tour => <option value={tour.id}>{tour.name}</option>}
+            </For>
           </select>
-        )}
+        }
       </div>
-      <div>
-        <button type="submit">Create Client</button>
-      </div>
+
+      <button type="submit" disabled = {isSubmitting()}>Create Client</button>
+      {isSubmitting() && <span>Envoi...</span>}
     </form>
   );
 };

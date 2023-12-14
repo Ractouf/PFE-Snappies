@@ -35,9 +35,9 @@ class ClientsToursController extends Controller
         try {
             $clientsTours = ClientsTours::where('client_id', $clientId)->first();
             if (!$clientsTours) {
-                return response()->json(['message' => 'ClientsTours record not found', 'data' => false], 200);
+                return response()->json(['message' => 'ClientsTours record not found', 'data' => false]);
             }
-            return response()->json(['message' => 'ClientsTours record found', 'data' => true], 200);
+            return response()->json(['message' => 'ClientsTours record found', 'data' => true, $clientsTours]);
         } catch (\Exception $e) {
             return response()->json(['message' => 'Error fetching ClientsTours data', 'error' => $e->getMessage()], 500);
         }
