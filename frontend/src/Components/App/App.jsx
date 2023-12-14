@@ -1,5 +1,4 @@
 import Header from "../Header/Header";
-import Footer from "../Footer/Footer";
 import {Navigate} from "@solidjs/router";
 
 function isLoggedIn() {
@@ -9,12 +8,10 @@ function isLoggedIn() {
 const App = props => {
     return (
         <>
-            <Header></Header>
+            {location.pathname !== "/login" && <Header />}
 
             {!isLoggedIn() && <Navigate href="/login" />}
             {props.children}
-
-            <Footer></Footer>
         </>
     );
 }

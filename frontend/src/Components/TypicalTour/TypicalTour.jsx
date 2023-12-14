@@ -22,11 +22,12 @@ const TypicalTour = () => {
 
     const handleClick = async (idTournee) => {
         const user = localStorage.getItem('user');
-        const navigate = useNavigate()
-        const userId = user.id
+        const navigate = useNavigate();
+        const userId = user.id;
 
         if (user.is_admin) {
-            navigate(`${API_BASE_URL}/${idTournee}`)
+            console.log("admin");
+            //navigate(`/${idTournee}`)
         } else {
             const requestBody = JSON.stringify({userId, idTournee});
 
@@ -43,7 +44,9 @@ const TypicalTour = () => {
                 throw new Error(errorData.message);
             }
 
-            navigate(`${API_BASE_URL}/${idTournee}/${userId}/${Date.now()}`)
+            const rep = await  linkDeliveryDriverTours.json();
+            console.log(rep)
+            //navigate(`/tours/${}`)
         }
     }
 
@@ -56,9 +59,9 @@ const TypicalTour = () => {
                 <ul>
                     {tours().map((item) => (
                         <li>
-                            <a href="#" onClick={() => handleClick(item.id)}>
+                            <h4 onClick={() => handleClick(item.id)}>
                                 {item.name}
-                            </a>
+                            </h4>
                         </li>
                     ))}
                 </ul>
