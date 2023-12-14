@@ -17,10 +17,9 @@ class ToursBoxesClientsController extends Controller
     public function store(Request $request)
     {
         $fields = $request->validate([
-            'is_delivered' => 'required|boolean',
-            'tour_id' => 'required|string',
             'client_id' => 'required|string',
             'box_id' => 'required|string',
+            'quantity_box' => 'required|integer',
         ]);
 
         return ToursBoxesClients::create($fields);

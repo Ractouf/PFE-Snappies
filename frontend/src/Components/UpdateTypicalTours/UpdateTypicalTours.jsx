@@ -207,8 +207,7 @@ const addExtra = (clientTourBox) => {
         })
 
         if (response.ok) {
-            console.log(response)
-            //window.location.reload();
+            window.location.reload();
         } else {
             throw new Error("Something went wrong");
         }
