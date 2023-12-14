@@ -3,6 +3,7 @@ import {useNavigate} from "@solidjs/router";
 import {API_BASE_URL} from "../../config";
 
 const TypicalTour = () => {
+    const navigate = useNavigate();
 
     const fetchTours = async () => {
         const tours = await fetch(`${API_BASE_URL}/typicalTours`, {
@@ -21,12 +22,12 @@ const TypicalTour = () => {
     }
 
     const handleClick = async (idTournee) => {
-        const user = localStorage.getItem('user');
-        const navigate = useNavigate()
+        const user = JSON.parse(localStorage.getItem('user'));
+
         const userId = user.id
 
         if (user.is_admin) {
-            navigate(`${API_BASE_URL}/${idTournee}`)
+            navigate(`${API_BASE_URL}/${idTournee}`);
         } else {
             const requestBody = JSON.stringify({userId, idTournee});
 
