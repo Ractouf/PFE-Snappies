@@ -11,13 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tours_boxes_clients', function (Blueprint $table) {
-            $table->increments('id');
-            $table->boolean('is_delivered')->default(false);
-            $table->unsignedBigInteger('tour_id');
-            $table->foreign('tour_id')->references('id')->on('tours');
-            $table->unsignedBigInteger('client_id')->nullable();
-            $table->foreign('client_id')->references('id')->on('clients');
+        Schema::create('boxes_clients_tours', function (Blueprint $table) {
+            $table->id();
+            $table->double('quantity_box');
+            $table->unsignedBigInteger('client_tour_id')->nullable();
+            $table->foreign('client_tour_id')->references('id')->on('clients_tours');
+            $table->unsignedBigInteger('typical_tour_id')->nullable();
+            $table->foreign('typical_tour_id')->references('id')->on('typical_tours');
             $table->unsignedBigInteger('box_id');
             $table->foreign('box_id')->references('id')->on('boxes');
             $table->timestamps();
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tours_boxes_clients');
+        Schema::dropIfExists('boxes_clients_tours');
     }
 };

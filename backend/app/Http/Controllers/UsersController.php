@@ -26,7 +26,13 @@ class UsersController extends Controller
             'password' => 'required',
         ]);
 
-        $user = Users::create($fields);
+        $user = Users::create([
+            'firstname' => $fields['firstname'],
+            'lastname' => $fields['lastname'],
+            'phone' => $fields['phone'],
+            'email' => $fields['email'],
+            'password' => bcrypt($fields['password']),
+        ]);
 
         $token = $user->createToken('myapptoken')->plainTextToken;
 

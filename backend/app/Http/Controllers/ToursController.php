@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Tours;
+use App\Models\ToursBoxesClients;
+use App\Models\TypicalTours;
 use Illuminate\Http\Request;
 
 class ToursController extends Controller
@@ -21,11 +23,49 @@ class ToursController extends Controller
             'typical_tour_id' => 'required',
         ]);
 
-        return Tours::create([
-            'date' => date('d/m/y'),
-            'delivery_driver_id' => $fields['delivery_driver_id'],
-            'typical_tour_id' => $fields['typical_tour_id'],
+        $tourId = Tours::create([
+                  'date' => date('d/m/y'),
+                  'delivery_driver_id' => $fields['delivery_driver_id'],
+                  'typical_tour_id' => $fields['typical_tour_id'],
+                  ]);
+
+        $typicalTour = TypicalTours::find($fields['typical_tour_id']);
+
+        $boxesClientsTours = $typicalTour->boxesClientsTours;
+
+        $createdRows = [];
+        foreach ($boxesClientsTours as $boxClientTour) {
+            $clientTour = $boxClientTour->clientTour;
+            $clientId = null;
+            if ($clientTour) {
+                $clientId = $clientTour->client_id;
+            }
+
+            $createdRow = ToursBoxesClients::create([
+                'tour_id' => $tourId,
+                'client_id' => $clientId,
+                'box_id' => $boxClientTour->box_id
             ]);
+
+            $createdRows[] = $createdRow;
+        }
+
+        $clientTours = $typicalTour->clientsTours;
+        foreach ($clientTours as $clientTour) {
+            $boxes = $clientTour->boxesClientsTours;
+
+            foreach ($boxes as $box) {
+                $createdRow = ToursBoxesClients::create([
+                    'tour_id' => $tourId,
+                    'client_id' => $clientTour->id,
+                    'box_id' => $box->box_id
+                ]);
+
+                $createdRows[] = $createdRow;
+            }
+        }
+
+        return response()->json($createdRows, 201);
     }
 
     public function show(string $id)

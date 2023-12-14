@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::create('clients_tours', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedBigInteger('client_id');
-            $table->unsignedBigInteger('tour_id');
+            $table->unsignedBigInteger('typical_tour_id');
             $table->foreign('client_id')->references('id')->on('clients');
-            $table->foreign('tour_id')->references('id')->on('typical_tours');
-            $table->unique(['client_id', 'tour_id']);
+            $table->foreign('typical_tour_id')->references('id')->on('typical_tours');
+            $table->unique(['client_id', 'typical_tour_id']);
             $table->timestamps();
         });
     }
