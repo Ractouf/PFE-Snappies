@@ -46,7 +46,9 @@ const ArticleRow = ({ article, setArticles }) => {
     return (
         <div class="article-row">
             <div class="article-content">
-                <button onClick={modifyArticle}>Modifier</button>
+                <di class="modifier-div">
+                    <button onClick={modifyArticle}>Modifier</button>
+                </di>
                 <h2>{article.name}</h2>
             </div>
 

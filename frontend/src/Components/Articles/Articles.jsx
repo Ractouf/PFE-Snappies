@@ -57,7 +57,7 @@ const Articles = () => {
     return (
         <div class="articles">
             {loading() ?
-                <h2>Chargement ...</h2>
+                <p>Chargement ...</p>
                 :
                 articles().length > 0 ?
                     <>
@@ -66,7 +66,7 @@ const Articles = () => {
                         </For>
                     </>
                     :
-                    <h2>Aucun article, voulez vous en ajouter ?</h2>
+                    <p>Aucun article, voulez vous en ajouter ?</p>
             }
             <form>
                 <input type="text" value={inputValue()} onInput={(e) => setInputValue(e.target.value)}/>

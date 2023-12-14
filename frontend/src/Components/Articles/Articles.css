@@ -1,11 +1,34 @@
 .article-content {
     display: flex;
-    gap: 40px;
     align-items: center;
-
-    padding: 20px;
+    padding: 1vh 0;
+    color: #333333;
 }
 
-.article-row:nth-child(odd) {
-    background-color: #f2f2f2;
+.articles form {
+
+}
+
+.modifier-div {
+    width: 14vw;
+    margin: 2vh 1vw;
+}
+
+.modifier-div button {
+    background-color: #25313c;
+    color: white;
+    padding: 7px 5px;
+    border: none;
+    border-radius: 5px;
+    font-size: 10px;
+    display: block;
+    margin: auto;
+}
+
+.article-row:nth-child(even) {
+    background-color: #EBE5DB;
+}
+
+.article-row {
+    background-color: #FFF9EFFF;
 }
