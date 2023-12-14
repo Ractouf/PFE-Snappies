@@ -28,9 +28,7 @@ const TypicalTour = () => {
         const userId = user.id
 
         if (user.is_admin) {
-            //ToDo changer vers le bonne url
-            console.log("is admin");
-            //navigate(`/${idTournee}`);
+            navigate(`/UpdateTypicalTour/${idTournee}`);
         } else {
             const requestBody = JSON.stringify({delivery_driver_id: userId, typical_tour_id: idTournee});
 
