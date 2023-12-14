@@ -7,6 +7,7 @@ const Articles = () => {
     const [articles, setArticles] = createSignal([]);
     const [loading, setLoading] = createSignal(true);
     const [isSubmitting, setSubmitting] = createSignal(false);
+    const [isFormVisible, setFormVisible] = createSignal(true);
 
     async function fetchArticles() {
         const response = await fetch(`http://localhost:8000/api/articles`, {
@@ -54,6 +55,10 @@ const Articles = () => {
 
     onMount(fetchArticles);
 
+    function toggleForm() {
+        setFormVisible(!isFormVisible());
+    }
+
     return (
         <div class="articles">
             {loading() ?
@@ -68,7 +73,8 @@ const Articles = () => {
                     :
                     <p>Aucun article, voulez vous en ajouter ?</p>
             }
-            <form>
+            <button onClick = {toggleForm}>EHEHEHE</button>
+            <form hidden = {isFormVisible()}>
                 <input type="text" value={inputValue()} onInput={(e) => setInputValue(e.target.value)}/>
                 <input onClick={addArticle} type="submit" value="Ajouter un article" disabled={isSubmitting()}/>
                 {isSubmitting() && <p>Envoi...</p>}
