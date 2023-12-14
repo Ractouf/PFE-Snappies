@@ -6,6 +6,7 @@ import ClientRow from "./ClientRow";
 const UsersTours = () => {
     const [tour, setTour] = createSignal([]);
     const [extraBoxes, setExtraBoxes] = createSignal([]);
+    const [isLoading, setIsLoading] = createSignal(true);
 
     async function fetchTours(tour) {
         const response = await fetch(`http://localhost:8000/api/toursBoxes/${tour}`, {
@@ -19,13 +20,14 @@ const UsersTours = () => {
             console.log(`HTTP error! status: ${response.status}`);
         } else {
             const res = await response.json();
-            console.log(res)
             setTour(res);
 
             if (res.rab)
                 setExtraBoxes(res.rab);
             else
                 setExtraBoxes([]);
+
+            setIsLoading(false);
         }
     }
 
@@ -34,9 +36,13 @@ const UsersTours = () => {
 
     return (
         <div class = "clients">
-            <For each = {tour().clients}>
-                {client => <ClientRow client = {client} extra = {extraBoxes} setExtra = {setExtraBoxes} tour = {tour()} fetchTours = {fetchTours}/>}
-            </For>
+            {isLoading() ?
+                <div class="load-page"><img src="/src/assets/loading.gif" alt="chargement..." class="load"/></div>
+                :
+                <For each={tour().clients}>
+                    {client => <ClientRow client = {client} extra = {extraBoxes} setExtra = {setExtraBoxes} tour = {tour()} fetchTours = {fetchTours}/>}
+                </For>
+            }
         </div>
     );
 }

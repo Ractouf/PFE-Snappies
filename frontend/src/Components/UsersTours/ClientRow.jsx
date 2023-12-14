@@ -5,6 +5,7 @@ import Box from "./Box";
 const ClientRow = ({ client, extra, setExtra, tour, fetchTours }) => {
     const [boxes, setBoxes] = createSignal(client.boxes);
     const [showArticles, setShowArticles] = createSignal(false);
+    const [isSubmitted, setIsSubmitted] = createSignal(false);
 
     const toggleArticles = () => {
         setShowArticles(!showArticles());
@@ -23,7 +24,7 @@ const ClientRow = ({ client, extra, setExtra, tour, fetchTours }) => {
 
     const removeArticle = (index) => {
         const removedBox = boxes()[index];
-        setBoxes(boxes().filter((_, i) => i !== index));
+        console.log(removedBox)
 
         if (removedBox.article !== undefined) {
             const extraBox = extra().find(box => box.article === removedBox.article);
@@ -33,11 +34,15 @@ const ClientRow = ({ client, extra, setExtra, tour, fetchTours }) => {
                 setExtra([...extra(), removedBox]);
             }
         }
+        console.log(extra())
+
+        setBoxes(boxes().filter((_, i) => i !== index));
     };
 
     const allBoxesDelivered = client.boxes.every(box => box.is_delivered);
 
     async function deliverClient() {
+        setIsSubmitted(true);
         const combinedArray = [...boxes(), ...client.extras];
 
         const boxesToDeliver = combinedArray.map(box => {
@@ -61,7 +66,9 @@ const ClientRow = ({ client, extra, setExtra, tour, fetchTours }) => {
         });
 
         await response.json();
-        fetchTours(tour.tour_id);
+        await fetchTours(tour.tour_id);
+
+        setIsSubmitted(false);
     }
 
     return (
@@ -89,7 +96,9 @@ const ClientRow = ({ client, extra, setExtra, tour, fetchTours }) => {
                         {!allBoxesDelivered &&
                             <>
                                 <button class="add" onClick={addArticle}>+</button>
-                                <button class="confirm-add" onClick={deliverClient}>Confirmer</button>
+                                {!isSubmitted() && <button class="confirm-add" onClick={deliverClient} disabled = {isSubmitted()}>Confirmer</button>}
+                                {isSubmitted() &&
+                                    <div class="confirm-check"><img src="/src/assets/loading.gif" alt="chargement..." class="load"/></div>}
                             </>
                         }
                     </div>
