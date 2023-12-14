@@ -11,18 +11,34 @@ const TypicalTour = () => {
     const [tourName, setTourName] = createSignal();
 
     const fetchTours = async () => {
-        const tours = await fetch(`${API_BASE_URL}/typicalTours`, {
-            method: 'GET',
-            headers: {
-                'Authorization': `Bearer ${localStorage.getItem('token')}`,
-            },
-        })
+        if (user.is_admin) {
+            const tours = await fetch(`${API_BASE_URL}/typicalTours`, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                },
+            })
 
-        if (!tours.ok) {
-            const errorData = await tours.json();
-            throw new Error(errorData.message);
+            if (!tours.ok) {
+                const errorData = await tours.json();
+                throw new Error(errorData.message);
+            } else {
+                return await tours.json();
+            }
         } else {
-            return await tours.json();
+            const tours = await fetch(`${API_BASE_URL}/tours/available`, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                },
+            })
+
+            if (!tours.ok) {
+                const errorData = await tours.json();
+                throw new Error(errorData.message);
+            } else {
+                return await tours.json();
+            }
         }
     }
 
@@ -30,7 +46,8 @@ const TypicalTour = () => {
         setFormVisible(!isFormVisible());
     }
 
-    const createTour = async () => {
+    const createTour = async (e) => {
+        e.preventDefault();
         const requestBody = JSON.stringify({name: tourName()});
 
         const createTypicalTour = await fetch(`${API_BASE_URL}/typicalTours`, {
@@ -105,7 +122,7 @@ const TypicalTour = () => {
                 <div>
                     <button class = "add-article" onClick={toggleForm}>+</button>
                     <form hidden={!isFormVisible()}>
-                        <button className="articles-add-confirm" onClick={() => createTour()}>→</button>
+                        <button className="articles-add-confirm" onClick={createTour}>→</button>
                         <input class="articles-text-input" type="text" placeholder="Nom de la tournée"
                                onInput={(e) => setTourName(e.target.value)}/>
 
