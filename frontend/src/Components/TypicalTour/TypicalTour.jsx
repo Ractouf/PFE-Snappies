@@ -6,6 +6,7 @@ import button from "../Button/Button";
 const TypicalTour = () => {
     const navigate = useNavigate();
     const user = JSON.parse(localStorage.getItem('user'));
+    const [isSubmitting, setSubmitting] = createSignal(false);
     const [isFormVisible, setFormVisible] = createSignal(false);
     const [tourName, setTourName] = createSignal();
 
@@ -81,7 +82,7 @@ const TypicalTour = () => {
     const [tours] = createResource(fetchTours);
 
     return (
-        <div>
+        <div class = "articles">
             {!tours.loading ?
                 <ul>
                     {tours().map((item) => (
@@ -98,15 +99,16 @@ const TypicalTour = () => {
                     ))}
                 </ul>
                 :
-                <h1 class="loading"> Chargement...</h1>
+                <div className="load-page"><img src="/src/assets/loading.gif" alt="chargement" className="load"/></div>
             }
             {user.is_admin && (
                 <div>
-                    <button onClick={toggleForm}>Ajouter tournée</button>
+                    <button class = "add-article" onClick={toggleForm}>+</button>
                     <form hidden={!isFormVisible()}>
-                        <input id="nameTour" type="text" placeholder="Nom de la tournée" onInput={(e) => setTourName(e.target.value)}
-                        />
-                        <button onClick={() => createTour()}>Confirmer</button>
+                        <button className="articles-add-confirm" onClick={() => createTour()}>→</button>
+                        <input class="articles-text-input" type="text" placeholder="Nom de la tournée"
+                               onInput={(e) => setTourName(e.target.value)}/>
+
                     </form>
                 </div>
             )}
