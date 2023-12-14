@@ -21,9 +21,9 @@ class TypicalToursController extends Controller
         return TypicalTours::create($fields);
     }
 
-    public function showByName(string $name)
+    public function getOne(string $id)
     {
-        $typicalTour = TypicalTours::where('name', $name)->first();
+        $typicalTour = TypicalTours::find($id);
 
         if (!$typicalTour) {
             return response()->json([

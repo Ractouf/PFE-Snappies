@@ -18,16 +18,16 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::post('/logout', [UsersController::class, 'logout']);
 
     Route::get('/typicalTours', [TypicalToursController::class, 'index']);
-    Route::get('/typicalTours/{name}', [TypicalToursController::class, 'showByName']);
+    Route::get('/typicalTours/{id}', [TypicalToursController::class, 'getOne']);
 
     Route::post('/tours', [ToursController::class, 'store']);
     Route::get('/tours/{id}', [ToursController::class, 'show']);
     Route::get('/tours/{date}/{driverId}', [ToursController::class, 'showByDateAndDriver']);
     Route::delete('/tours/{id}', [ToursController::class, 'destroy']);
-  
+
     Route::get('/tours/{tourId}/{deliveryDriverId}/{date}', [ToursBoxesClientsController::class, 'getTour']);
     Route::post('/tours/{typicalTourId}/{tourId}', [ToursBoxesClientsController::class,'createRow']);
-  
+
     Route::get('/articles', [ArticlesController::class, 'index']);
 });
 
