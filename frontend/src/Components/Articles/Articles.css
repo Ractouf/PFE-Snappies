@@ -1,0 +1,84 @@
+.article-content {
+    display: flex;
+    align-items: center;
+    padding: 1vh 0;
+    color: #333333;
+}
+
+.articles form {
+    padding-left: 16vw;
+    padding-bottom: 2vh;
+    width: 70vw;
+    justify-content: space-between;
+}
+
+.articles input {
+    border: none;
+    padding: 0 5px;
+    height: 30px;
+}
+
+.articles-text-input {
+    border-radius: 5px;
+    margin: 0 2vw;
+    width: 40vw;
+    background-color: #BFBEBB;;
+    color: #333333;
+}
+
+.articles-add-confirm {
+    background-color: #25313c;
+    color: white;
+    width: 30px;
+    border-radius: 15px;
+}
+
+.load-page {
+    width: 30px;
+    height: 30px;
+    margin: auto;
+    padding: 30px 0;
+}
+
+.load {
+    float:left;
+    width: 30px;
+    align-items: center;
+    position: relative;
+}
+
+
+.modifier-div {
+    width: 14vw;
+    margin: 2vh 1vw;
+}
+
+.add-article {
+    width: 50vw;
+    margin: 0 25vw;
+    font-size: 25px;
+    font-weight: normal;
+    color: #333333;
+    background-color: rgb(0,0,0,0%);
+    border: none;
+    text-align: center;
+}
+
+.modifier-div button {
+    background-color: #25313c;
+    color: white;
+    padding: 7px 5px;
+    border: none;
+    border-radius: 5px;
+    font-size: 10px;
+    display: block;
+    margin: auto;
+}
+
+.article-row:nth-child(even) {
+    background-color: #EBE5DB;
+}
+
+.article-row {
+    background-color: #FFF9EFFF;
+}

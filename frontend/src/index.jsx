@@ -7,6 +7,7 @@ import { Router, Route } from "@solidjs/router";
 import Login from "./Components/Login/Login";
 import Button from "./Components/Button/Button";
 import UsersTours from "./Components/UsersTours/UsersTours";
+import Articles from "./Components/Articles/Articles";
 import Client from './Components/Clients/Clients';
 import ClientList from './Components/ClientsList/ClientsList';
 import ModifyClient from './Components/ModifyClient/ModifyClient';
@@ -15,7 +16,8 @@ render(
     () =>
         <Router root={App}>
             <Route path = "/login" component = {Login}/>
-            <Route path = "/:typicalTour/:driver/:date" component = {UsersTours}/>
+            <Route path = "/tours/:tourId" component = {UsersTours}/>
+            <Route path = "/articles" component = {Articles}/>
             // change button to something else
             <Route path = "/" component = {Button}/>
             <Route path = "/addClient" component = {Client}/>

@@ -40,19 +40,23 @@ const Login = () => {
     };
 
     return (
-        <div class = "login">
+        <div class="login">
+            <img src="/src/assets/logo2.png" alt="Logo" className="logo"/>
             <form class="login-form" onSubmit={handleSubmit}>
-                <h2>Login</h2>
-
                 <label>
-                    <input placeholder = "E-mail" type="text" value={email()} onInput={(e) => setEmail(e.target.value)}/>
+                    <input class="login-input" placeholder="E-MAIL" type="text" value={email()}
+                           onInput={(e) => setEmail(e.target.value)}/>
                 </label>
                 <label>
-                    <input placeholder = "Password" type="password" value={password()} onInput={(e) => setPassword(e.target.value)}/>
+                    <input class="login-input" placeholder="MOT DE PASSE" type="password" value={password()}
+                           onInput={(e) => setPassword(e.target.value)}/>
                 </label>
 
-                <input type="submit" />
+                <input class="submit" type="submit" value="CONNEXION"/>
             </form>
+            <footer className="footer-container">
+                <p>&copy; {new Date().getFullYear()} Snappies. All rights reserved.</p>
+            </footer>
         </div>
     );
 };
