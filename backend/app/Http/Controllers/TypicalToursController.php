@@ -36,6 +36,7 @@ class TypicalToursController extends Controller
         $typicalTourRes = [];
         foreach ($clientsTours as $clientsTour) {
             $client = $clientsTour->client;
+            $tourBoxClient = $client->toursBoxesClients->box;
 
             $boxesClientsTours = $clientsTour->boxesClientsTours;
 
@@ -54,7 +55,7 @@ class TypicalToursController extends Controller
             ];
         }
 
-        return $typicalTourRes;
+        return $test;
     }
 
     public function update(Request $request, string $id)

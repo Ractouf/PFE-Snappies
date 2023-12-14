@@ -13,4 +13,9 @@ class Clients extends Model
         'address',
         'phone',
     ];
+
+    public function toursBoxesClients()
+    {
+        return $this->hasMany(ToursBoxesClients::class, 'client_id');
+    }
 }

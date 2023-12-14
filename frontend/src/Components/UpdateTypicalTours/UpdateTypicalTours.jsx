@@ -62,7 +62,7 @@ const UpdateTypicalTours = () => {
                 :
                 <>
                     <For each={tour()}>
-                        {clientTourBox => <ClientTour tourId = {clientTourBox.id} client = {clientTourBox.client} clientBoxes = {clientTourBox.client.boxes} boxes = {boxes()} fetchData = {fetchData}/>}
+                        {clientTourBox => <ClientTour tourId = {clientTourBox.id} client = {clientTourBox.client} clientBoxes = {clientTourBox.client.boxes} existingBoxes= {boxes()} fetchData = {fetchData}/>}
                     </For>
                 </>
             }

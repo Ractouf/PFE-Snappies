@@ -1,10 +1,11 @@
 import Boxes from "./Boxes";
 import { createSignal, For } from "solid-js";
 
-const ClientTour = ({ tourId, client, clientBoxes, boxes, fetchData }) => {
+const ClientTour = ({ tourId, client, clientBoxes, existingBoxes, fetchData }) => {
     const [isFormHidden, setIsFormHidden] = createSignal(true);
     const [nbBoxes, setNbBoxes] = createSignal("0");
     const [boxId, setBoxId] = createSignal("0");
+    const [boxes, setBoxes] = createSignal(clientBoxes);
 
     const goToMaps = (address) => {
         window.location.href = `https://www.google.com/maps/dir/?api=1&destination=${address}&travelmode:driving`
@@ -18,7 +19,7 @@ const ClientTour = ({ tourId, client, clientBoxes, boxes, fetchData }) => {
         e.preventDefault();
 
         if (nbBoxes() !== "0" || boxId() !== "0") {
-            await fetch("http://localhost:8000/api/boxesClientsTours/box", {
+            const resp = await fetch("http://localhost:8000/api/boxesClientsTours/box", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -31,7 +32,7 @@ const ClientTour = ({ tourId, client, clientBoxes, boxes, fetchData }) => {
                 })
             });
 
-            await fetchData();
+            setBoxes([...boxes(), await resp.json()]);
         }
     }
 
@@ -47,9 +48,9 @@ const ClientTour = ({ tourId, client, clientBoxes, boxes, fetchData }) => {
                     "Authorization": `Bearer ${localStorage.getItem("token")}`,
                 },
                 body: JSON.stringify({
-                    client_id: client.id,
-                    box_id: boxId(),
-                    quantity_box: nbBoxes(),
+                    client_id: client.id.toString(),
+                    box_id: boxId().toString(),
+                    quantity_box: nbBoxes().toString(),
                 })
             });
 
@@ -62,7 +63,7 @@ const ClientTour = ({ tourId, client, clientBoxes, boxes, fetchData }) => {
             <h2>{client.name}</h2>
             <img onClick={() => goToMaps(client.address)} class = "google-maps-logo" src = "/src/assets/googleMaps.png" alt = "maps"/>
 
-            <Boxes clientBoxes = {clientBoxes} fetchData = {fetchData}/>
+            <Boxes boxes = {boxes} setBoxes = {setBoxes} clientId = {client.id}/>
 
             <button onClick = {toggleForm}>+</button>
 
@@ -71,7 +72,7 @@ const ClientTour = ({ tourId, client, clientBoxes, boxes, fetchData }) => {
 
                 <select onChange={(e) => setBoxId(e.target.value)}>
                     <option value="0">Choisir une boite</option>
-                    <For each={boxes}>
+                    <For each={existingBoxes}>
                         {box => <option value={box.id}>{box.quantity_article}x {box.article.name}</option>}
                     </For>
                 </select>

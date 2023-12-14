@@ -16,7 +16,10 @@ class BoxesClientsToursController extends Controller
             'quantity_box' => 'required',
         ]);
 
-        return BoxesClientsTours::create($fields);
+        $created = BoxesClientsTours::create($fields);
+
+        $created->load('box.article');
+        return $created;
     }
 
     public function storeRab(Request $request)

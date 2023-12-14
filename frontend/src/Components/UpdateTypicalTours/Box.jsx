@@ -1,8 +1,9 @@
-import { createSignal, For, onMount } from "solid-js";
+import { createSignal } from "solid-js";
 
-const Box = ({ box, fetchData }) => {
+const Box = ({ box, deleteBox, clientId }) => {
     const [isFormHidden, setIsFormHidden] = createSignal(true);
     const [boxQuantity, setBoxQuantity] = createSignal(box.quantity_box);
+    const [currentBox, setCurrentBox] = createSignal(box);
 
     const toggleForm = () => {
         setIsFormHidden(!isFormHidden());
@@ -12,6 +13,8 @@ const Box = ({ box, fetchData }) => {
         e.preventDefault();
 
         if (boxQuantity() !== "0") {
+            setCurrentBox(b => ({...b, quantity_box: boxQuantity()}));
+
             await fetch(`http://localhost:8000/api/boxesClientsTours/${box.id}`, {
                 method: "PATCH",
                 headers: {
@@ -21,41 +24,46 @@ const Box = ({ box, fetchData }) => {
                 body: JSON.stringify({
                     quantity_box: boxQuantity(),
                 })
-            })
-
-            await fetchData();
+            });
         }
     }
 
-    async function deleteBox(e) {
+    async function updateOnce(e) {
         e.preventDefault();
 
-        await fetch(`http://localhost:8000/api/boxesClientsTours/${box.id}`, {
-            method: "DELETE",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${localStorage.getItem("token")}`,
-            },
-        });
-
-        await fetchData();
+        const diff = parseInt(boxQuantity()) - parseInt(currentBox().quantity_box);
+        if (boxQuantity() !== "0") {
+            await fetch(`http://localhost:8000/api/toursBoxesClients`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${localStorage.getItem("token")}`,
+                },
+                body: JSON.stringify({
+                    quantity_box: diff.toString(),
+                    box_id: currentBox().box.id.toString(),
+                    client_id: clientId.toString(),
+                })
+            });
+        }
     }
 
     return (
         <>
             <button onClick = {toggleForm}>Update box</button>
             <p>
-                {box.box.quantity_article}x {box.box.article.name} : {box.quantity_box}
+                {currentBox().box.quantity_article}x {currentBox().box.article.name} : {currentBox().quantity_box}
             </p>
 
             <form hidden={isFormHidden()}>
-                <input type="submit" onClick = {updateForever}/>
+                <input type="submit" onClick = {updateForever} value = "forever"/>
+                <input type="submit" onClick = {updateOnce} value = "once"/>
 
                 <input type="number" value={boxQuantity()} onInput={(e) => setBoxQuantity(e.target.value)}/>
 
-                <p>{box.box.article.name}</p>
+                <p>{currentBox().box.article.name}</p>
 
-                <button onClick={(e) => deleteBox(e, box)}>Delete box</button>
+                <button onClick={(e) => deleteBox(e, currentBox())}>Delete box</button>
             </form>
         </>
     );
