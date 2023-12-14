@@ -51,30 +51,30 @@ const BoxRow = ({ box, articles, setBoxes }) => {
     }
 
     return (
-        <div class = "box-row">
-            <div class = "box-content">
-                <div class="modify-box">
-                    <button onClick = {modifyBox}>Modifier</button>
+        <div class = "article-row">
+            <div class="article-content">
+                <div class="modifier-div">
+                    <button onClick={modifyBox}>Modifier</button>
                 </div>
 
-                <h2>{box.quantity_article}</h2>
-                <h2>{box.article.name}</h2>
+                <h2 class = "boxes-name">{box.article.name}</h2>
+                <h2 class = "boxes-amount">{box.quantity_article}</h2>
             </div>
 
-            <form hidden = {isFormHidden()} onSubmit = {formSubmit}>
-                {!isSubmitting() && <input type = "submit" disabled = {isSubmitting()} value="→"/>}
+            <form hidden={isFormHidden()} onSubmit= {formSubmit}>
+                {!isSubmitting() && <input class = "articles-add-confirm" type = "submit" disabled = {isSubmitting()} value="→"/>}
 
-                {isSubmitting() && <p>Chargement...</p>}
+                {isSubmitting() && <img src="/src/assets/loading.gif" alt="chargement..." className="load"/>}
 
-                <input min = "0" type = "number" value={quantity()} oninput={(e) => setQuantity(e.target.value)}/>
+                <input class = "articles-number-input" min="0" type="number" value={quantity()} oninput={(e) => setQuantity(e.target.value)}/>
 
-                <select value = {name()} onchange={(e) => { setName(e.target.value); setArticleName(e.target.options[e.target.selectedIndex].text) }}>
+                <select class="boxes-text-input" value = {name()} onchange={(e) => { setName(e.target.value); setArticleName(e.target.options[e.target.selectedIndex].text) }}>
                     <For each = {articles()}>
                         {article => <option value = {article.id}>{article.name}</option>}
                     </For>
                 </select>
 
-                <button onClick = {deleteBox}>X</button>
+                <button class = "remove-btn" onClick = {deleteBox}>X</button>
             </form>
         </div>
     )

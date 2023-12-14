@@ -84,28 +84,28 @@ const Boxes = () => {
     }
 
     return (
-        <div class="boxes">
+        <div class="articles">
             {loading() ?
-                <p>chargement...</p>
+                <div className="load-page"><img src="/src/assets/loading.gif" alt="chargement..." className="load"/></div>
                 :
                 boxes().length > 0 ?
                     <>
-                        <For each={boxes()}>
+                    <For each={boxes()}>
                             {box => <BoxRow box={box} articles={articles} setBoxes={setBoxes}/>}
                         </For>
                     </>
                     : <p>Vous n'avez pas encore de boites</p>
             }
 
-            <button onClick={toggleForm}>+</button>
+            <button class = "add-article" onClick={toggleForm}>+</button>
 
             <form hidden={isFormVisible()} onSubmit = {addBox}>
-                <input type = "submit" disabled = {isSubmitting()}/>
+                {!isSubmitting() && <input class = "articles-add-confirm" type = "submit" value="→" disabled = {isSubmitting()}/>}
 
-                {isSubmitting() && <p>Chargement...</p>}
-                <input type = "number" min = "1" value = {quantiteArticle()} onInput={(e) => setQuantiteArticle(e.target.value)}/>
+                {isSubmitting() && <img className="load" src="/src/assets/loading.gif" alt="envoie"/>}
+                <input class="articles-number-input" type="number" min = "1" value = {quantiteArticle()} onInput={(e) => setQuantiteArticle(e.target.value)}/>
 
-                <select disabled = {isSubmitting()} value = {idArticle()} onchange={(e) => setIdArticle(e.target.value)}>
+                <select class="articles-text-input" disabled = {isSubmitting()} value = {idArticle()} onchange={(e) => setIdArticle(e.target.value)}>
                     <For each = {articles()}>
                         {article => <option value = {article.id}>{article.name}</option>}
                     </For>

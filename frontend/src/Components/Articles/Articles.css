@@ -22,8 +22,39 @@
     border-radius: 5px;
     margin: 0 2vw;
     width: 40vw;
+    height: 30px;
     background-color: #BFBEBB;;
     color: #333333;
+    border: none;
+}
+
+.boxes-name {
+    width: 70.9vw;
+}
+
+.boxes-amount {
+    width: 10vw;
+    text-align: center;
+    color: #D97467FF;
+}
+
+.boxes-text-input {
+    border-radius: 5px;
+    margin: 0 2vw;
+    width: 30vw;
+    height: 30px;
+    background-color: #BFBEBB;;
+    color: #333333;
+    border: none;
+}
+
+.articles-number-input {
+    border-radius: 5px;
+    margin: 0 2vw;
+    width: 5vw;
+    background-color: #BFBEBB;;
+    color: #333333;
+    text-align: center;
 }
 
 .articles-add-confirm {

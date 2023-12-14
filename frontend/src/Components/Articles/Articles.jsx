@@ -62,7 +62,7 @@ const Articles = () => {
     return (
         <div class="articles">
             {loading() ?
-                <div class="load-page"><img src="/src/assets/loading.gif" alt="chargement" className="load"/></div>
+                <div class="load-page"><img src="/src/assets/loading.gif" alt="chargement..." className="load"/></div>
                 :
                 articles().length > 0 ?
                     <>
