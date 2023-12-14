@@ -14,6 +14,7 @@ class ToursBoxesClients extends Model
         'tour_id',
         'client_id',
         'box_id',
+        'quantity_box'
     ];
 
     public function tour()
