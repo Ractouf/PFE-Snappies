@@ -46,16 +46,21 @@ const ArticleRow = ({ article, setArticles }) => {
     return (
         <div class="article-row">
             <div class="article-content">
-                <button onClick={modifyArticle}>Modifier</button>
+                <di class="modifier-div">
+                    <button onClick={modifyArticle}>Modifier</button>
+                </di>
                 <h2>{article.name}</h2>
             </div>
 
             <form hidden={isFormHidden()} onSubmit={formSubmit}>
-                <input type="text" value={inputValue()} oninput={(e) => setInputValue(e.target.value)}/>
-                <input type="submit" disabled={isSubmitting()}/>
-                {isSubmitting() && <p>Envoi...</p>}
+                {!isSubmitting() &&
+                    <input className="articles-add-confirm" type="submit" disabled={isSubmitting()} value="→"/>}
 
-                <button onClick={deleteArticle}>Supprimer</button>
+                {isSubmitting() && <img src="/src/assets/loading.gif" alt="chargement" class="load"/>}
+
+                <input class="articles-text-input" type="text" value={inputValue()} oninput={(e) => setInputValue(e.target.value)}/>
+
+                <button class = "remove-btn" onClick={deleteArticle}>X</button>
             </form>
         </div>
     );
