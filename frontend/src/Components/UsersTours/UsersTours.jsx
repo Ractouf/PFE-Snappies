@@ -37,9 +37,9 @@ const UsersTours = () => {
     return (
         <div class = "clients">
             {isLoading() ?
-                <div class = "loading">Chargement...</div>
+                <div class="load-page"><img src="/src/assets/loading.gif" alt="chargement..." class="load"/></div>
                 :
-                <For each = {tour().clients}>
+                <For each={tour().clients}>
                     {client => <ClientRow client = {client} extra = {extraBoxes} setExtra = {setExtraBoxes} tour = {tour()} fetchTours = {fetchTours}/>}
                 </For>
             }

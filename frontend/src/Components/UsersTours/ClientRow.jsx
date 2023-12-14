@@ -96,8 +96,9 @@ const ClientRow = ({ client, extra, setExtra, tour, fetchTours }) => {
                         {!allBoxesDelivered &&
                             <>
                                 <button class="add" onClick={addArticle}>+</button>
-                                <button class="confirm-add" onClick={deliverClient} disabled = {isSubmitted()}>Confirmer</button>
-                                {isSubmitted() && <div class = "loading">Chargement...</div>}
+                                {!isSubmitted() && <button class="confirm-add" onClick={deliverClient} disabled = {isSubmitted()}>Confirmer</button>}
+                                {isSubmitted() &&
+                                    <div class="confirm-check"><img src="/src/assets/loading.gif" alt="chargement..." class="load"/></div>}
                             </>
                         }
                     </div>
