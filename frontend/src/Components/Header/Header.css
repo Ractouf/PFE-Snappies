@@ -1,12 +1,129 @@
-header {
-    background-color: #f5f1e4;
-    padding: 10px;
-    display: flex;
-    align-items: center;
+*{
+    font-weight: bold;
+    list-style-type: none
 }
 
-.logo {
-    max-height: 80px;
-    margin-right: 10px;
+header{
+    background-color: #25313c;
+    position: sticky;
+    height: 10vh;
+    width: 100%;
+    display: flex;
 }
-  
+
+header p{
+    color: white;
+    padding-top: 3.5vh;
+    width: 73vw;
+    overflow: hidden;
+}
+
+/* Logo */
+.logo-header{
+    width: 14vw;
+    margin: 2vh 1vw;
+}
+
+.logo-img{
+    width: 6vh;
+    display:block;
+    margin:auto;
+}
+
+a{
+    text-decoration: none;
+}
+
+/* Nav menu */
+.nav{
+    margin-top: 10vh;
+    width: 100vw;
+    max-height: 0;
+    transition: max-height .5s ease-out;
+    position: fixed;
+    background-color: #25313c;
+    overflow: hidden;
+    border-top: 1px solid #353d48;
+}
+
+.menu {
+    padding-bottom: 10px;
+}
+
+.menu a, .menu p{
+    display: block;
+    padding: 10px 10px 10px 16vw;
+    color: white;
+    width: 84.8vw;
+}
+
+
+
+
+
+
+
+
+.hamb{
+    margin: 5vh 2vw 5vh 0vw;
+}
+.hamb-line {
+    background: white;
+    display: block;
+    height: 2px;
+    position: relative;
+    width: 24px;
+
+}
+.hamb-line::before,
+.hamb-line::after{
+    background: white;
+    content: '';
+    display: block;
+    height: 100%;
+    position: absolute;
+    transition: all .2s ease-out;
+    width: 100%;
+}
+.hamb-line::before{
+    top: 5px;
+}
+.hamb-line::after{
+    top: -5px;
+}
+.side-menu {
+    display: none;
+}
+/* Toggle menu icon */
+.side-menu:checked ~ nav{
+    max-height: 100%;
+}
+.side-menu:checked ~ .hamb .hamb-line {
+    background: transparent;
+}
+.side-menu:checked ~ .hamb .hamb-line::before {
+    transform: rotate(-45deg);
+    top:0;
+}
+.side-menu:checked ~ .hamb .hamb-line::after {
+    transform: rotate(45deg);
+    top:0;
+}
+
+/* Sub nav */
+.subnav{
+    transition: max-height .5s ease-out;
+}
+.subnav-content {
+    background-color: #353d48;
+    width: 100%;
+    z-index: 1;
+    display: none;
+}
+.subnav-content a {
+    color: white;
+    text-decoration: none;
+}
+.subnav:hover .subnav-content {
+    display: block;
+}

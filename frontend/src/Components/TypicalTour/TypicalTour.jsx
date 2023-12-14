@@ -44,7 +44,9 @@ const TypicalTour = () => {
                 throw new Error(errorData.message);
             }
 
-            navigate(`${API_BASE_URL}/${idTournee}/${userId}/${Date.now()}`)
+            const rep = await  linkDeliveryDriverTours.json();
+            console.log(rep)
+            //navigate(`/tours/${}`)
         }
     }
 
@@ -57,9 +59,9 @@ const TypicalTour = () => {
                 <ul>
                     {tours().map((item) => (
                         <li>
-                            <a href="#" onClick={() => handleClick(item.id)}>
+                            <h4 onClick={() => handleClick(item.id)}>
                                 {item.name}
-                            </a>
+                            </h4>
                         </li>
                     ))}
                 </ul>
