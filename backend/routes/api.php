@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\ArticlesController;
-use App\Http\Controllers\BoxesClientsToursController;
 use App\Http\Controllers\BoxesController;
 use App\Http\Controllers\ClientsController;
 use App\Http\Controllers\ClientsToursController;
@@ -26,8 +25,9 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get('/tours/{date}/{driverId}', [ToursController::class, 'showByDateAndDriver']);
     Route::delete('/tours/{id}', [ToursController::class, 'destroy']);
 
-    Route::get('/tours/{tourId}/{deliveryDriverId}/{date}', [ToursBoxesClientsController::class, 'getTour']);
     Route::post('/tours/{typicalTourId}/{tourId}', [ToursBoxesClientsController::class,'createRow']);
+    Route::get('/toursBoxes/{tourId}', [ToursBoxesClientsController::class, 'getTour']);
+    Route::post('/toursBoxes/{tourId}/{clientId}', [ToursBoxesClientsController::class, 'markBoxesAsDelivered']);
 
     Route::get('/articles', [ArticlesController::class, 'index']);
 });

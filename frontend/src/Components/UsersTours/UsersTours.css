@@ -1,90 +1,174 @@
-.loading {
+.nth:nth-child(even) {
+    background-color: #EBE5DB;
+}
+
+.clients {
+    display: flex;
+    flex-direction: column;
+}
+
+.clients {
+    background-color: #FFF9EFFF;
+    color: #333333;
+}
+
+.client {
+    display: flex;
+    align-items: center;
+    padding: 2vh 0;
+    width: 100vw;
+}
+
+.adress {
+    color: #D97467FF;
+}
+
+.client-info {
+    width: 68vw;
+    margin-right: 4.6vw;
+}
+
+.client-check {
+    width: 14vw;
+    margin: 2vh 1vw;
+}
+
+.client-details {
+    margin-left: 16vw;
+    border-top: 1px solid #D97467FF;
+    width: 68vw;
+    padding-top: 2vh;
+    padding-bottom: 2vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.client-details input, .client-details select, .client-details button{
+    border: none;
     text-align: center;
 }
 
-.client-row:nth-child(even) {
-    background-color: lightgray;
+.client-details input, .client-details select {
+    border-radius: 5px;
+    background-color: #BFBEBB;
 }
 
-.hidden {
-    display: none;
+.client-details select {
+    width: 40vw;
+    color: #333333;
 }
 
-.validate {
-    position: fixed;
-    top: 0;
-    left: 0;
-    background-color: rgba(0, 0, 0, 0.4);
-    width: 100%;
-    height: 100%;
-    z-index: 100;
+.remove-btn {
+    color: #333333;
+    border-radius: 15px;
+    width: 30px;
+    height: 30px;
+    background-color: #D97467FF;
+    border: none;
 }
 
-.validate-form {
-    position: fixed;
-    top: 20%;
-    background-color: tomato;
-    padding-block: 30px;
-    padding-inline: 50px;
+.client-articles {
     display: flex;
     flex-direction: column;
     gap: 10px;
+    width: 100%;
 }
 
-.boxes {
+.client-confirmation {
     display: flex;
-    flex-direction: column;
-    gap: 5px;
+    justify-content: space-between;
+    width: 100%;
 }
 
-.article h3 {
-    padding-block: 5px;
+.client-confirmation button{
+    margin-top: 10px;
+}
+
+.add {
+    width: 40px;
+    font-size: 25px;
+    font-weight: normal;
+    color: #333333;
+    background-color: rgb(0,0,0,0%);
+}
+
+.confirm-add {
+    background-color: #25313c;
+    color: white;
+    padding-left: 5px;
+    padding-right: 5px;
+    border-radius: 5px;
+}
+
+.confirm-check {
+    width: 30px;
+    height: 30px;
+    margin-top: 10px;
+    margin-right: 18px;
+}
+
+.delivered {
+    display:block;
+    margin:auto;
 }
 
 .article {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    gap: 20px;
 }
 
 .article input {
     width: 40px;
-    height: 25px;
-}
-
-.article select {
-    width: 100px;
     height: 30px;
-}
+    color: #333333;
 
-.article button {
-    width: 30px;
-    height: 30px;
-}
-
-.client-row:after {
-    position: absolute;
-    content: '';
-    border-bottom: 1px solid tomato;
-    width: calc(100% - 20px);
-    right: 10px;
-}
-
-.client-row-item {
-    display: flex;
-    gap: 10px;
-    align-items: center;
-    padding-block: 20px;
-    margin-inline: 10px;
-}
-
-.confirm {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
 }
 
 .google-maps-logo {
     max-height: 30px;
+}
+
+.extra {
+    color: crimson;
+}
+
+.client-check input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+.checkmark {
+    display: block;
+    margin: auto;
+    height: 21px;
+    width: 25px;
+    background-color: #D97467FF;
+    border-radius: 5px;
+    padding-top: 4px;
+}
+
+.client-check input:checked ~ .checkmark {
+    background-color: #25313c;
+}
+
+.checkmark:after {
+    content: "";
+    margin: auto;
+    display: none;
+}
+
+.client-check input:checked ~ .checkmark:after {
+    display: block;
+}
+
+.client-check .checkmark:after {
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    transform: rotate(45deg);
 }
