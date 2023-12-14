@@ -43,6 +43,7 @@
 .load {
     float:left;
     width: 30px;
+    height: 30px;
     align-items: center;
     position: relative;
 }

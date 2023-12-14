@@ -34,7 +34,7 @@ const Box = ({ box, extra, setExtra, removeArticle, index, setBoxes }) => {
             }
         } else {
             const res = 0 - difference;
-            setExtra([...extra(), { article: article(), quantity_box: res.toString(), quantity_article: box.quantity_article }]);
+            setExtra([...extra(), { article: article(), quantity_box: res.toString(), quantity_article: box.quantity_article, box_id: box.box_id }]);
         }
 
         setBoxes(prevBoxes => {
@@ -45,8 +45,6 @@ const Box = ({ box, extra, setExtra, removeArticle, index, setBoxes }) => {
             }
             return newBoxes;
         });
-
-        console.log(extra());
     };
 
     const handleSelectChange = (event) => {
