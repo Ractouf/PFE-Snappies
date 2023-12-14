@@ -15,11 +15,12 @@
     display: flex;
     align-items: center;
     padding: 2vh 0;
+    width: 100vw;
 }
 
 .client-info {
-    width: 72.3vw;
-    margin-right: 1vw;
+    width: 72vw;
+    margin-right: 0.6vw;
 }
 
 .client-check {
