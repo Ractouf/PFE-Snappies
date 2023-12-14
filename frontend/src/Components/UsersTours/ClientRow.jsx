@@ -73,6 +73,9 @@ const ClientRow = ({ client, extra, setExtra, tour, fetchTours }) => {
             {showArticles() && (
                 <div class = "client-details">
                     <div class = "client-articles">
+                        <For each = {client.extras}>
+                            {extra => <h4 class = "extra">{extra.quantity_box}x {extra.article}</h4>}
+                        </For>
                         <For each = {boxes()}>
                             {(box, index) => !allBoxesDelivered ?
                                 <Box box = {box} extra = {extra} setExtra = {setExtra} removeArticle = {removeArticle} index = {index} setBoxes = {setBoxes}/>
@@ -80,17 +83,13 @@ const ClientRow = ({ client, extra, setExtra, tour, fetchTours }) => {
                                 <h4>{box.quantity_box}x {box.article}</h4>
                             }
                         </For>
-
-                        <For each = {client.extras}>
-                            {extra => <h4 class = "extra">{extra.quantity_box}x {extra.article}</h4>}
-                        </For>
                     </div>
 
                     <div class = "client-confirmation">
                         {!allBoxesDelivered &&
                             <>
-                                <button onClick={addArticle}>Ajouter un article</button>
-                                <button onClick={deliverClient}>Confirmer</button>
+                                <button class="add" onClick={addArticle}>+</button>
+                                <button class="confirm-add" onClick={deliverClient}>Confirmer</button>
                             </>
                         }
                     </div>

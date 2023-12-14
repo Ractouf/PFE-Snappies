@@ -7,10 +7,13 @@ const Client = ({ client }) => {
 
     return (
         <div class = "client">
-            <input disabled class = "delivered" checked = {allBoxesDelivered} type = "checkbox"/>
-            <div class = "client-info">
+            <div class="client-check">
+                <input disabled className="delivered" checked={allBoxesDelivered} type="checkbox"/>
+                <span class="checkmark"></span>
+            </div>
+            <div class="client-info">
                 <h3>{client.name}</h3>
-                <h4>{client.address}</h4>
+                <h4 class="adress">{client.address}</h4>
             </div>
             <img onClick = {() => goToMaps(client.address)} class = "google-maps-logo" src = "/src/assets/googleMaps.png" alt = "maps"/>
         </div>
