@@ -1,5 +1,5 @@
 .nth:nth-child(even) {
-    background-color: lightgrey;
+    background-color: #EBE5DB;
 }
 
 .clients {
@@ -7,13 +7,24 @@
     flex-direction: column;
 }
 
+.clients {
+    background-color: #FFF9EFFF;
+}
+
 .client {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    margin-inline: 10px;
-    gap: 5px;
-    padding-block: 20px;
+    padding: 2vh 0;
+}
+
+.client-info {
+    width: 72.3vw;
+    margin-right: 1vw;
+}
+
+.client-check {
+    width: 14vw;
+    margin: 2vh 1vw;
 }
 
 .client-details {
@@ -32,11 +43,6 @@
     width: 100%;
 }
 
-.red-border {
-    padding: 3px;
-    border-bottom: 1px solid tomato;
-}
-
 .client-confirmation {
     display: flex;
     justify-content: space-between;
@@ -44,8 +50,8 @@
 }
 
 .delivered {
-    width: 30px;
-    height: 30px;
+    display:block;
+    margin:auto;
 }
 
 .article {
@@ -70,4 +76,44 @@
 .extra {
     color: crimson;
     text-align: center;
+}
+
+.client-check input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+.checkmark {
+    display: block;
+    margin: auto;
+    height: 21px;
+    width: 25px;
+    background-color: rgb(217,116,103);
+    border-radius: 5px;
+    padding-top: 4px;
+}
+
+.client-check input:checked ~ .checkmark {
+    background-color: #25313c;
+}
+
+.checkmark:after {
+    content: "";
+    margin: auto;
+    display: none;
+}
+
+.client-check input:checked ~ .checkmark:after {
+    display: block;
+}
+
+.client-check .checkmark:after {
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    transform: rotate(45deg);
 }
