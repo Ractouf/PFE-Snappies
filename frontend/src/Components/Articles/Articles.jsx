@@ -7,6 +7,7 @@ const Articles = () => {
     const [articles, setArticles] = createSignal([]);
     const [loading, setLoading] = createSignal(true);
     const [isSubmitting, setSubmitting] = createSignal(false);
+    const [isFormVisible, setFormVisible] = createSignal(true);
 
     async function fetchArticles() {
         const response = await fetch(`http://localhost:8000/api/articles`, {
@@ -54,10 +55,14 @@ const Articles = () => {
 
     onMount(fetchArticles);
 
+    function toggleForm() {
+        setFormVisible(!isFormVisible());
+    }
+
     return (
         <div class="articles">
             {loading() ?
-                <h2>Chargement ...</h2>
+                <div class="load-page"><img src="/src/assets/loading.gif" alt="chargement" className="load"/></div>
                 :
                 articles().length > 0 ?
                     <>
@@ -66,15 +71,18 @@ const Articles = () => {
                         </For>
                     </>
                     :
-                    <h2>Aucun article, voulez vous en ajouter ?</h2>
+                    <p>Aucun article, voulez vous en ajouter ?</p>
             }
-            <form>
-                <input type="text" value={inputValue()} onInput={(e) => setInputValue(e.target.value)}/>
-                <input onClick={addArticle} type="submit" value="Ajouter un article" disabled={isSubmitting()}/>
-                {isSubmitting() && <p>Envoi...</p>}
+            <button class = "add-article"onClick = {toggleForm}>+</button>
+            <form hidden={isFormVisible()}>
+                    {!isSubmitting() && <input class="articles-add-confirm" onClick={addArticle} type="submit" value="→"
+                                               disabled={isSubmitting()}/>}
+                    {isSubmitting() && <img class = "load" src="/src/assets/loading.gif" alt="envoie"/>}
+                    <input class="articles-text-input" type="text" value={inputValue()}
+                           onInput={(e) => setInputValue(e.target.value)}/>
             </form>
         </div>
-    );
+);
 }
 
 export default Articles;
