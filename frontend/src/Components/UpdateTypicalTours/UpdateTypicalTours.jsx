@@ -200,13 +200,14 @@ const addExtra = (clientTourBox) => {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                quantity_box: quantity,
-                box_id: selectedBox.id,
                 client_id: clientTourBox.client.id,
+                box_id: selectedBox.id,
+                quantity_box: quantity,
             })
         })
 
         if (response.ok) {
+            //console.log(await response)
             window.location.reload();
         } else {
             throw new Error("Something went wrong");
