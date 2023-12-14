@@ -63,7 +63,9 @@ Route::group(['middleware' => ['auth:sanctum', 'checkRole:admin']], function () 
     Route::post('/boxesClientsTours/box', [BoxesClientsToursController::class, 'storeBox']);
     Route::post('/boxesClientsTours/rab', [BoxesClientsToursController::class, 'storeRab']);
     Route::patch('/boxesClientsTours/{id}', [BoxesClientsToursController::class, 'updateQuantityBox']);
-    Route::delete('/boxesClientsTours/{id}', [BoxesClientsToursController::class, 'destory']);
+    Route::delete('/boxesClientsTours/{id}', [BoxesClientsToursController::class, 'destroy']);
+
+    Route::post('/toursBoxesClients', [ToursBoxesClientsController::class, 'store']);
 });
 
 // tout CRUD d'un controller

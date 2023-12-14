@@ -35,7 +35,7 @@ class BoxesClientsToursController extends Controller
         return BoxesClientsTours::find($id)->update($request->all());
     }
 
-    public function destory(string $id)
+    public function destroy(string $id)
     {
         return BoxesClientsTours::destroy($id);
     }
