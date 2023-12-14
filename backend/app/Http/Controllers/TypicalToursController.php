@@ -38,16 +38,20 @@ class TypicalToursController extends Controller
             $client = $clientsTour->client;
 
             $boxesClientsTours = $clientsTour->boxesClientsTours;
+
             $clientBoxes = [];
             foreach ($boxesClientsTours as $boxes) {
                 $boxes['box'] = $boxes->box;
-                $boxes['article'] = $boxes->box->article;
+                $boxes['box']['article'] = $boxes->box->article;
                 $clientBoxes[] = $boxes;
             }
 
             $client['boxes'] = $clientBoxes;
 
-            $typicalTourRes[] = $client;
+            $typicalTourRes[] = [
+                'id' => $clientsTour->id,
+                'client' => $client,
+            ];
         }
 
         return $typicalTourRes;

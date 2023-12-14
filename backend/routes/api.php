@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ArticlesController;
+use App\Http\Controllers\BoxesClientsToursController;
 use App\Http\Controllers\BoxesController;
 use App\Http\Controllers\ClientsController;
 use App\Http\Controllers\ClientsToursController;
@@ -58,6 +59,11 @@ Route::group(['middleware' => ['auth:sanctum', 'checkRole:admin']], function () 
     Route::delete('/articles/{id}', [ArticlesController::class, 'destroy']);
 
     Route::resource('boxes', BoxesController::class);
+
+    Route::post('/boxesClientsTours/box', [BoxesClientsToursController::class, 'storeBox']);
+    Route::post('/boxesClientsTours/rab', [BoxesClientsToursController::class, 'storeRab']);
+    Route::patch('/boxesClientsTours/{id}', [BoxesClientsToursController::class, 'updateQuantityBox']);
+    Route::delete('/boxesClientsTours/{id}', [BoxesClientsToursController::class, 'destory']);
 });
 
 // tout CRUD d'un controller
