@@ -77,7 +77,16 @@ class ToursController extends Controller
 
     public function showByDateAndDriver(string $date, string $driverId)
     {
-        return Tours::where('date', $date)->where('delivery_driver_id', $driverId)->get();
+        $tours = Tours::where('date', $date)->where('delivery_driver_id', $driverId)->get();
+
+        $toursWithNames = [];
+        foreach ($tours as $tour) {
+            $tourName = TypicalTours::find($tour->typical_tour_id)->name;
+            $tour['name'] = $tourName;
+            $toursWithNames[] = $tour;
+        }
+
+        return response()->json($toursWithNames, 200);
     }
 
     public function update(Request $request, string $id)
@@ -93,7 +102,6 @@ class ToursController extends Controller
     public function getAvailableTour()
     {
         $typicalTours = TypicalTours::all();
-        // get the typical_tour_id of the tours of today
         $tours = Tours::where('date', date('d/m/y'))->get();
         $typicalToursId = [];
         foreach ($tours as $tour) {
@@ -109,5 +117,16 @@ class ToursController extends Controller
         }
 
         return $availableTours;
+    }
+
+    public function getTodayByUserId(Request $request)
+    {
+        $fields = $request->validate([
+            'driver_id' => 'required',
+        ]);
+
+        $tour = Tours::where('date', date('d/m/y'))->where('delivery_driver_id', $fields['driver_id'])->first();
+        $tourName = TypicalTours::find($tour->typical_tour_id)->name;
+        return response()->json(['tour' => $tour, 'tourName' => $tourName], 200);
     }
 }
