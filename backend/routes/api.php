@@ -14,7 +14,6 @@ use Illuminate\Support\Facades\Route;
 Route::post('/login', [UsersController::class, 'login']);
 Route::get('/tours/available', [ToursController::class, 'getAvailableTour']);
 
-
 // user protected routes
 Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::post('/logout', [UsersController::class, 'logout']);
