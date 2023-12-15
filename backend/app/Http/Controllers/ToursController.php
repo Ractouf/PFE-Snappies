@@ -77,9 +77,16 @@ class ToursController extends Controller
 
     public function showByDateAndDriver(string $date, string $driverId)
     {
-        $tour = Tours::where('date', $date)->where('delivery_driver_id', $driverId)->get();
-        $tourName = TypicalTours::find($tour->typical_tour_id)->name;
-        return response()->json(['tour' => $tour, 'tourName' => $tourName], 200);
+        $tours = Tours::where('date', $date)->where('delivery_driver_id', $driverId)->get();
+
+        $toursWithNames = [];
+        foreach ($tours as $tour) {
+            $tourName = TypicalTours::find($tour->typical_tour_id)->name;
+            $tour['name'] = $tourName;
+            $toursWithNames[] = $tour;
+        }
+
+        return response()->json($toursWithNames, 200);
     }
 
     public function update(Request $request, string $id)

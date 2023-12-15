@@ -8,6 +8,7 @@ import TypicalTour from "./Components/TypicalTour/TypicalTour";
 import UsersTours from "./Components/UsersTours/UsersTours";
 import Articles from "./Components/Articles/Articles";
 import Boxes from "./Components/Boxes/Boxes";
+import DriverTours from "./Components/DriverTours/DriverTours";
 
 
 render(
@@ -17,6 +18,7 @@ render(
             <Route path = "/login" component = {Login}/>
             <Route path = "/tours/:tourId" component = {UsersTours}/>
             <Route path = "/articles" component = {Articles}/>
+            <Route path = "/tours/:driver/:date" component = {DriverTours}></Route>
             <Route path = "/boxes" component = {Boxes}/>
         </Router>,
     document.getElementById("root")
