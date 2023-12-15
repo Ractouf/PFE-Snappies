@@ -30,7 +30,7 @@ const Header = () => {
         <header>
 
             <div class="logo-header"><img src="/src/assets/logo.png" alt="Logo" class="logo-img"/></div>
-            <p>Page Name</p>
+            <p>Snappies</p>
 
             <input class="side-menu" type="checkbox" id="side-menu"/>
             <label class="hamb" for="side-menu"><span class="hamb-line"></span></label>
