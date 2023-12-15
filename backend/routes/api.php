@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Route;
 
 // public routes
 Route::post('/login', [UsersController::class, 'login']);
+Route::get('/tours/available', [ToursController::class, 'getAvailableTour']);
+
 
 
 // user protected routes
@@ -49,7 +51,6 @@ Route::group(['middleware' => ['auth:sanctum', 'checkRole:admin']], function () 
 
     Route::get('/tours', [ToursController::class, 'index']);
     Route::patch('/tours/{id}', [ToursController::class, 'update']);
-    Route::get('/tours/available', [ToursController::class, 'getAvailableTour']);
 
 
     Route::post('/clientsTours', [ClientsToursController::class, 'store']);
