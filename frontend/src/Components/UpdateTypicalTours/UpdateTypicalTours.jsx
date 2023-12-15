@@ -59,19 +59,30 @@ const UpdateTypicalTours = () => {
         setFormHidden(!formHidden());
     }
 
-    function addRab(e) {
+    async function addRab(e) {
         e.preventDefault();
 
-        if (rabQuandity() === "0" || boxId() === "0") {
+        if (rabQuandity() !== "0" || boxId() !== "0") {
+            setCurrentRab([...currentRab(), {
+                typical_tour_id: params.id,
+                quantity_box: rabQuandity(),
+                box_id: boxId(),
+                box: boxes().find(b => parseInt(b.id) === parseInt(boxId()))
+            }]);
 
+            await fetch("http://localhost:8000/api/boxesClientsTours/rab", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${localStorage.getItem("token")}`,
+                },
+                body: JSON.stringify({
+                    'typical_tour_id': params.id,
+                    'quantity_box': rabQuandity(),
+                    'box_id': boxId(),
+                })
+            })
         }
-
-        setCurrentRab([...currentRab(), {
-            typical_tour_id: params.id,
-            quantity_box: rabQuandity(),
-            box_id: boxId(),
-            box: boxes().find(b => parseInt(b.id) === parseInt(boxId()))
-        }]);
     }
 
     async function deleteRab(e) {
