@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ArticlesController;
+use App\Http\Controllers\BoxesClientsToursController;
 use App\Http\Controllers\BoxesController;
 use App\Http\Controllers\ClientsController;
 use App\Http\Controllers\ClientsToursController;

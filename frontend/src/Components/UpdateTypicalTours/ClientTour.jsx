@@ -1,11 +1,13 @@
 import Boxes from "./Boxes";
 import { createSignal, For } from "solid-js";
+import Extras from "./Extras";
 
-const ClientTour = ({ tourId, client, clientBoxes, existingBoxes, fetchData }) => {
+const ClientTour = ({ tourId, client, clientBoxes, existingBoxes, clientExtras }) => {
     const [isFormHidden, setIsFormHidden] = createSignal(true);
     const [nbBoxes, setNbBoxes] = createSignal("0");
     const [boxId, setBoxId] = createSignal("0");
     const [boxes, setBoxes] = createSignal(clientBoxes);
+    const [extras, setExtras] = createSignal(clientExtras);
 
     const goToMaps = (address) => {
         window.location.href = `https://www.google.com/maps/dir/?api=1&destination=${address}&travelmode:driving`
@@ -40,8 +42,7 @@ const ClientTour = ({ tourId, client, clientBoxes, existingBoxes, fetchData }) =
         e.preventDefault();
 
         if (nbBoxes() !== "0" || boxId() !== "0") {
-            console.log(boxId(), nbBoxes(), client.id);
-            await fetch("http://localhost:8000/api/toursBoxesClients", {
+            const resp = await fetch("http://localhost:8000/api/toursBoxesClients", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -54,7 +55,7 @@ const ClientTour = ({ tourId, client, clientBoxes, existingBoxes, fetchData }) =
                 })
             });
 
-            await fetchData();
+            setExtras([...extras(), await resp.json()]);
         }
     }
 
@@ -63,7 +64,8 @@ const ClientTour = ({ tourId, client, clientBoxes, existingBoxes, fetchData }) =
             <h2>{client.name}</h2>
             <img onClick={() => goToMaps(client.address)} class = "google-maps-logo" src = "/src/assets/googleMaps.png" alt = "maps"/>
 
-            <Boxes boxes = {boxes} setBoxes = {setBoxes} clientId = {client.id}/>
+            <Extras extras = {extras} />
+            <Boxes boxes = {boxes} setBoxes = {setBoxes} setExtras = {setExtras} clientId = {client.id}/>
 
             <button onClick = {toggleForm}>+</button>
 

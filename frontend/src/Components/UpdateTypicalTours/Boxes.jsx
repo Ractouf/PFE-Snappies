@@ -1,7 +1,7 @@
 import {For} from "solid-js";
 import Box from "./Box";
 
-const Boxes = ({ boxes, setBoxes, clientId }) => {
+const Boxes = ({ boxes, setBoxes, setExtras, clientId }) => {
 
     async function deleteBox(e, box) {
         e.preventDefault();
@@ -19,7 +19,7 @@ const Boxes = ({ boxes, setBoxes, clientId }) => {
 
     return (
         <For each = {boxes()}>
-            {box => <Box box = {box} deleteBox = {deleteBox} clientId = {clientId}/>}
+            {box => <Box box = {box} deleteBox = {deleteBox} clientId = {clientId} setExtras = {setExtras}/>}
         </For>
     );
 }

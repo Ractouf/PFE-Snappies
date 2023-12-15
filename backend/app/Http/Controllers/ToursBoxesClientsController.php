@@ -22,8 +22,10 @@ class ToursBoxesClientsController extends Controller
             'box_id' => 'required|string',
             'quantity_box' => 'required|integer',
         ]);
+        $created = ToursBoxesClients::create($fields);
 
-        return ToursBoxesClients::create($fields);
+        $created->load('box.article');
+        return $created;
     }
 
     public function show(string $id)

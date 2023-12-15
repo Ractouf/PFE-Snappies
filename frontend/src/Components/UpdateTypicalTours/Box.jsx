@@ -1,6 +1,6 @@
 import { createSignal } from "solid-js";
 
-const Box = ({ box, deleteBox, clientId }) => {
+const Box = ({ box, deleteBox, clientId, setExtras }) => {
     const [isFormHidden, setIsFormHidden] = createSignal(true);
     const [boxQuantity, setBoxQuantity] = createSignal(box.quantity_box);
     const [currentBox, setCurrentBox] = createSignal(box);
@@ -33,6 +33,11 @@ const Box = ({ box, deleteBox, clientId }) => {
 
         const diff = parseInt(boxQuantity()) - parseInt(currentBox().quantity_box);
         if (boxQuantity() !== "0") {
+            setExtras(extras => [...extras, {
+                box: currentBox().box,
+                quantity_box: diff,
+            }]);
+
             await fetch(`http://localhost:8000/api/toursBoxesClients`, {
                 method: "POST",
                 headers: {

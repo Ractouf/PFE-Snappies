@@ -25,6 +25,7 @@ const UpdateTypicalTours = () => {
 
         if (response.ok) {
             const res = await response.json();
+            console.log(res)
             setTour(res);
         } else {
             throw new Error("Something went wrong");
@@ -62,7 +63,7 @@ const UpdateTypicalTours = () => {
                 :
                 <>
                     <For each={tour()}>
-                        {clientTourBox => <ClientTour tourId = {clientTourBox.id} client = {clientTourBox.client} clientBoxes = {clientTourBox.client.boxes} existingBoxes= {boxes()} fetchData = {fetchData}/>}
+                        {clientTourBox => <ClientTour tourId = {clientTourBox.id} client = {clientTourBox.client} clientBoxes = {clientTourBox.client.boxes} clientExtras = {clientTourBox.client.extras} existingBoxes= {boxes()}/>}
                     </For>
                 </>
             }
