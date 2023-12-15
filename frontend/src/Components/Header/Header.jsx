@@ -44,7 +44,7 @@ const Header = () => {
                                     <a onClick = {() => goTo()}>Tournées</a>
                                     <a onClick = {() => goTo('/clients')}>Clients</a>
                                     <a onClick = {() => goTo('/articles')}>Articles</a>
-                                    <a onClick = {() => goTo()}>Livreurs</a>
+                                    <a onClick = {() => goTo('/registerUser')}>Livreurs</a>
                                 </div>
                             </li>
                         )
