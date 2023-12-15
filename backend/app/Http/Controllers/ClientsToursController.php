@@ -15,7 +15,9 @@ class ClientsToursController extends Controller
             'typical_tour_id' => 'required|string',
         ]);
 
-        return ClientsTours::create($fields);
+        $clientsTours = ClientsTours::create($fields);
+
+        return response()->json(['message' => 'ClientsTours created successfully', 'data' => $clientsTours], 201);
     }
 
     public function update(Request $request, string $id)
@@ -27,4 +29,30 @@ class ClientsToursController extends Controller
     {
         return ClientsTours::destroy($id);
     }
+
+    public function deleteIfExists(string $id)
+{
+    $clientsTours = ClientsTours::find($id);
+
+    if ($clientsTours) {
+        $clientsTours->delete();
+        return response()->json(['message' => 'ClientsTours record deleted successfully'], 200);
+    }
+
+    return response()->json(['message' => 'ClientsTours record not found'], 200);
+}
+
+    public function getByClientId(string $clientId)
+    {
+        try {
+            $clientsTours = ClientsTours::where('client_id', $clientId)->first();
+            if (!$clientsTours) {
+                return response()->json(['message' => 'ClientsTours record not found', 'data' => false]);
+            }
+            return response()->json(['message' => 'ClientsTours record found', 'data' => true, $clientsTours]);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Error fetching ClientsTours data', 'error' => $e->getMessage()], 500);
+        }
+    }
+
 }

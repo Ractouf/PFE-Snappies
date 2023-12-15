@@ -89,4 +89,9 @@ class TypicalToursController extends Controller
     {
         return TypicalTours::destroy($id);
     }
+
+    public function getAll()
+    {
+        return TypicalTours::all();
+    }
 }

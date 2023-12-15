@@ -19,20 +19,41 @@ class UsersController extends Controller
     public function store(Request $request)
     {
         $fields = $request->validate([
-            'firstname' => 'required',
-            'lastname' => 'required',
-            'phone' => 'required',
             'email' => 'required|unique:users,email',
             'password' => 'required',
+            'lastname' => 'required',
+            'firstname' => 'required',
+            'phone' => 'required|unique:users,phone',
+            'is_admin' => 'required|boolean',
         ]);
 
-        $user = Users::create([
-            'firstname' => $fields['firstname'],
-            'lastname' => $fields['lastname'],
-            'phone' => $fields['phone'],
-            'email' => $fields['email'],
-            'password' => bcrypt($fields['password']),
-        ]);
+        if (!filter_var($fields['email'], FILTER_VALIDATE_EMAIL)) {
+            return response([
+                'message' => 'Invalid email'
+            ], 400);
+        }
+
+        if (preg_match('/^04[0-9]{8}$/', $fields['phone'])) {
+            $fields['phone'] = '+32' . substr($fields['phone'], 1);
+        }
+
+        // check if phone is valid or throw error
+        if (!preg_match('/^\+?\d{11}$/', $fields['phone'])) {
+            return response([
+                'message' => 'Invalid phone number'
+            ], 400);
+        }
+
+        $user = Users::create(
+            [
+                'email' => $fields['email'],
+                'password' => bcrypt($fields['password']),
+                'lastname' => $fields['lastname'],
+                'firstname' => $fields['firstname'],
+                'phone' => $fields['phone'],
+                'is_admin' => $fields['is_admin'],
+            ]
+        );
 
         $token = $user->createToken('myapptoken')->plainTextToken;
 

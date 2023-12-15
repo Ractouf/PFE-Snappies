@@ -1,11 +1,30 @@
 import "./Header.css";
+import {useNavigate} from "@solidjs/router";
 
 const Header = () => {
-
     const userString = localStorage.getItem("user");
     const user = userString ? JSON.parse(userString) : null;
+    const navigate = useNavigate();
 
     const isAdmin = user && user.is_admin;
+
+    function goTo(url) {
+        navigate(url);
+    }
+
+    async function logout() {
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
+
+        await fetch("http://localhost:8000/api/logout", {
+            method: "POST",
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+            }
+        })
+
+        navigate("/login");
+    }
 
     return (
         <header>
@@ -22,19 +41,19 @@ const Header = () => {
                             <li class="subnav">
                                 <p class="subnavbtn">Admin <i class="fa fa-caret-down"></i></p>
                                 <div class="subnav-content">
-                                    <a href="#">Tournées</a>
-                                    <a href="#">Clients</a>
-                                    <a href="#">Articles</a>
-                                    <a href="#">Livreurs</a>
+                                    <a onClick = {() => goTo()}>Tournées</a>
+                                    <a onClick = {() => goTo('/clients')}>Clients</a>
+                                    <a onClick = {() => goTo('/articles')}>Articles</a>
+                                    <a onClick = {() => goTo('/registerUser')}>Livreurs</a>
                                 </div>
                             </li>
                         )
                         : <>
-                            <li><a href="#">Inventaire</a></li>
-                            <li><a href="#">Changer Tournée</a></li>
+                            {/*<li><a onClick = {() => goTo()}>Inventaire</a></li>*/}
+                            <li><a onClick = {() => goTo()}>Changer Tournée</a></li>
                         </>
                     }
-                    <li><a href="#">Déconnexion</a></li>
+                    <li><a onClick = {() => logout()}>Déconnexion</a></li>
                 </ul>
             </nav>
         </header>
