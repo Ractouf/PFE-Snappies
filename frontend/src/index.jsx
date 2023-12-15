@@ -1,28 +1,28 @@
 /* @refresh reload */
-import { render } from 'solid-js/web';
-
+import {render} from 'solid-js/web';
 import './index.css';
 import App from './Components/App/App';
-import { Router, Route } from "@solidjs/router";
+import {Router, Route} from "@solidjs/router";
 import Login from "./Components/Login/Login";
-import Button from "./Components/Button/Button";
+import TypicalTour from "./Components/TypicalTour/TypicalTour";
 import UsersTours from "./Components/UsersTours/UsersTours";
 import Articles from "./Components/Articles/Articles";
 import Client from './Components/Clients/Clients';
 import ClientList from './Components/ClientsList/ClientsList';
 import ModifyClient from './Components/ModifyClient/ModifyClient';
+import Boxes from "./Components/Boxes/Boxes";
 
 render(
     () =>
         <Router root={App}>
+            <Route path="/" component={TypicalTour}/>
             <Route path = "/login" component = {Login}/>
             <Route path = "/tours/:tourId" component = {UsersTours}/>
             <Route path = "/articles" component = {Articles}/>
-            // change button to something else
-            <Route path = "/" component = {Button}/>
             <Route path = "/addClient" component = {Client}/>
             <Route path = "/clients" component = {ClientList}/>
             <Route path="/modifyClient/:clientId" component={ModifyClient} />
+            <Route path = "/boxes" component = {Boxes}/>
         </Router>,
     document.getElementById("root")
 );

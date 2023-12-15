@@ -62,7 +62,7 @@ const Articles = () => {
     return (
         <div class="articles">
             {loading() ?
-                <div class="load-page"><img src="/src/assets/loading.gif" alt="chargement" className="load"/></div>
+                <div class="load-page"><img src="/src/assets/loading.gif" alt="chargement..." className="load"/></div>
                 :
                 articles().length > 0 ?
                     <>
@@ -73,7 +73,7 @@ const Articles = () => {
                     :
                     <p>Aucun article, voulez vous en ajouter ?</p>
             }
-            <button class = "add-article"onClick = {toggleForm}>+</button>
+            <button class = "add-article" onClick = {toggleForm}>+</button>
             <form hidden={isFormVisible()}>
                     {!isSubmitting() && <input class="articles-add-confirm" onClick={addArticle} type="submit" value="→"
                                                disabled={isSubmitting()}/>}

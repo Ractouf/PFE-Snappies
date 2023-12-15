@@ -54,7 +54,7 @@ const ArticleRow = ({ article, setArticles }) => {
 
             <form hidden={isFormHidden()} onSubmit={formSubmit}>
                 {!isSubmitting() &&
-                    <input className="articles-add-confirm" type="submit" disabled={isSubmitting()} value="→"/>}
+                    <input class = "articles-add-confirm" type="submit" disabled={isSubmitting()} value="→"/>}
 
                 {isSubmitting() && <img src="/src/assets/loading.gif" alt="chargement..." class="load"/>}
 
