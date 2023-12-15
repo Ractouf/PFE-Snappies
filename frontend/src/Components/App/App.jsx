@@ -1,11 +1,13 @@
 import Header from "../Header/Header";
-import {Navigate} from "@solidjs/router";
+import {Navigate, useLocation} from "@solidjs/router";
 
 function isLoggedIn() {
     return localStorage.getItem("token") !== null;
 }
 
 const App = props => {
+    const location = useLocation();
+
     return (
         <>
             {location.pathname !== "/login" && <Header />}

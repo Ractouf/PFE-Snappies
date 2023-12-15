@@ -1,5 +1,6 @@
 import {createSignal, createResource} from "solid-js";
 import "./Login.css";
+import {useNavigate} from "@solidjs/router";
 
 const loginUser = async (email, password) => {
     const requestBody = JSON.stringify({email, password});
@@ -24,6 +25,7 @@ const Login = () => {
     const [email, setEmail] = createSignal('');
     const [password, setPassword] = createSignal('');
     const [data, {refetch}] = createResource(() => loginUser(email(), password()));
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -36,6 +38,7 @@ const Login = () => {
         } finally {
             setEmail('');
             setPassword('');
+            navigate("/");
         }
     };
 
