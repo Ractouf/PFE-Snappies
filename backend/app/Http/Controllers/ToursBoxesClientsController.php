@@ -52,6 +52,7 @@ class ToursBoxesClientsController extends Controller
         }
 
         $toursBoxesClients = $tour->toursBoxesClients;
+        $clients = [];
 
         $res = ['clients' => []];
         $res['tour_id'] = $tourId;
@@ -78,16 +79,16 @@ class ToursBoxesClientsController extends Controller
                     'box_id' => $tourBoxClient->box_id,
                     'is_delivered' => $tourBoxClient->is_delivered,
                     'quantity_box' => $tourBoxClient->quantity_box,
-                    'quantity_article' => $tourBoxClient->boxes->quantity_article,
-                    'article' => $tourBoxClient->boxes->article->name,
+                    'quantity_article' => $tourBoxClient->box->quantity_article,
+                    'article' => $tourBoxClient->box->article->name,
                 ];
             } else {
                 $res['rab'][] = [
                     'box_id' => $tourBoxClient->box_id,
                     'is_delivered' => $tourBoxClient->is_delivered,
                     'quantity_box' => $tourBoxClient->quantity_box,
-                    'quantity_article' => $tourBoxClient->boxes->quantity_article,
-                    'article' => $tourBoxClient->boxes->article->name,
+                    'quantity_article' => $tourBoxClient->box->quantity_article,
+                    'article' => $tourBoxClient->box->article->name,
                 ];
             }
         }
@@ -100,8 +101,8 @@ class ToursBoxesClientsController extends Controller
                     'box_id' => $extraTour->box_id,
                     'is_delivered' => $extraTour->is_delivered,
                     'quantity_box' => $extraTour->quantity_box,
-                    'quantity_article' => $extraTour->boxes->quantity_article,
-                    'article' => $extraTour->boxes->article->name,
+                    'quantity_article' => $extraTour->box->quantity_article,
+                    'article' => $extraTour->box->article->name,
                 ];
             }
         }
