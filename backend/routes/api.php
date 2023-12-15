@@ -49,6 +49,8 @@ Route::group(['middleware' => ['auth:sanctum', 'checkRole:admin']], function () 
 
     Route::get('/tours', [ToursController::class, 'index']);
     Route::patch('/tours/{id}', [ToursController::class, 'update']);
+    Route::get('/tours/available', [ToursController::class, 'getAvailableTour']);
+
 
     Route::post('/clientsTours', [ClientsToursController::class, 'store']);
     Route::patch('/clientsTours/{id}', [ClientsToursController::class, 'update']);
