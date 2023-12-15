@@ -29,8 +29,8 @@ const Header = () => {
     return (
         <header>
 
-            <div class="logo-header" onClick = {() => goTo('/')}><img src="/src/assets/logo.png" alt="Logo" class="logo-img"/></div>
-            <p>Page Name</p>
+            <div class="logo-header"><img src="/src/assets/logo.png" alt="Logo" class="logo-img"/></div>
+            <p>Snappies</p>
 
             <input class="side-menu" type="checkbox" id="side-menu"/>
             <label class="hamb" for="side-menu"><span class="hamb-line"></span></label>
