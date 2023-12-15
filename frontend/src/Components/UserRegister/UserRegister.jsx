@@ -81,7 +81,7 @@ const UserRegister = () => {
 
         try {
             await refetch();
-            navigator('/users/' + data().user.id)
+            navigator('/users');
         } catch (error) {
             console.error('Register failed:', error.message);
             setErrorMessage("Register failed")
