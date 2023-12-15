@@ -89,7 +89,9 @@ const ModifyClient = () => {
     await response.json();
 
     if (parseInt(selectedTour()) !== 0) {
+      console.log("1");
       if (clientTours() === 0) {
+        console.log("2");
         try {
           const bodyContent = JSON.stringify({
             client_id: clientId.toString(),
@@ -116,6 +118,7 @@ const ModifyClient = () => {
         console.error(errorMessage || 'Error in API request:', error);
       }
       } else {
+        console.log("3");
       const bodyContent = JSON.stringify({
         client_id: clientId.toString(),
         typical_tour_id: selectedTour().toString(),
@@ -130,29 +133,27 @@ const ModifyClient = () => {
         body: bodyContent,
       });
     }
-    } else 
+    } else
     {
-      try {
+      try{
         const token = localStorage.getItem('token');
-        const response = await fetch (`http://localhost:8000/api/clientsTours/${clientId}`, {
+        const response = await fetch (`http://localhost:8000/api/clientsTours/deleteIfExists/${clientId}`, {
           method: 'DELETE',
           headers: {
             'Authorization': 'Bearer ' + token,
           },
         });
-
         if (response.ok) {
           return await response.json();
         } else {
-          console.error('HTTP Error');
-        }
-      } catch (error) {
-        console.error(errorMessage || 'Error in API request:', error);
-      }
+          console.log(" ");
+        }   
+    } catch (error) {
+      console.log(" ");
     }
-
-    setIsSubmitting(false);
+  }
     navigate('/clients');
+    setIsSubmitting(false);
   };
 
   return (
@@ -194,5 +195,4 @@ const ModifyClient = () => {
     </form>
   );
 };
-
 export default ModifyClient;

@@ -30,6 +30,18 @@ class ClientsToursController extends Controller
         return ClientsTours::destroy($id);
     }
 
+    public function deleteIfExists(string $id)
+{
+    $clientsTours = ClientsTours::find($id);
+
+    if ($clientsTours) {
+        $clientsTours->delete();
+        return response()->json(['message' => 'ClientsTours record deleted successfully'], 200);
+    }
+
+    return response()->json(['message' => 'ClientsTours record not found'], 200);
+}
+
     public function getByClientId(string $clientId)
     {
         try {

@@ -54,6 +54,7 @@ Route::group(['middleware' => ['auth:sanctum', 'checkRole:admin']], function () 
     Route::patch('/clientsTours/{id}', [ClientsToursController::class, 'update']);
     Route::get('/clientsTours/getByClientId/{clientId}', [ClientsToursController::class, 'getByClientId']);
     Route::delete('/clientsTours/{id}', [ClientsToursController::class, 'destroy']);
+    Route::delete('/clientsTour/deleteIfExists/{id}', [ClientsToursController::class, 'deleteIfExists']);
 
     Route::post('/articles', [ArticlesController::class, 'store']);
     Route::get('/articles/{id}', [ArticlesController::class, 'show']);

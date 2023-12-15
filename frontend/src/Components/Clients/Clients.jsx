@@ -1,4 +1,5 @@
 import {createResource, createSignal, For} from 'solid-js';
+import { useNavigate } from '@solidjs/router';
 import './Client.css';
 
 const Client = () => {
@@ -7,6 +8,8 @@ const Client = () => {
   const [phone, setPhone] = createSignal('');
   const [selectedTour, setSelectedTour] = createSignal(0);
   const [isSubmitting, setIsSubmitting] = createSignal(false);
+
+  const navigate = useNavigate();
 
   const fetchTours = async () => {
     const response = await fetch(`http://localhost:8000/api/typicalTours`, {
@@ -60,6 +63,7 @@ const Client = () => {
         typical_tour_id: selectedTour().toString(),
       });
 
+      console.log(bodyContent);
       const toursResponse = await fetch('http://localhost:8000/api/clientsTours', {
         method: 'POST',
         headers: {
@@ -83,6 +87,8 @@ const Client = () => {
     setAddress('');
     setPhone('');
     setSelectedTour('');
+
+    navigate('/clients');
   };
 
   return (
