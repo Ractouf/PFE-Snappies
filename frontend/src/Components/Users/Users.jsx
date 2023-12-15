@@ -32,20 +32,27 @@ const Users = () => {
     return (
         <>
             {loading() ?
-                <div>Loading...</div>
-            :
+                <div class="load-page"><img src="/src/assets/loading.gif" alt="chargement..." class="load"/></div>
+                :
                 <>
-                    <For each = {users()}>
+                    <For each={users()}>
                         {user =>
-                            <>
+                            <div class = "article-row">
+                                <div class = "article-content">
+                                <div class = 'modifier-div'>
                                 <button onClick = {() => goToModify(user.id)}>Modifier</button>
-                                <p>{user.lastname} {user.firstname}</p>
-                                <p>{user.phone}</p>
-                            </>
+                                </div>
+                                    <div class = "client-info">
+                                        <p>{user.lastname} {user.firstname}</p>
+                                        <p class = "adress">{user.phone}</p>
+                                    </div>
+                                </div>
+
+                            </div>
                         }
                     </For>
 
-                    <button onClick = {goToRegisterUser}>Ajouter</button>
+                    <button class="add-article" onClick = {goToRegisterUser}>+</button>
                 </>
             }
         </>

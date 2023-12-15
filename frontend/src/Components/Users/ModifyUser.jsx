@@ -1,6 +1,7 @@
 import {useNavigate, useParams} from "@solidjs/router";
 import {createSignal, onMount} from "solid-js";
 import users from "./Users";
+import "./ModifyUser.css"
 
 const ModifyUser = () => {
     const parmas = useParams();
@@ -87,17 +88,17 @@ const ModifyUser = () => {
     return (
         <>
             {loading() ?
-                <div>Loading...</div>
-            :
-                <form onSubmit = {formSubmit}>
-                    <input value = {user().firstname} type = "text" onInput = {(e) => setFirstname(e.target.value)}/>
-                    <input value = {user().lastname} type = "text" onInput = {(e) => setLastname(e.target.value)}/>
-                    <input value = {user().phone} type = "text" onInput = {(e) => setPhone(e.target.value)}/>
-                    <input value = {user().email} type = "email" onInput = {(e) => setEmail(e.target.value)}/>
-                    <input type = "password" onInput = {(e) => setPassword(e.target.value)}/>
+                <div className="load-page"><img src="/src/assets/loading.gif" alt="chargement..." className="load"/></div>
+                :
+                <form class = "clients-add" onSubmit={formSubmit}>
+                    <input placeholder="prénom" value={user().firstname} type = "text" onInput = {(e) => setFirstname(e.target.value)}/>
+                    <input placeholder="nom de famille" value = {user().lastname} type = "text" onInput = {(e) => setLastname(e.target.value)}/>
+                    <input placeholder="téléphone" value = {user().phone} type = "text" onInput = {(e) => setPhone(e.target.value)}/>
+                    <input placeholder="email" value = {user().email} type = "email" onInput = {(e) => setEmail(e.target.value)}/>
+                    <input placeholder="mot de passe" type = "password" onInput = {(e) => setPassword(e.target.value)}/>
 
-                    <input type = "submit" value = "confirmer"/>
-                    <input type = "submit" onClick = {deleteUser} value = "supprimer"/>
+                    <input id = "confirm-add" type = "submit" value = "confirmer"/>
+                    <input id = "delete-user" type = "submit" onClick = {deleteUser} value = "supprimer"/>
                 </form>
             }
         </>
