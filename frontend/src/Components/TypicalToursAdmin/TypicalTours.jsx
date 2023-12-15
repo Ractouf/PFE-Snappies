@@ -101,7 +101,7 @@ const TypicalTours = () => {
     return (
         <>
             {loading() ?
-                <h1>Loading...</h1>
+                <div class="client-tours-load"><img src="/src/assets/loading.gif" alt="chargement..." className="load"/></div>
                 :
                 <>
                     <For each={tour().clients}>
@@ -115,8 +115,6 @@ const TypicalTours = () => {
                         }
                     </For>
 
-                    <h1>RAB</h1>
-
                     <For each = {currentRab()}>
                         {rab =>
                             <>
@@ -126,19 +124,20 @@ const TypicalTours = () => {
                         }
                     </For>
 
-                    <button onClick = {toggleForm}>rab</button>
+                    <button class = "add-article" onClick = {toggleForm}>rab</button>
 
-                    <form hidden ={formHidden()}>
-                        <input onClick = {addRab} type = "submit" />
+                    <form hidden={formHidden()}>
+                        <div class="rab">
+                            <input class="add-box-quantity" type="number" onInput={(e) => setRabQuandity(e.target.value)}/>
 
-                        <input type = "number" onInput = {(e) => setRabQuandity(e.target.value)} />
-
-                        <select onchange={(e) => setBoxId(e.target.value)}>
-                            <option value = "0">Choisir une boite</option>
-                            <For each = {boxes()}>
-                                {box => <option value = {box.id}>{box.quantity_article}x {box.article.name}</option>}
-                            </For>
-                        </select>
+                            <select class="add-box-select" onchange={(e) => setBoxId(e.target.value)}>
+                                <option value="0">Choisir une boite</option>
+                                <For each={boxes()}>
+                                    {box => <option value={box.id}>{box.quantity_article}x {box.article.name}</option>}
+                                </For>
+                            </select>
+                            <input value = "→" class="articles-add-confirm" onClick={addRab} type="submit"/>
+                        </div>
                     </form>
                 </>
             }

@@ -3,16 +3,17 @@ import {For} from "solid-js";
 const Extras = ({ extras }) => {
 
     return (
-        <>
+
+        <div class = "box-owner">
             <For each = {extras()}>
                 {extra =>
-                    <>
-                        <p>EXTRA {extra.quantity_box}x {extra.box.article.name} : {extra.box.quantity_article}</p>
-                        <button>Supprimer</button>
-                    </>
+                    <div class = "pas-client">
+                        <p class = "modify-extra">{extra.quantity_box}x{extra.box.quantity_article} {extra.box.article.name}</p>
+                        <button class = "remove-btn">X</button>
+                    </div>
                 }
             </For>
-        </>
+        </div>
     );
 }
 

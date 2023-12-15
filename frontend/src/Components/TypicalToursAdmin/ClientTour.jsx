@@ -1,6 +1,7 @@
 import Boxes from "./Boxes";
 import { createSignal, For } from "solid-js";
 import Extras from "./Extras";
+import "./ClientTour.css";
 
 const ClientTour = ({ tourId, client, clientBoxes, existingBoxes, clientExtras }) => {
     const [isFormHidden, setIsFormHidden] = createSignal(true);
@@ -60,28 +61,38 @@ const ClientTour = ({ tourId, client, clientBoxes, existingBoxes, clientExtras }
     }
 
     return (
-        <div>
-            <h2>{client.name}</h2>
-            <img onClick={() => goToMaps(client.address)} class = "google-maps-logo" src = "/src/assets/googleMaps.png" alt = "maps"/>
+        <div class = "nth">
+            <div class = "client">
+                <h2 class = "box-owner">{client.name}</h2>
+                <img class="google-maps-logo" onClick={() => goToMaps(client.address)} class = "google-maps-logo" src = "/src/assets/googleMaps.png" alt = "maps"/>
+            </div>
 
-            <Extras extras = {extras} />
-            <Boxes boxes = {boxes} setBoxes = {setBoxes} setExtras = {setExtras} clientId = {client.id}/>
+            <div class = "box-owner-detail">
+                <Extras extras = {extras} />
+                <Boxes boxes = {boxes} setBoxes = {setBoxes} setExtras = {setExtras} clientId = {client.id}/>
 
-            <button onClick = {toggleForm}>+</button>
+                <button class = "add-article" onClick = {toggleForm}>+</button>
 
-            <form hidden = {isFormHidden()}>
-                <input type = "number" onInput={(e) => setNbBoxes(e.target.value)}/>
+                <form hidden = {isFormHidden()}>
+                    <div class="client">
+                        <div class= "modifier-div">
+                            <input onClick={boxForever} type="submit" value="toujours"/>
+                            <input onClick={boxOnce} type="submit" value="une fois"/>
+                        </div>
+                        <div class = "pas-client-details">
+                        <input class="add-box-quantity" type="number" onInput={(e) => setNbBoxes(e.target.value)}/>
 
-                <select onChange={(e) => setBoxId(e.target.value)}>
-                    <option value="0">Choisir une boite</option>
-                    <For each={existingBoxes}>
-                        {box => <option value={box.id}>{box.quantity_article}x {box.article.name}</option>}
-                    </For>
-                </select>
+                        <select class="add-box-select" onChange={(e) => setBoxId(e.target.value)}>
+                            <option value="0">Choisir une boite</option>
+                            <For each={existingBoxes}>
+                                {box => <option value={box.id}>{box.quantity_article}x {box.article.name}</option>}
+                            </For>
+                        </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
 
-                <input onClick = {boxForever} type = "submit" value = "forever"/>
-                <input onClick = {boxOnce} type = "submit" value = "once"/>
-            </form>
         </div>
     );
 }

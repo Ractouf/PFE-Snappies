@@ -54,23 +54,34 @@ const Box = ({ box, deleteBox, clientId, setExtras }) => {
     }
 
     return (
-        <>
-            <button onClick = {toggleForm}>Update box</button>
-            <p>
-                {currentBox().box.quantity_article}x {currentBox().box.article.name} : {currentBox().quantity_box}
-            </p>
+        <div>
+            <div class = "pas-client">
+                <div class = "modifier-div">
+                    <button onClick = {toggleForm}>Modifier</button>
+                </div>
+                <p>
+                    {currentBox().quantity_box}x{currentBox().box.quantity_article} {currentBox().box.article.name}
+                </p>
+            </div>
 
             <form hidden={isFormHidden()}>
-                <input type="submit" onClick = {updateForever} value = "forever"/>
-                <input type="submit" onClick = {updateOnce} value = "once"/>
-
-                <input type="number" value={boxQuantity()} onInput={(e) => setBoxQuantity(e.target.value)}/>
-
-                <p>{currentBox().box.article.name}</p>
-
-                <button onClick={(e) => deleteBox(e, currentBox())}>Delete box</button>
+                <div className="client">
+                    <div className="modifier-div">
+                        <input type="submit" onClick={updateForever} value="toujours"/>
+                        <input type="submit" onClick={updateOnce} value="une fois"/>
+                    </div>
+                    <div className="pas-client-details">
+                        <div class = "pas-article">
+                            <div class = "pas-article-details">
+                                <input type="number" value={boxQuantity()} onInput={(e) => setBoxQuantity(e.target.value)}/>
+                                <p>{currentBox().box.article.name}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="remove-btn" onClick={(e) => deleteBox(e, currentBox())}>X</button>
+                </div>
             </form>
-        </>
+</div>
     );
 };
 
