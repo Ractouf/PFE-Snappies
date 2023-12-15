@@ -15,7 +15,6 @@ Route::post('/login', [UsersController::class, 'login']);
 Route::get('/tours/available', [ToursController::class, 'getAvailableTour']);
 
 
-
 // user protected routes
 Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::post('/logout', [UsersController::class, 'logout']);
@@ -43,6 +42,7 @@ Route::group(['middleware' => ['auth:sanctum', 'checkRole:admin']], function () 
     Route::patch('/users/{id}', [UsersController::class, 'update']);
     Route::delete('/users/{id}', [UsersController::class, 'destroy']);
 
+    Route::get('/typicalTours', [TypicalToursController::class, 'getAll']);
     Route::post('/typicalTours', [TypicalToursController::class, 'store']);
     Route::patch('/typicalTours/{id}', [TypicalToursController::class, 'update']);
     Route::delete('/typicalTours/{id}', [TypicalToursController::class, 'destroy']);
@@ -55,7 +55,9 @@ Route::group(['middleware' => ['auth:sanctum', 'checkRole:admin']], function () 
 
     Route::post('/clientsTours', [ClientsToursController::class, 'store']);
     Route::patch('/clientsTours/{id}', [ClientsToursController::class, 'update']);
+    Route::get('/clientsTours/getByClientId/{clientId}', [ClientsToursController::class, 'getByClientId']);
     Route::delete('/clientsTours/{id}', [ClientsToursController::class, 'destroy']);
+    Route::delete('/clientsTour/deleteIfExists/{id}', [ClientsToursController::class, 'deleteIfExists']);
 
     Route::post('/articles', [ArticlesController::class, 'store']);
     Route::get('/articles/{id}', [ArticlesController::class, 'show']);
