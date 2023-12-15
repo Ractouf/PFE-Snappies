@@ -33,6 +33,7 @@ class TypicalToursController extends Controller
 
         $clientsTours = $typicalTour->clientsTours;
 
+        $res = [];
         $typicalTourRes = [];
         foreach ($clientsTours as $clientsTour) {
             $client = $clientsTour->client;
@@ -64,7 +65,19 @@ class TypicalToursController extends Controller
             ];
         }
 
-        return $typicalTourRes;
+        $res['clients'] = $typicalTourRes;
+
+        $resRabs = [];
+        $rabs = $typicalTour->boxesClientsTours;
+        foreach ($rabs as $rab) {
+            $rab['box'] = $rab->box;
+            $rab['box']['article'] = $rab->box->article;
+            $resRabs[] = $rab;
+        }
+
+        $res['rab'] = $resRabs;
+
+        return $res;
     }
 
     public function update(Request $request, string $id)

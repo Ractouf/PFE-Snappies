@@ -1,9 +1,3 @@
-// page to update a typical tour (admin only)
-// (fetch the boxes for each client of that typical tour)
-// (the admin can also add new boxes for each client)
-// (the admin can also delete boxes for each client)
-// (the admin can also update the number of boxes for each client)
-
 import { useParams } from "@solidjs/router";
 import {createSignal, For, onMount} from "solid-js";
 import ClientTour from "./ClientTour";
@@ -12,6 +6,10 @@ const UpdateTypicalTours = () => {
     const [tour, setTour] = createSignal([]);
     const [loading, setLoading] = createSignal(true);
     const [boxes, setBoxes] = createSignal([]);
+    const [formHidden, setFormHidden] = createSignal(true);
+    const [rabQuandity, setRabQuandity] = createSignal("0");
+    const [boxId, setBoxId] = createSignal("0");
+    const [currentRab, setCurrentRab] = createSignal([]);
 
     const params = useParams();
 
@@ -25,7 +23,7 @@ const UpdateTypicalTours = () => {
 
         if (response.ok) {
             const res = await response.json();
-            console.log(res)
+            setCurrentRab(res.rab);
             setTour(res);
         } else {
             throw new Error("Something went wrong");
@@ -42,6 +40,7 @@ const UpdateTypicalTours = () => {
 
         if (response.ok) {
             const res = await response.json();
+            console.log(res)
             setBoxes(res);
         } else {
             throw new Error("Something went wrong");
@@ -56,15 +55,76 @@ const UpdateTypicalTours = () => {
 
     onMount(fetchData);
 
+    async function toggleForm() {
+        setFormHidden(!formHidden());
+    }
+
+    function addRab(e) {
+        e.preventDefault();
+
+        if (rabQuandity() === "0" || boxId() === "0") {
+
+        }
+
+        setCurrentRab([...currentRab(), {
+            typical_tour_id: params.id,
+            quantity_box: rabQuandity(),
+            box_id: boxId(),
+            box: boxes().find(b => parseInt(b.id) === parseInt(boxId()))
+        }]);
+    }
+
+    function deleteRab(e) {
+        e.preventDefault();
+
+        console.log(currentRab())
+        console.log(e.target.value)
+
+        setCurrentRab(currentRab().filter(r => r.id !== e.target.value));
+    }
+
     return (
         <>
             {loading() ?
                 <h1>Loading...</h1>
                 :
                 <>
-                    <For each={tour()}>
-                        {clientTourBox => <ClientTour tourId = {clientTourBox.id} client = {clientTourBox.client} clientBoxes = {clientTourBox.client.boxes} clientExtras = {clientTourBox.client.extras} existingBoxes= {boxes()}/>}
+                    <For each={tour().clients}>
+                        {clientTourBox =>
+                            <ClientTour
+                                tourId = {clientTourBox.id}
+                                client = {clientTourBox.client}
+                                clientBoxes = {clientTourBox.client.boxes}
+                                clientExtras = {clientTourBox.client.extras}
+                                existingBoxes= {boxes()}/>
+                        }
                     </For>
+
+                    <h1>RAB</h1>
+
+                    <For each = {currentRab()}>
+                        {rab =>
+                            <>
+                                <p>{rab.box.quantity_article}x {rab.box.article.name} : {rab.quantity_box}</p>
+                                <button onClick = {deleteRab} value = {rab.id}>Supprimer</button>
+                            </>
+                        }
+                    </For>
+
+                    <button onClick = {toggleForm}>rab</button>
+
+                    <form hidden ={formHidden()}>
+                        <input onClick = {addRab} type = "submit" />
+
+                        <input type = "number" onInput = {(e) => setRabQuandity(e.target.value)} />
+
+                        <select onchange={(e) => setBoxId(e.target.value)}>
+                            <option value = "0">Choisir une boite</option>
+                            <For each = {boxes()}>
+                                {box => <option value = {box.id}>{box.quantity_article}x {box.article.name}</option>}
+                            </For>
+                        </select>
+                    </form>
                 </>
             }
         </>
