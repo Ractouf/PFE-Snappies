@@ -29,3 +29,9 @@ select option {
   width: inherit;
   border-radius: 5px;
 }
+
+.delete-user {
+  border-radius: 5px;
+  color: white;
+  background-color: #D97467FF;
+}

@@ -30,7 +30,7 @@ const Header = () => {
         <header>
 
             <div class="logo-header"><img src="/src/assets/logo.png" alt="Logo" class="logo-img"/></div>
-            <p>Page Name</p>
+            <p>Snappies</p>
 
             <input class="side-menu" type="checkbox" id="side-menu"/>
             <label class="hamb" for="side-menu"><span class="hamb-line"></span></label>
@@ -41,7 +41,7 @@ const Header = () => {
                             <li class="subnav">
                                 <p class="subnavbtn">Admin <i class="fa fa-caret-down"></i></p>
                                 <div class="subnav-content">
-                                    <a onClick = {() => goTo()}>Tournées</a>
+                                    <a onClick = {() => goTo('/')}>Tournées</a>
                                     <a onClick = {() => goTo('/clients')}>Clients</a>
                                     <a onClick = {() => goTo('/articles')}>Articles</a>
                                     <a onClick = {() => goTo('/users')}>Livreurs</a>
@@ -50,7 +50,8 @@ const Header = () => {
                         )
                         : <>
                             {/*<li><a onClick = {() => goTo()}>Inventaire</a></li>*/}
-                            <li><a onClick = {() => goTo()}>Changer Tournée</a></li>
+                            <li><a onClick={() => goTo()}>Tournées</a></li>
+                            <li><a onClick={() => goTo()}>Mes tournées</a></li>
                         </>
                     }
                     <li><a onClick = {() => logout()}>Déconnexion</a></li>

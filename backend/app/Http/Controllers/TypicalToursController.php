@@ -21,9 +21,9 @@ class TypicalToursController extends Controller
         return TypicalTours::create($fields);
     }
 
-    public function showByName(string $name)
+    public function getOne(string $id)
     {
-        $typicalTour = TypicalTours::where('name', $name)->first();
+        $typicalTour = TypicalTours::find($id);
 
         if (!$typicalTour) {
             return response()->json([
@@ -33,11 +33,13 @@ class TypicalToursController extends Controller
 
         $clientsTours = $typicalTour->clientsTours;
 
+        $res = [];
         $typicalTourRes = [];
         foreach ($clientsTours as $clientsTour) {
             $client = $clientsTour->client;
 
             $boxesClientsTours = $clientsTour->boxesClientsTours;
+
             $clientBoxes = [];
             foreach ($boxesClientsTours as $boxes) {
                 $boxes['box'] = $boxes->box;
@@ -45,12 +47,37 @@ class TypicalToursController extends Controller
                 $clientBoxes[] = $boxes;
             }
 
+            $extras = [];
+            foreach ($client->toursBoxesClients as $tourBoxClient) {
+                if (!$tourBoxClient->is_delivered && $tourBoxClient->tour_id == null) {
+                    $tourBoxClient['box'] = $tourBoxClient->box;
+                    $tourBoxClient['box']['article'] = $tourBoxClient->box->article;
+                    $extras[] = $tourBoxClient;
+                }
+            }
+
+            $client['extras'] = $extras;
             $client['boxes'] = $clientBoxes;
 
-            $typicalTourRes[] = $client;
+            $typicalTourRes[] = [
+                'id' => $clientsTour->id,
+                'client' => $client,
+            ];
         }
 
-        return $typicalTourRes;
+        $res['clients'] = $typicalTourRes;
+
+        $resRabs = [];
+        $rabs = $typicalTour->boxesClientsTours;
+        foreach ($rabs as $rab) {
+            $rab['box'] = $rab->box;
+            $rab['box']['article'] = $rab->box->article;
+            $resRabs[] = $rab;
+        }
+
+        $res['rab'] = $resRabs;
+
+        return $res;
     }
 
     public function update(Request $request, string $id)

@@ -156,6 +156,19 @@ const ModifyClient = () => {
     setIsSubmitting(false);
   };
 
+  async function deleteClient(e) {
+    e.preventDefault();
+
+    await fetch(`http://localhost:8000/api/clients/${clientId}`, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': 'Bearer ' + localStorage.getItem('token'),
+      },
+    });
+
+    navigate('/clients');
+  }
+
   return (
     <form class = "clients-add" onSubmit={handleSubmit}>
 
@@ -191,8 +204,10 @@ const ModifyClient = () => {
 
       {!isSubmitting() &&
           <button class="confirm-add" type="submit" disabled={isSubmitting()}>Envoyer</button>}
+
+      <button class = "delete-user" onClick = {deleteClient}>Supprimer</button>
       {isSubmitting() &&
-          <div class="client-tours-load"><img src="/src/assets/loading.gif" alt="envoie..." class="load"/></div>}
+          <div class="client-tours-load"><img src="/src/assets/loading.gif" alt="envoi..." class="load"/></div>}
     </form>
   );
 };

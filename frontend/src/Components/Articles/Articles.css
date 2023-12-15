@@ -61,9 +61,12 @@ input::placeholder {
 }
 
 .articles-add-confirm {
+    border: none;
+    text-align: center;
     background-color: #25313c;
     color: white;
     width: 30px;
+    height: 30px;
     border-radius: 15px;
 }
 

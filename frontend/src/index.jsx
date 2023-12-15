@@ -15,6 +15,7 @@ import UserRegister from "./Components/UserRegister/UserRegister";
 import DriverTours from "./Components/DriverTours/DriverTours";
 import Users from "./Components/Users/Users";
 import ModifyUser from "./Components/Users/ModifyUser";
+import TypicalTours from "./Components/TypicalToursAdmin/TypicalTours";
 
 render(
     () =>
@@ -31,6 +32,7 @@ render(
             <Route path = "/users" component = {Users}/>
             <Route path = "/registerUser" component = {UserRegister}/>
             <Route path = "/users/:id" component = {ModifyUser}/>
+            <Route path = "/admin/tours/:id" component = {TypicalTours}/>
         </Router>,
     document.getElementById("root")
 );
