@@ -22,7 +22,7 @@ class ArticlesController extends Controller
     public function store(Request $request)
     {
         $fields = $request->validate([
-            'name' => 'required|string'
+            'name' => 'required|unique:articles,name',
         ]);
 
         return Articles::create($fields);

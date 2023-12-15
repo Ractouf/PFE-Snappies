@@ -20,8 +20,8 @@ class ClientsFactory extends Factory
     {
         return [
             'name' => $this->faker->name(),
-            'address' => $this->faker->address(),
-            'phone' => $this->faker->phoneNumber(),
+            'address' => $this->faker->unique()->address(),
+            'phone' => $this->faker->unique()->phoneNumber(),
         ];
     }
 }

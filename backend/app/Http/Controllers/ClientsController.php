@@ -17,8 +17,8 @@ class ClientsController extends Controller
     {
         $fields = $request->validate([
             'name' => 'required',
-            'address' => 'required',
-            'phone' => 'required',
+            'address' => 'required|unique:clients,address',
+            'phone' => 'required|unique:clients,phone',
         ]);
 
         return Clients::create($fields);

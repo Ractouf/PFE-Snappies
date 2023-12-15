@@ -1,0 +1,13 @@
+.admin-check {
+    display: flex;
+    align-items: center;
+    width: 70vw;
+    height: 30px;
+}
+
+.admin-check p {
+    color: #333333;
+    padding-left: 4vw;
+}
+
+.admin-check .client
