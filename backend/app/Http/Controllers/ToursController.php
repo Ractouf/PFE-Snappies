@@ -24,7 +24,7 @@ class ToursController extends Controller
         ]);
 
         $tourId = Tours::create([
-                  'date' => date('d/m/y'),
+                  'date' => date('y-m-d'),
                   'delivery_driver_id' => $fields['delivery_driver_id'],
                   'typical_tour_id' => $fields['typical_tour_id'],
                   ]);
@@ -33,7 +33,6 @@ class ToursController extends Controller
 
         $boxesClientsTours = $typicalTour->boxesClientsTours;
 
-        $createdRows = [];
         foreach ($boxesClientsTours as $boxClientTour) {
             $clientTour = $boxClientTour->clientTour;
             $clientId = null;
@@ -41,14 +40,12 @@ class ToursController extends Controller
                 $clientId = $clientTour->client_id;
             }
 
-            $createdRow = ToursBoxesClients::create([
-                'tour_id' => $tourId,
+            ToursBoxesClients::create([
+                'tour_id' => $tourId->id,
                 'client_id' => $clientId,
                 'box_id' => $boxClientTour->box_id,
                 'quantity_box' => $boxClientTour->quantity_box
             ]);
-
-            $createdRows[] = $createdRow;
         }
 
         $clientTours = $typicalTour->clientsTours;
@@ -56,14 +53,12 @@ class ToursController extends Controller
             $boxes = $clientTour->boxesClientsTours;
 
             foreach ($boxes as $box) {
-                $createdRow = ToursBoxesClients::create([
-                    'tour_id' => $tourId,
+                ToursBoxesClients::create([
+                    'tour_id' => $tourId->id,
                     'client_id' => $clientTour->client_id,
                     'box_id' => $box->box_id,
                     'quantity_box' => $box->quantity_box
                 ]);
-
-                $createdRows[] = $createdRow;
             }
         }
 
