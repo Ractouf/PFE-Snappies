@@ -26,6 +26,14 @@ const Header = () => {
         navigate("/login");
     }
 
+    function gotToMyToursToday() {
+        const date = new Date();
+        const year = date.getFullYear();
+        const month = date.getMonth() + 1;
+        const day = date.getDate();
+        navigate("/tours/" + user.id + "/" + date + "-" + month + "-" + year);
+    }
+
     return (
         <header>
 
@@ -41,17 +49,18 @@ const Header = () => {
                             <li class="subnav">
                                 <p class="subnavbtn">Admin <i class="fa fa-caret-down"></i></p>
                                 <div class="subnav-content">
-                                    <a onClick = {() => goTo('/')}>Tournées</a>
-                                    <a onClick = {() => goTo('/clients')}>Clients</a>
-                                    <a onClick = {() => goTo('/articles')}>Articles</a>
-                                    <a onClick = {() => goTo('/users')}>Livreurs</a>
+                                    <a onClick={() => goTo('/')}>Tournées</a>
+                                    <a onClick={() => goTo('/clients')}>Clients</a>
+                                    <a onClick={() => goTo('/articles')}>Articles</a>
+                                    <a onClick={() => goTo('/boxes')}>Caisses</a>
+                                    <a onClick={() => goTo('/users')}>Livreurs</a>
                                 </div>
                             </li>
                         )
                         : <>
                             {/*<li><a onClick = {() => goTo()}>Inventaire</a></li>*/}
-                            <li><a onClick={() => goTo()}>Tournées</a></li>
-                            <li><a onClick={() => goTo()}>Mes tournées</a></li>
+                            <li><a onClick={() => goTo('/')}>Tournées</a></li>
+                            <li><a onClick={() => gotToMyToursToday}>Mes tournées</a></li>
                         </>
                     }
                     <li><a onClick = {() => logout()}>Déconnexion</a></li>
