@@ -205,7 +205,7 @@ const ModifyClient = () => {
       {!isSubmitting() &&
           <button class="confirm-add" type="submit" disabled={isSubmitting()}>Envoyer</button>}
 
-      <button onClick = {deleteClient}>Supprimer</button>
+      <button class = "delete-user" onClick = {deleteClient}>Supprimer</button>
       {isSubmitting() &&
           <div class="client-tours-load"><img src="/src/assets/loading.gif" alt="envoi..." class="load"/></div>}
     </form>
