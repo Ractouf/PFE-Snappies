@@ -10,14 +10,14 @@ class BoxesController extends Controller
 {
     public function index()
     {
-        return Boxes::all();
+        $allboxes = Boxes::with('article')->get();
+        return $allboxes;
     }
 
     public function store(Request $request)
     {
         $fields = $request->validate([
-            'quantity' => 'required',
-            'clients_tours_id' => 'string',
+            'quantity_article' => 'required',
             'article_id' => 'required',
         ]);
 

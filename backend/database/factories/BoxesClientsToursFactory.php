@@ -3,15 +3,14 @@
 namespace Database\Factories;
 
 use App\Models\Boxes;
-use App\Models\Clients;
-use App\Models\Tours;
-use App\Models\ToursBoxesClients;
+use App\Models\BoxesClientsTours;
+use App\Models\ClientsTours;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends Factory<ToursBoxesClients>
+ * @extends Factory<BoxesClientsTours>
  */
-class ToursBoxesClientsFactory extends Factory
+class BoxesClientsToursFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -21,10 +20,9 @@ class ToursBoxesClientsFactory extends Factory
     public function definition(): array
     {
         return [
-            'is_delivered' => $this->faker->boolean(),
-            'client_id' => Clients::inRandomOrder()->value('id'),
-            'tour_id' => Tours::inRandomOrder()->value('id'),
+            'client_tour_id' => ClientsTours::inRandomOrder()->value('id'),
             'box_id' => Boxes::inRandomOrder()->value('id'),
+            'quantity_box' => $this->faker->numberBetween(1, 10),
         ];
     }
 }

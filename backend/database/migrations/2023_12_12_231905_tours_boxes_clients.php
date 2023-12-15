@@ -14,9 +14,10 @@ return new class extends Migration
         Schema::create('tours_boxes_clients', function (Blueprint $table) {
             $table->increments('id');
             $table->boolean('is_delivered')->default(false);
-            $table->unsignedBigInteger('tour_id');
+            $table->double("quantity_box");
+            $table->unsignedBigInteger('tour_id')->nullable();
             $table->foreign('tour_id')->references('id')->on('tours');
-            $table->unsignedBigInteger('client_id');
+            $table->unsignedBigInteger('client_id')->nullable();
             $table->foreign('client_id')->references('id')->on('clients');
             $table->unsignedBigInteger('box_id');
             $table->foreign('box_id')->references('id')->on('boxes');

@@ -1,15 +1,18 @@
 .login {
+    height: 100vh;
+    background-color: rgb(255,249,239);
+}
+
+.logo {
+    padding-top: 13vh;
+    padding-bottom: 5vh;
     display: flex;
-    align-items: center;
-    justify-content: center;
-    height: calc(100vh - 142px);
+    margin: auto;
 }
 
 .login-form {
-    background-color: #f5f1e4;
     margin: auto;
-    width: 75%;
-    padding: 10px;
+    width: 80vw;
     display: flex;
     flex-direction: column;
     gap: 20px;
@@ -17,8 +20,41 @@
 }
 
 .login-form input {
+    height: 50px;
+    color: white;
     font-size: 16px;
-    padding: 5px 10px;
+    border-radius: 10px;
     outline: none;
     border: none;
+}
+
+.submit{
+    width: 86vw;
+}
+
+.login-input {
+    background-color: rgb(189,185,178);
+    padding: 0px 3vw;
+    width: 80vw;
+}
+
+::placeholder {
+    color: white;
+    opacity: 1;
+}
+
+.submit{
+    background-color: #25313CFF;
+}
+
+.footer-container {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: linear-gradient(to right, #f8eeb4, #f1d07a);
+    color: #333;
+    text-align: center;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+    padding: 10px;
 }

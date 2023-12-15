@@ -23,8 +23,7 @@ class BoxesFactory extends Factory
     public function definition(): array
     {
         return [
-            'quantity' => $this->faker->numberBetween(1, 10),
-            'clients_tours_id' => ClientsTours::inRandomOrder()->value('id'),
+            'quantity_article' => $this->faker->numberBetween(1, 10),
             'article_id' => Articles::inRandomOrder()->value('id'),
         ];
     }

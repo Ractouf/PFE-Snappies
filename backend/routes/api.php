@@ -7,10 +7,12 @@ use App\Http\Controllers\ClientsToursController;
 use App\Http\Controllers\ToursController;
 use App\Http\Controllers\TypicalToursController;
 use App\Http\Controllers\UsersController;
+use App\Http\Controllers\ToursBoxesClientsController;
 use Illuminate\Support\Facades\Route;
 
 // public routes
 Route::post('/login', [UsersController::class, 'login']);
+
 
 // user protected routes
 Route::group(['middleware' => 'auth:sanctum'], function () {
@@ -23,6 +25,10 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get('/tours/{id}', [ToursController::class, 'show']);
     Route::get('/tours/{date}/{driverId}', [ToursController::class, 'showByDateAndDriver']);
     Route::delete('/tours/{id}', [ToursController::class, 'destroy']);
+
+    Route::post('/tours/{typicalTourId}/{tourId}', [ToursBoxesClientsController::class,'createRow']);
+    Route::get('/toursBoxes/{tourId}', [ToursBoxesClientsController::class, 'getTour']);
+    Route::post('/toursBoxes/{tourId}/{clientId}', [ToursBoxesClientsController::class, 'markBoxesAsDelivered']);
 
     Route::get('/articles', [ArticlesController::class, 'index']);
 });
@@ -43,6 +49,8 @@ Route::group(['middleware' => ['auth:sanctum', 'checkRole:admin']], function () 
 
     Route::get('/tours', [ToursController::class, 'index']);
     Route::patch('/tours/{id}', [ToursController::class, 'update']);
+    Route::get('/tours/available', [ToursController::class, 'getAvailableTour']);
+
 
     Route::post('/clientsTours', [ClientsToursController::class, 'store']);
     Route::patch('/clientsTours/{id}', [ClientsToursController::class, 'update']);
