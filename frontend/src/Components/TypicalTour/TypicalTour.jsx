@@ -65,7 +65,7 @@ const TypicalTour = () => {
         }
 
         const rep = await createTypicalTour.json();
-        navigate(`/UpdateTypicalTour/${rep.id}`)
+        navigate(`/tours/${rep.id}`)
     }
 
     const handleClick = async (idTournee) => {
@@ -73,7 +73,7 @@ const TypicalTour = () => {
         const userId = user.id
 
         if (user.is_admin) {
-            navigate(`/UpdateTypicalTour/${idTournee}`);
+            navigate(`/admin/tours/${idTournee}`);
         } else {
             const requestBody = JSON.stringify({delivery_driver_id: userId, typical_tour_id: idTournee});
 
@@ -92,7 +92,7 @@ const TypicalTour = () => {
             }
 
             const rep = await linkDeliveryDriverTours.json();
-            navigate(`/UpdateTypicalTour/${rep.id}`)
+            navigate(`/tours/${rep.id}`)
         }
     }
 

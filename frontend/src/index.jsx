@@ -13,6 +13,7 @@ import ModifyClient from './Components/ModifyClient/ModifyClient';
 import Boxes from "./Components/Boxes/Boxes";
 import UserRegister from "./Components/UserRegister/UserRegister";
 import DriverTours from "./Components/DriverTours/DriverTours";
+import TypicalTours from "./Components/TypicalToursAdmin/TypicalTours";
 
 render(
     () =>
@@ -27,6 +28,7 @@ render(
             <Route path="/modifyClient/:clientId" component={ModifyClient} />
             <Route path = "/boxes" component = {Boxes}/>
             <Route path = "/registerUser" component = {UserRegister}/>
+            <Route path = "/admin/tours/:id" component = {TypicalTours}/>
         </Router>,
     document.getElementById("root")
 );

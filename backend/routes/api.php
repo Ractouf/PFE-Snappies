@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ArticlesController;
+use App\Http\Controllers\BoxesClientsToursController;
 use App\Http\Controllers\BoxesController;
 use App\Http\Controllers\ClientsController;
 use App\Http\Controllers\ClientsToursController;
@@ -19,7 +20,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::post('/logout', [UsersController::class, 'logout']);
 
     Route::get('/typicalTours', [TypicalToursController::class, 'index']);
-    Route::get('/typicalTours/{name}', [TypicalToursController::class, 'showByName']);
+    Route::get('/typicalTours/{id}', [TypicalToursController::class, 'getOne']);
 
     Route::post('/tours', [ToursController::class, 'store']);
     Route::get('/tours/{id}', [ToursController::class, 'show']);
@@ -64,7 +65,14 @@ Route::group(['middleware' => ['auth:sanctum', 'checkRole:admin']], function () 
     Route::delete('/articles/{id}', [ArticlesController::class, 'destroy']);
 
     Route::resource('boxes', BoxesController::class);
+
+    Route::post('/boxesClientsTours/box', [BoxesClientsToursController::class, 'storeBox']);
+    Route::post('/boxesClientsTours/rab', [BoxesClientsToursController::class, 'storeRab']);
+    Route::patch('/boxesClientsTours/{id}', [BoxesClientsToursController::class, 'updateQuantityBox']);
+    Route::delete('/boxesClientsTours/{id}', [BoxesClientsToursController::class, 'destroy']);
+
+    Route::post('/toursBoxesClients', [ToursBoxesClientsController::class, 'store']);
 });
 
 // tout CRUD d'un controller
-// Route::resource('tours', TypicalTours::class);
+// Route::resource('tours', TypicalToursAdmin::class);
