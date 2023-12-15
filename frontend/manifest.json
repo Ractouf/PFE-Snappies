@@ -2,16 +2,22 @@
     "name": "Snappies",
     "short_name": "Snappies",
     "description": "Your app description",
-    "start_url": "index.html",
+    "start_url": "/",
     "display": "standalone",
     "background_color": "#ffffff",
     "theme_color": "#000000",
     "icons": [
       {
-        "src": "/logo2.png",
+        "src": "src/assets/logo2.png",
         "sizes": "120x138",
-        "type": "image/png"
+        "type": "image/png",
+        "purpose": "any maskable"
       },
+      {
+        "src": "src/assets/logo_large.png",
+        "sizes": "512x512",
+        "type": "image/png"
+      }
     ]
   }
   
