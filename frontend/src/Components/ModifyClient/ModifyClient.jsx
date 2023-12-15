@@ -157,7 +157,7 @@ const ModifyClient = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form class = "clients-add" onSubmit={handleSubmit}>
 
       <input placeholder="nom" type="text" value={name()} onInput={(e) => setName(e.target.value)}/>
 
@@ -171,7 +171,6 @@ const ModifyClient = () => {
       <div>
         {!toursByClient.loading ?
             <>
-              <label for="tour">Tournée: </label>
               {tours.loading ?
                 <span>Loading...</span>
               :
@@ -186,12 +185,14 @@ const ModifyClient = () => {
               }
           </>
         :
-          <span>Chargement...</span>
+            <div class="client-tours-load"><img src="/src/assets/loading.gif" alt="chargement..." class="load"/></div>
         }
       </div>
 
-      <button type = "submit" disabled = {isSubmitting()}>Envoyer</button>
-      {isSubmitting() && <span>Envoi...</span>}
+      {!isSubmitting() &&
+          <button class="confirm-add" type="submit" disabled={isSubmitting()}>Envoyer</button>}
+      {isSubmitting() &&
+          <div class="client-tours-load"><img src="/src/assets/loading.gif" alt="envoie..." class="load"/></div>}
     </form>
   );
 };

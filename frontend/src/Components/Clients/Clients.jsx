@@ -115,9 +115,11 @@ const Client = () => {
           </select>
         }
       </div>
-
-      <button class = "confirm-add" type="submit" disabled = {isSubmitting()}>Ajouter Client</button>
-      {isSubmitting() && <span>Envoi...</span>}
+      {!isSubmitting() &&
+          <button class = "confirm-add" type="submit" disabled = {isSubmitting()}>Ajouter Client</button>}
+      {isSubmitting() &&
+          <div class="client-tours-load"><img src="/src/assets/loading.gif" alt="envoie..." className="load"/>
+          </div>}
     </form>
   );
 };
