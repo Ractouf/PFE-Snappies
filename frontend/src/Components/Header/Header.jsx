@@ -53,7 +53,7 @@ const Header = () => {
                                     <a onClick={() => goTo('/clients')}>Clients</a>
                                     <a onClick={() => goTo('/articles')}>Articles</a>
                                     <a onClick={() => goTo('/boxes')}>Caisses</a>
-                                    <a onClick={() => goTo('/users')}>Livreurs</a>
+                                    <a onClick={() => goTo('/users')}>Utilisateurs</a>
                                 </div>
                             </li>
                         )
