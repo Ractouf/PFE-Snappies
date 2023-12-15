@@ -11,6 +11,7 @@ import Client from './Components/Clients/Clients';
 import ClientList from './Components/ClientsList/ClientsList';
 import ModifyClient from './Components/ModifyClient/ModifyClient';
 import Boxes from "./Components/Boxes/Boxes";
+import DriverTours from "./Components/DriverTours/DriverTours";
 
 render(
     () =>
@@ -19,6 +20,7 @@ render(
             <Route path = "/login" component = {Login}/>
             <Route path = "/tours/:tourId" component = {UsersTours}/>
             <Route path = "/articles" component = {Articles}/>
+            <Route path = "/tours/:driver/:date" component = {DriverTours}></Route>
             <Route path = "/addClient" component = {Client}/>
             <Route path = "/clients" component = {ClientList}/>
             <Route path="/modifyClient/:clientId" component={ModifyClient} />
