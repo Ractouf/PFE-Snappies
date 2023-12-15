@@ -1,6 +1,6 @@
 import {createResource, createSignal} from "solid-js";
 import { useNavigate} from "@solidjs/router";
-
+import "./UserRegister.css";
 const registerUser = async (email, password, lastname, firstname, phone, is_admin) => {
     const requestBody = JSON.stringify({email, password, lastname, firstname, phone, is_admin});
     const response = await fetch("http://localhost:8000/api/users", {
@@ -100,50 +100,29 @@ const UserRegister = () => {
 
     return (
         <div>
-            <h2>Register</h2>
-
             {errorMessage() && <p>{errorMessage()}</p>} {/* Display the error message if it exists */}
 
-            <form onSubmit={handleSubmit}>
-                <label>
-                    Email:
-                    <input type="text" value={email()} onInput={(e) => setEmail(e.target.value)}/>
-                </label>
-                <br/>
-                <label>
-                    Password:
-                    <input type="password" value={password()} onInput={(e) => setPassword(e.target.value)}/>
-                </label>
-                <br/>
-                <label>
-                    Confirm the Password:
-                    <input type="password" value={passwordConfirm()}
+            <form class="clients-add" onSubmit={handleSubmit}>
+                <input placeholder="email" type="text" value={email()} onInput={(e) => setEmail(e.target.value)}/>
+                <input placeholder="mot de passe" type="password" value={password()} onInput={(e) => setPassword(e.target.value)}/>
+                <input placeholder="répéter mot de passe" type="password" value={passwordConfirm()}
                            onInput={(e) => setPasswordConfirm(e.target.value)}/>
-                </label>
-                <br/>
-                <label>
-                    Name:
-                    <input type="text" value={lastname()} onInput={(e) => setLastname(e.target.value)}/>
-                </label>
-                <br/>
-                <label>
-                    Surname:
-                    <input type="text" value={firstname()} onInput={(e) => setFirstname(e.target.value)}/>
-                </label>
-                <br/>
-                <label>
-                    Phone:
-                    <input type="text" value={phone()} onInput={(e) => setPhone(e.target.value)}/>
-                </label>
-                <br/>
-                <label>
-                    Administrator:
-                    <input type="checkbox" checked={isAdministrator()}
-                           onInput={(e) => setIsAdministrator(e.target.checked)}/>
-                </label>
-                <br/>
 
-                <button type="submit">Register</button>
+                <input placeholder="nom de famille" type="text" value={lastname()} onInput={(e) => setLastname(e.target.value)}/>
+                <input placeholder="prénom" type="text" value={firstname()} onInput={(e) => setFirstname(e.target.value)}/>
+                <input placeholder="téléphone" type="text" value={phone()} onInput={(e) => setPhone(e.target.value)}/>
+
+                <div class = "admin-check">
+                    <div class="client-check">
+                        <input type="checkbox" checked={isAdministrator()}
+                               onInput={(e) => setIsAdministrator(e.target.checked)}/>
+                        <span class = "checkmark" ></span>
+                    </div>
+                    <p>Administrateur</p>
+                </div>
+
+
+                <button class = "confirm-add " type="submit">Enregistrer livreur</button>
             </form>
         </div>
     );
