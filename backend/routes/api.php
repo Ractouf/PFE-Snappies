@@ -70,4 +70,4 @@ Route::group(['middleware' => ['auth:sanctum', 'checkRole:admin']], function () 
 });
 
 // tout CRUD d'un controller
-// Route::resource('tours', TypicalTours::class);
+// Route::resource('tours', TypicalToursAdmin::class);

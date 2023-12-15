@@ -2,7 +2,7 @@ import { useParams } from "@solidjs/router";
 import {createSignal, For, onMount} from "solid-js";
 import ClientTour from "./ClientTour";
 
-const UpdateTypicalTours = () => {
+const TypicalTours = () => {
     const [tour, setTour] = createSignal([]);
     const [loading, setLoading] = createSignal(true);
     const [boxes, setBoxes] = createSignal([]);
@@ -40,7 +40,6 @@ const UpdateTypicalTours = () => {
 
         if (response.ok) {
             const res = await response.json();
-            console.log(res)
             setBoxes(res);
         } else {
             throw new Error("Something went wrong");
@@ -147,4 +146,4 @@ const UpdateTypicalTours = () => {
     )
 }
 
-export default UpdateTypicalTours;
+export default TypicalTours;
