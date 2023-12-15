@@ -74,13 +74,18 @@ const UpdateTypicalTours = () => {
         }]);
     }
 
-    function deleteRab(e) {
+    async function deleteRab(e) {
         e.preventDefault();
 
-        console.log(currentRab())
-        console.log(e.target.value)
+        setCurrentRab(currentRab().filter(r => r.id.toString() !== e.target.value.toString()));
 
-        setCurrentRab(currentRab().filter(r => r.id !== e.target.value));
+        await fetch(`http://localhost:8000/api/boxesClientsTours/${e.target.value.toString()}`, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${localStorage.getItem("token")}`,
+            },
+        });
     }
 
     return (
