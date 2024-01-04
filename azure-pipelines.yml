@@ -8,7 +8,7 @@ trigger:
 
 variables:
   # Azure Resource Manager connection created during pipeline creation
-  azureSubscription: '353f897f-9e22-4220-8050-6b7306a85c28'
+  azureSubscription: $(subscription)
 
   # Web app name
   webAppName: 'dev-back-snappies'
